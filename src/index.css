@@ -1,7 +1,7 @@
-body {
-  margin: 0;
+#root {
+  margin: 40px auto;
+  max-width: 1920px;
 }
-
 /* @font-face {
   font-family: 'Iceland', Arial, Helvetica, sans-serif;
   src: url(./fonts/Iceland-Regular.ttf) format('ttf');
