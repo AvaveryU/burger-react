@@ -1,8 +1,10 @@
 .header {
   min-height: 88px;
+  background: #1c1c21;
+}
+.header__box {
   display: flex;
   justify-content: flex-start;
-  flex-direction: row;
   align-items: center;
   margin: 40px 320px 0;
 }
@@ -20,6 +22,7 @@
   box-sizing: border-box;
   border-radius: 40px;
   text-decoration: none;
+  color: #f2f2f3;
 }
 .header__link:nth-child(3) {
   margin-left: 289px;

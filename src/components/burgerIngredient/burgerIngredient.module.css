@@ -1,0 +1,24 @@
+.ingredient__li {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: center;
+  height: 208px;
+}
+.ingredient__image {
+  height: 120px;
+  width: 272px;
+  object-fit: cover;
+}
+.ingredient__price {
+  display: flex;
+  justify-content: center;
+}
+.ingredient__digits {
+  line-height: 24px;
+}
+.ingredient__name {
+  line-height: 24px;
+  font-size: 16px;
+}

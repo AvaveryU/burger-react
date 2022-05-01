@@ -1,6 +1,4 @@
-import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import appStyles from "./app.module.css";
-
 import AppHeader from "../appHeader/appHeader";
 import BurgerIngredients from "../burgerIngredients/burgerIngredients";
 import BurgerConstructor from "../burgerConstructor/burgerConstructor";
@@ -12,7 +10,6 @@ const App = () => {
     <>
       <AppHeader />
     <main className={appStyles.app}>
-      {/* <BurgerIngredients ingredients={dataBurgers}/> */}
       <BurgerIngredients ingredients={data}/>
       <BurgerConstructor ingredients={data}/>
     </main>

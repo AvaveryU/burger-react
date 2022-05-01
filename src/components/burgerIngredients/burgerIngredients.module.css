@@ -1,21 +1,12 @@
 .ingredients__box {
   width: 600px;
+  height: 100%;
 }
 .ingredients__title {
   line-height: 40px;
 }
-
-
-/* IngredientsCategory */
-.ingredient__ul {
-  list-style-type: none;
-  padding: 0;
-  justify-items: center;
-  display: grid;
-  grid-template-columns: repeat(2, 272px);
-  column-gap: 24px;
-}
-.ingredient__li {
-  text-decoration: none;
-  height: 208px;
+.ingredients__category {
+  height: 716px;
+  overflow: scroll;
+  overflow-x: hidden;
 }

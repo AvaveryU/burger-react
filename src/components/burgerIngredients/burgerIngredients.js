@@ -1,4 +1,5 @@
 import ingredientsStyles from "./burgerIngredients.module.css";
+import IngredientsCategory from "../ingredientsCategory/ingredientsCategory";
 import { InfoIcon, CurrencyIcon, Counter, Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
 const BurgerIngredients = ({ ingredients }) => {
@@ -17,40 +18,15 @@ const BurgerIngredients = ({ ingredients }) => {
           Начинки
         </Tab>
       </div>
+      <div className={`${ingredientsStyles.ingredients__category} mt-10`}>
       <IngredientsCategory type="bun" ingredients={ingredients} title="Булки" />
       <IngredientsCategory type="sauce" ingredients={ingredients} title="Соусы" />
       <IngredientsCategory type="main" ingredients={ingredients} title="Начинки" />
-      {/* <CurrencyIcon type="primary" />
+      </div>
+      {/* 
       <InfoIcon type="primary" /> */}
       {/* <Counter count={count} size="default" /> */}
     </div>
-  );
-};
-
-const IngredientsCategory = ({ type, title, ingredients }) => {
-  const category = ingredients.filter((ingredient) => ingredient.type === `${type}`);
-  console.log(category);
-  return (
-    <>
-      <h3 className={`${ingredientsStyles.ingredient__title} m-0`}>{title}</h3>
-      <ul className={`${ingredientsStyles.ingredient__ul} mt-10 ml-4 mb-0`}>
-        {category.map((ingredient) => (
-          <BurgerIngredient ingredient={ingredient} type={type} key={ingredient._id} />
-        ))}
-      </ul>
-    </>
-  );
-};
-
-const BurgerIngredient = ({ ingredient }) => {
-  return (
-    <li className={`${ingredientsStyles.ingredient__li} mt-6`}>
-      <img src={ingredient.image} alt={ingredient.name} key={ingredient._id} />
-      <div>
-        <p className={`${ingredientsStyles.ingredient__price}`}>{ingredient.price}</p>
-        <p className={`${ingredientsStyles.ingredient__name}`}>{ingredient.name}</p>
-      </div>
-    </li>
   );
 };
 
