@@ -5,6 +5,8 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import CurrencyIcon from "../../images/CurrencyIcon.svg";
+import ingredientPropType from '../../utils/prop-types.js';
+import PropTypes from 'prop-types';
 const BurgerConstructor = ({ ingredients }) => {
   const buns = ingredients.filter((ingredient) => ingredient.type === `bun`);
   return (
@@ -58,3 +60,6 @@ const BurgerConstructor = ({ ingredients }) => {
 };
 
 export default BurgerConstructor;
+BurgerConstructor.propTypes = {
+  ingredients: PropTypes.arrayOf(ingredientPropType)
+}
