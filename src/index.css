@@ -1,22 +1,14 @@
 #root {
-  margin: 40px auto;
-  max-width: 1920px;
+  margin: 0 auto;
 }
-/* @font-face {
-  font-family: 'Iceland', Arial, Helvetica, sans-serif;
-  src: url(./fonts/Iceland-Regular.ttf) format('ttf');
-  font-style:  normal;
-  font-weight: 400;
+::-webkit-scrollbar {
+  width: 8px;
+  background: #2f2f37;
 }
-@font-face {
-  font-family: 'JetBrains Mono', Arial, Helvetica, sans-serif;
-  src: url(./fonts/JetBrainsMono-Regular.ttf) format('ttf');
-  font-style:  normal;
-  font-weight: 400;
+::-webkit-scrollbar-thumb {
+  height: 492px;
+  background: #8585ad;
 }
-@font-face {
-  font-family: 'JetBrains Mono', Arial, Helvetica, sans-serif;
-  src: url(./fonts/JetBrainsMono-Bold.ttf) format('ttf');
-  font-style: bold;
-  font-weight: 700;
-} */
+.ingredient__title {
+  line-height: 30px;
+}

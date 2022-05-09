@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+//определенная структура данных с проверкой на соответствие определенному обязательному JS-типу
 const ingredientPropType = PropTypes.shape({
     _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -11,6 +12,6 @@ const ingredientPropType = PropTypes.shape({
     image: PropTypes.string.isRequired,
     image_mobile: PropTypes.string.isRequired,
     image_large: PropTypes.string.isRequired,
-    __v: PropTypes.number,
+    __v: PropTypes.number.isRequired,
   });
   export default ingredientPropType

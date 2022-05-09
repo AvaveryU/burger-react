@@ -1,38 +1,44 @@
 import ingredientsStyles from "./burgerIngredients.module.css";
 import IngredientsCategory from "../ingredientsCategory/ingredientsCategory";
-import { InfoIcon, CurrencyIcon, Counter, Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import React from "react";
-import ingredientPropType from '../../utils/prop-types.js';
-import PropTypes from 'prop-types';
+import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useState } from "react";
+import ingredientPropType from "../../utils/prop-types.js";
+import PropTypes from "prop-types";
+
 const BurgerIngredients = ({ ingredients }) => {
-  const [current, setCurrent] = React.useState("bun");
+  const [current, setCurrent] = useState("bun");
+  const handleCLickTab = (event) => {
+    setCurrent(event);
+  };
   return (
     <div className={`${ingredientsStyles.ingredients__box} mr-10 mt-10`}>
-      <h1 className={`${ingredientsStyles.ingredients__title} text text_type_main-large mb-5`}>Соберите бургер</h1>
+      <h1 className={`${ingredientsStyles.ingredients__title} text text_type_main-large mb-5`}>
+        Соберите бургер
+      </h1>
       <div style={{ display: "flex" }}>
-        <Tab value="bun" active={current === "bun"} onClick={setCurrent}>
+        <Tab value="bun" active={current === "bun"} onClick={handleCLickTab}>
           Булки
         </Tab>
-        <Tab value="sauce" active={current === "sauce"} onClick={setCurrent}>
+        <Tab value="sauce" active={current === "sauce"} onClick={handleCLickTab}>
           Соусы
         </Tab>
-        <Tab value="main" active={current === "main"} onClick={setCurrent}>
+        <Tab value="main" active={current === "main"} onClick={handleCLickTab}>
           Начинки
         </Tab>
       </div>
       <div className={`${ingredientsStyles.ingredients__category} mt-10`}>
-      <IngredientsCategory type="bun" ingredients={ingredients} title="Булки" />
-      <IngredientsCategory type="sauce" ingredients={ingredients} title="Соусы" />
-      <IngredientsCategory type="main" ingredients={ingredients} title="Начинки" />
+        <IngredientsCategory type="bun" ingredients={ingredients} title="Булки" />
+        <IngredientsCategory type="sauce" ingredients={ingredients} title="Соусы" />
+        <IngredientsCategory type="main" ingredients={ingredients} title="Начинки" />
       </div>
-      {/* 
-      <InfoIcon type="primary" /> */}
-      {/* <Counter count={count} size="default" /> */}
     </div>
   );
 };
 
 export default BurgerIngredients;
+//проверка передаваемых пропсов
 BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropType)
-}
+  ingredients: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
+};
+//подходит ли для проверки таким образом? в компонент BurgerIngredients передается пропс ingredients,
+//поэтому проверки по другим пропсам не должно быть, в отличие от компонента IngredientsCategory...

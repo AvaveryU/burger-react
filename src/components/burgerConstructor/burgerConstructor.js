@@ -9,9 +9,10 @@ import ingredientPropType from '../../utils/prop-types.js';
 import PropTypes from 'prop-types';
 const BurgerConstructor = ({ ingredients }) => {
   const buns = ingredients.filter((ingredient) => ingredient.type === `bun`);
+  const ingredientsBetweenBuns = ingredients.filter((ingredient) => ingredient.type !== `bun`);
   return (
-    <div className={`${constructorStyles.constructor__box} mt-25 ml-4 pl-8`}>
-      <div className="ml-6">
+    <div className={`${constructorStyles.constructor__box} mt-25 ml-4`}>
+      <div className="ml-8">
         <ConstructorElement
           type="top"
           isLocked={true}
@@ -20,10 +21,10 @@ const BurgerConstructor = ({ ingredients }) => {
           price={buns[0].price}
         />
       </div>
-      <ul className={`${constructorStyles.constructor__ul}`}>
-        {ingredients.map((item, index) => (
-          <li className={`${constructorStyles.constructor__li}`} key={index}>
-            <div className="mr-2">
+      <ul className={`${constructorStyles.constructor__list}`}>
+        {ingredientsBetweenBuns.map((item, index) => (
+          <li className={`${constructorStyles.constructor__element}`} key={index}>
+            <div className={`${constructorStyles.constructor__dragIcon} mr-2`}>
               <DragIcon />
             </div>
             <ConstructorElement
@@ -35,7 +36,7 @@ const BurgerConstructor = ({ ingredients }) => {
           </li>
         ))}
       </ul>
-      <div className="ml-6">
+      <div className="ml-8">
         <ConstructorElement
           type="bottom"
           isLocked={true}
@@ -60,6 +61,12 @@ const BurgerConstructor = ({ ingredients }) => {
 };
 
 export default BurgerConstructor;
+//проверка передаваемых пропсов
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropType)
+  ingredients: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired
+}
+ConstructorElement.propTypes = {
+  price: PropTypes.number.isRequired,
+  thumbnail: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
 }
