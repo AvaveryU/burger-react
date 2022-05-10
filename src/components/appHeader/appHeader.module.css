@@ -1,0 +1,29 @@
+.header {
+  max-width: 1280px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+}
+.header__ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+.header__link {
+  display: flex;
+  border-radius: 40px;
+  text-decoration: none;
+  color: #f2f2f3;
+  align-items: center;
+}
+.header__link:nth-child(3) {
+  margin-left: 176px;
+}
+.header__link:hover {
+  cursor: pointer;
+}
+.header__logo {
+  align-items: center;
+}

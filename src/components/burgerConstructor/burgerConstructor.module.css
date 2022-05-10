@@ -1,0 +1,38 @@
+.constructor__box {
+  width: 600px;
+  height: 912px;
+}
+.constructor__list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+  width: 100%;
+  overflow: scroll;
+  overflow-x: hidden;
+  height: 480px;
+  margin-bottom: 0;
+}
+.constructor__element {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+.constructor__element:last-child {
+  margin-bottom: 16px;
+}
+.constructor__list::-webkit-scrollbar-thumb {
+  height: 292px;
+}
+.constructor__button {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.constructor__icon {
+  width: 33px;
+  height: 100%;
+}
+.constructor__dragIcon {
+  height: 24px;
+}

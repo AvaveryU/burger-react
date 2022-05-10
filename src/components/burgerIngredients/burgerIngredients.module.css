@@ -1,0 +1,12 @@
+.ingredients__box {
+  width: 600px;
+  height: 100%;
+}
+.ingredients__title {
+  line-height: 40px;
+}
+.ingredients__category {
+  height: 716px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
