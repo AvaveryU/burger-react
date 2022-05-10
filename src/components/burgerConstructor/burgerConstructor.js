@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 const BurgerConstructor = ({ ingredients }) => {
   const buns = ingredients.filter((ingredient) => ingredient.type === `bun`);
   const ingredientsBetweenBuns = ingredients.filter((ingredient) => ingredient.type !== `bun`);
+  
   return (
     <div className={`${constructorStyles.constructor__box} mt-25 ml-4`}>
       <div className="ml-8">

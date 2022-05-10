@@ -40,5 +40,3 @@ export default BurgerIngredients;
 BurgerIngredients.propTypes = {
   ingredients: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
 };
-//подходит ли для проверки таким образом? в компонент BurgerIngredients передается пропс ingredients,
-//поэтому проверки по другим пропсам не должно быть, в отличие от компонента IngredientsCategory...
