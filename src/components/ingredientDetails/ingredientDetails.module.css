@@ -1,0 +1,29 @@
+.detail__data {
+  composes: order__data from "../orderDetails/orderDetails.module.css";
+}
+.detail__ingredient {
+  width: 480px;
+  height: 240px;
+  text-align: center;
+}
+.detail__image {
+  height: 100%;
+  object-fit: cover;
+}
+.detail__description {
+  font-weight: normal;
+}
+.detail__macronutrients {
+  display: grid;
+  padding: 0;
+  margin: 0;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  list-style: none;
+}
+.detail__macronutrient {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
