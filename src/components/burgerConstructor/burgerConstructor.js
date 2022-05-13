@@ -3,10 +3,12 @@ import { ConstructorElement, DragIcon, Button } from "@ya.praktikum/react-develo
 import CurrencyIcon from "../../images/CurrencyIcon.svg";
 import ingredientPropType from "../../utils/prop-types.js";
 import PropTypes from "prop-types";
-const BurgerConstructor = ({ ingredients }) => {
+const BurgerConstructor = ({ ingredients, onOpenModal }) => {
   const buns = ingredients.filter((ingredient) => ingredient.type === "bun");
   const ingredientsBetweenBuns = ingredients.filter((ingredient) => ingredient.type !== `bun`);
-
+  const handleOpenModal = (event) => {
+    onOpenModal(event.currentTarget)
+  }
   return (
     <div className={`${constructorStyles.constructor__box} mt-25 ml-4`}>
       <div className="ml-8">
@@ -49,7 +51,7 @@ const BurgerConstructor = ({ ingredients }) => {
           src={CurrencyIcon}
           alt="иконка"
         ></img>
-        <Button type="primary" size="large">
+        <Button type="primary" size="large" onClick={handleOpenModal}>
           Оформить заказ
         </Button>
       </div>
@@ -61,6 +63,7 @@ export default BurgerConstructor;
 //проверка передаваемых пропсов
 BurgerConstructor.propTypes = {
   ingredients: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
+  onOpenModal: PropTypes.func.isRequired
 };
 ConstructorElement.propTypes = {
   price: PropTypes.number.isRequired,

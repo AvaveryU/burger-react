@@ -5,7 +5,7 @@ import { useState } from "react";
 import ingredientPropType from "../../utils/prop-types.js";
 import PropTypes from "prop-types";
 
-const BurgerIngredients = ({ ingredients }) => {
+const BurgerIngredients = ({ ingredients, onOpenModal }) => {
   const [current, setCurrent] = useState("bun");
   const handleCLickTab = (event) => {
     setCurrent(event);
@@ -27,9 +27,9 @@ const BurgerIngredients = ({ ingredients }) => {
         </Tab>
       </div>
       <div className={`${ingredientsStyles.ingredients__category} mt-10`}>
-        <IngredientsCategory type="bun" ingredients={ingredients} title="Булки" />
-        <IngredientsCategory type="sauce" ingredients={ingredients} title="Соусы" />
-        <IngredientsCategory type="main" ingredients={ingredients} title="Начинки" />
+        <IngredientsCategory type="bun" ingredients={ingredients} title="Булки" onOpenModal={onOpenModal} />
+        <IngredientsCategory type="sauce" ingredients={ingredients} title="Соусы" onOpenModal={onOpenModal} />
+        <IngredientsCategory type="main" ingredients={ingredients} title="Начинки" onOpenModal={onOpenModal} />
       </div>
     </div>
   );
@@ -39,4 +39,5 @@ export default BurgerIngredients;
 //проверка передаваемых пропсов
 BurgerIngredients.propTypes = {
   ingredients: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
+  onOpenModal: PropTypes.func.isRequired
 };

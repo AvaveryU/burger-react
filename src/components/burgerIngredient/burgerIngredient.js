@@ -3,11 +3,14 @@ import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-c
 import ingredientPropType from '../../utils/prop-types.js';
 import PropTypes from 'prop-types';
 
-const BurgerIngredient = ({ ingredient, type }) => {
+const BurgerIngredient = ({ ingredient, type, onOpenModal }) => {
+  const handleOpenModal = (event) => {
+    onOpenModal(event.currentTarget.id)
+  }
     return (
-      <li type={type} className={ingredientStyles.ingredient__element}>
-        <Counter count={0} size="default"/>
-        <img className={`${ingredientStyles.ingredient__image}`} src={ingredient.image} alt={ingredient.name} key={ingredient._id} />
+      <li type={type} className={ingredientStyles.ingredient__element} key={ingredient._id} onClick={handleOpenModal} id={ingredient._id}>
+        <div style={{visibility: 'hidden'}}><Counter count={'0'} size="default" /></div>
+        <img className={`${ingredientStyles.ingredient__image}`} src={ingredient.image} alt={ingredient.name}  />
         <div>
           <div className={`${ingredientStyles.ingredient__price} mb-1 mt-1`}>
             <p className={`${ingredientStyles.ingredient__digits} text text_type_digits-default mr-2`}>{ingredient.price}</p>
@@ -23,5 +26,6 @@ const BurgerIngredient = ({ ingredient, type }) => {
   //проверка передаваемых пропсов
   BurgerIngredient.propTypes = {
     ingredient: ingredientPropType.isRequired,
-    type: PropTypes.string.isRequired
+    type: PropTypes.string.isRequired,
+    onOpenModal: PropTypes.func.isRequired
   }

@@ -10,8 +10,9 @@ import URL from "../../utils/data.json";
 
 const App = () => {
   const [ingredients, setIngredients] = useState(null);
-  const [isOrderDetailsOpened, setIsOrderDetailsOpened] = useState(false); // Булевый стейт для одной конкретной модалки
-  const [isIngredientDetailsOpened, setIsIngredientDetailsOpened] = useState(false); // Булевый стейт для одной конкретной модалки
+  const [isOrderDetailsOpened, setIsOrderDetailsOpened] = useState(false); // Булевый стейт для одной конкретной модалки - заказ
+  const [isIngredientDetailsOpened, setIsIngredientDetailsOpened] = useState(false); // Булевый стейт для одной конкретной модалки - ингредиент
+  const [ingredientInModal, setIngredientInModal] = useState({}); // карточка с ингредиентом
 
   useEffect(() => {
     const getIngredientsData = async () => {
@@ -30,20 +31,29 @@ const App = () => {
   // Закрытие всех модалок
   const closeAllModals = () => {
     setIsOrderDetailsOpened(false);
-    // тут же закрываем и другие модалки
     setIsIngredientDetailsOpened(false);
   };
   // Обработка нажатия Esc
   const handleEscKeydown = (event) => {
     event.key === "Escape" && closeAllModals();
   };
+  // открытие окна с ингредиентом
+  const handleOpenIngredientDetails = (idIngredient) => {
+    setIngredientInModal(ingredients.find((ingredient) => ingredient._id === idIngredient));
+    setIsIngredientDetailsOpened(true);
+  };
+  // открытие окна заказа
+  const handleOpenOrder = () => {
+    setIsOrderDetailsOpened(true);
+  };
+
   return (
     ingredients && (
       <>
         <AppHeader />
         <main className={appStyles.app}>
-          <BurgerIngredients ingredients={ingredients} />
-          <BurgerConstructor ingredients={ingredients} />
+          <BurgerIngredients ingredients={ingredients} onOpenModal={handleOpenIngredientDetails} />
+          <BurgerConstructor ingredients={ingredients} onOpenModal={handleOpenOrder} />
         </main>
         {/* модальное окно заказа */}
         {isOrderDetailsOpened && (
@@ -58,8 +68,7 @@ const App = () => {
             onOverlayClick={closeAllModals}
             onEscKeydown={handleEscKeydown}
           >
-            {/* <IngredientDetails ingredients={ingredients} /> */}
-            <IngredientDetails />
+            <IngredientDetails ingredient={ingredientInModal} />
           </Modal>
         )}
       </>
