@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/react-burger/static/css/main.2e67aebf.css",
-    "main.js": "/react-burger/static/js/main.d6afdc3d.js",
-    "static/media/JetBrainsMono-Bold.woff": "/react-burger/static/media/JetBrainsMono-Bold.3914674f1cb2335acf26.woff",
-    "static/media/JetBrainsMono-Regular.woff": "/react-burger/static/media/JetBrainsMono-Regular.f52bee61d00ce995b89f.woff",
-    "static/media/DoneInPopup.svg": "/react-burger/static/media/DoneInPopup.effd71790a6eb1b87495a16c82fb3767.svg",
-    "static/media/JetBrainsMono-Bold.woff2": "/react-burger/static/media/JetBrainsMono-Bold.c232d532ea5a5189a278.woff2",
-    "static/media/JetBrainsMono-Regular.woff2": "/react-burger/static/media/JetBrainsMono-Regular.b60380891bcf2eb241ca.woff2",
-    "static/media/iceland.woff": "/react-burger/static/media/iceland.77ad7fc2baffd9305538.woff",
-    "static/media/iceland.woff2": "/react-burger/static/media/iceland.4ae67a017a5ff82bbbb7.woff2",
-    "static/media/CurrencyIcon.svg": "/react-burger/static/media/CurrencyIcon.5f2a2084ff702e09da2d32b101f11ca7.svg",
-    "index.html": "/react-burger/index.html",
-    "main.2e67aebf.css.map": "/react-burger/static/css/main.2e67aebf.css.map",
-    "main.d6afdc3d.js.map": "/react-burger/static/js/main.d6afdc3d.js.map"
+    "main.css": "/burger-react/static/css/main.0e1dd725.css",
+    "main.js": "/burger-react/static/js/main.7c5abf79.js",
+    "static/media/JetBrainsMono-Bold.woff": "/burger-react/static/media/JetBrainsMono-Bold.3914674f1cb2335acf26.woff",
+    "static/media/JetBrainsMono-Regular.woff": "/burger-react/static/media/JetBrainsMono-Regular.f52bee61d00ce995b89f.woff",
+    "static/media/DoneInPopup.svg": "/burger-react/static/media/DoneInPopup.effd71790a6eb1b87495a16c82fb3767.svg",
+    "static/media/JetBrainsMono-Bold.woff2": "/burger-react/static/media/JetBrainsMono-Bold.c232d532ea5a5189a278.woff2",
+    "static/media/JetBrainsMono-Regular.woff2": "/burger-react/static/media/JetBrainsMono-Regular.b60380891bcf2eb241ca.woff2",
+    "static/media/iceland.woff": "/burger-react/static/media/iceland.77ad7fc2baffd9305538.woff",
+    "static/media/iceland.woff2": "/burger-react/static/media/iceland.4ae67a017a5ff82bbbb7.woff2",
+    "static/media/CurrencyIcon.svg": "/burger-react/static/media/CurrencyIcon.5f2a2084ff702e09da2d32b101f11ca7.svg",
+    "index.html": "/burger-react/index.html",
+    "main.0e1dd725.css.map": "/burger-react/static/css/main.0e1dd725.css.map",
+    "main.7c5abf79.js.map": "/burger-react/static/js/main.7c5abf79.js.map"
   },
   "entrypoints": [
-    "static/css/main.2e67aebf.css",
-    "static/js/main.d6afdc3d.js"
+    "static/css/main.0e1dd725.css",
+    "static/js/main.7c5abf79.js"
   ]
 }
