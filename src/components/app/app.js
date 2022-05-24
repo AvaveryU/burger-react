@@ -44,9 +44,9 @@ const App = () => {
     const urlOrders = "orders";
     fetch(INFO.baseURL + urlOrders, {
       method: "POST",
-      "headers": INFO.headers,
+      headers: INFO.headers,
       body: JSON.stringify({
-        "ingredients": ['60d3b41abdacab0026a733c6']
+        ingredients: ["60d3b41abdacab0026a733c6"],
       }),
     })
       .then((res) => res.json())
@@ -76,7 +76,7 @@ const App = () => {
   );
   // открытие окна заказа
   const handleOpenOrder = useCallback(() => {
-    postOrderDetails(isOrderNumber)
+    postOrderDetails(isOrderNumber);
     setIsOrderDetailsOpened(true);
   }, []);
 
@@ -95,7 +95,7 @@ const App = () => {
           {/* модальное окно заказа */}
           {isOrderDetailsOpened && (
             <Modal onOverlayClick={closeAllModals} onEscKeydown={handleEscKeydown}>
-              <OrderDetails isOrderNumber={isOrderNumber}/> {/* вложенное содержимое, идет в пропс children  */}
+              <OrderDetails isOrderNumber={isOrderNumber} /> {/* вложенное содержимое, идет в пропс children  */}
             </Modal>
           )}
           {/* модальное окно ингредиента */}

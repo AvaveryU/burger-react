@@ -12,7 +12,6 @@ const BurgerConstructor = ({ onOpenModal }) => {
 
   const buns = ingredients.filter((ingredient) => ingredient.type === "bun");
   const ingredientsBetweenBuns = ingredients.filter((ingredient) => ingredient.type !== `bun`);
-console.log(ingredients)
   // хук для подсчета цены ингредиентов
   useEffect(() => {
     //пока что вручную посчитана сумма
