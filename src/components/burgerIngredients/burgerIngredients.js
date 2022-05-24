@@ -2,10 +2,10 @@ import ingredientsStyles from "./burgerIngredients.module.css";
 import IngredientsCategory from "../ingredientsCategory/ingredientsCategory";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
-import ingredientPropType from "../../utils/prop-types.js";
 import PropTypes from "prop-types";
 
-const BurgerIngredients = ({ ingredients, onOpenModal }) => {
+const BurgerIngredients = ({ onOpenModal }) => {
+  
   const [current, setCurrent] = useState("bun");
   const handleCLickTab = (event) => {
     setCurrent(event);
@@ -27,9 +27,9 @@ const BurgerIngredients = ({ ingredients, onOpenModal }) => {
         </Tab>
       </div>
       <div className={`${ingredientsStyles.ingredients__category} mt-10`}>
-        <IngredientsCategory type="bun" ingredients={ingredients} title="Булки" onOpenModal={onOpenModal} />
-        <IngredientsCategory type="sauce" ingredients={ingredients} title="Соусы" onOpenModal={onOpenModal} />
-        <IngredientsCategory type="main" ingredients={ingredients} title="Начинки" onOpenModal={onOpenModal} />
+        <IngredientsCategory type="bun" title="Булки" onOpenModal={onOpenModal} />
+        <IngredientsCategory type="sauce" title="Соусы" onOpenModal={onOpenModal} />
+        <IngredientsCategory type="main" title="Начинки" onOpenModal={onOpenModal} />
       </div>
     </div>
   );
@@ -37,7 +37,6 @@ const BurgerIngredients = ({ ingredients, onOpenModal }) => {
 
 export default BurgerIngredients;
 //проверка передаваемых пропсов
-BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
-  onOpenModal: PropTypes.func.isRequired
+ BurgerIngredients.propTypes = {
+   onOpenModal: PropTypes.func.isRequired
 };

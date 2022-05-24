@@ -1,10 +1,10 @@
 import orderStyles from "./orderDetails.module.css";
 import DoneInPopup from "../../images/DoneInPopup.svg";
 
-const OrderDetails = () => {
+const OrderDetails = ({isOrderNumber}) => {
   return (
     <div className={orderStyles.order__data}>
-      <p className={`${orderStyles.order__number} text text_type_digits-large`}>034536</p>
+      <p className={`${orderStyles.order__number} text text_type_digits-large`}>{isOrderNumber.order.number}</p>
       <p className={`${orderStyles.order__identifier} text text_type_main-medium mt-8`}>
         идентификатор заказа
       </p>
