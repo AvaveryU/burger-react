@@ -2,6 +2,9 @@
   width: 600px;
   height: 100%;
 }
+.ingredients__tab {
+  display: flex;
+}
 .ingredients__title {
   line-height: 40px;
 }

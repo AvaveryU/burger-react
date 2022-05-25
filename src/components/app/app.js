@@ -24,18 +24,22 @@ const App = () => {
   }); // состояние начальное для заказа
   const [totalPrice, setTotalPrice] = useState(null); //стейт для стоимости заказа
 
+  // проверка ответа от сервера
+  function checkResponse(response) {
+    if (response.ok) {
+      return response.json();
+    }
+    throw new Error("Ошибка при взаимодействии с сервером!");
+  }
+  // хук для получения данных с сервера
   useEffect(() => {
     const urlIngredients = "ingredients";
     const getIngredientsData = async () => {
       const response = await fetch(INFO.baseURL + urlIngredients, {
         method: "GET",
       });
-      const data = await response.json();
-      if (response.ok) {
-        setIngredients(data.data);
-      } else {
-        throw new Error("Ошибка при запросе данных с сервера!");
-      }
+      const data = await checkResponse(response);
+      setIngredients(data.data);
     };
     getIngredientsData().catch((error) => console.log(error));
   }, []);
@@ -49,22 +53,16 @@ const App = () => {
         ingredients: ["60d3b41abdacab0026a733c6"],
       }),
     })
-      .then((res) => res.json())
+      .then(checkResponse)
       .then((isOrderNumber) => {
         setOrderDetails(isOrderNumber);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((error) => console.log(error));
   };
   // Закрытие всех модалок
   const closeAllModals = useCallback(() => {
     setIsOrderDetailsOpened(false);
     setIsIngredientDetailsOpened(false);
-  }, []);
-  // Обработка нажатия Esc
-  const handleEscKeydown = useCallback((event) => {
-    event.key === "Escape" && closeAllModals();
   }, []);
   // открытие окна с ингредиентом
   const handleOpenIngredientDetails = useCallback(
@@ -94,13 +92,13 @@ const App = () => {
           </main>
           {/* модальное окно заказа */}
           {isOrderDetailsOpened && (
-            <Modal onOverlayClick={closeAllModals} onEscKeydown={handleEscKeydown}>
-              <OrderDetails isOrderNumber={isOrderNumber} /> {/* вложенное содержимое, идет в пропс children  */}
+            <Modal onClose={closeAllModals}>
+              <OrderDetails isOrderNumber={isOrderNumber} />
             </Modal>
           )}
           {/* модальное окно ингредиента */}
           {isIngredientDetailsOpened && (
-            <Modal title="Детали ингредиента" onOverlayClick={closeAllModals} onEscKeydown={handleEscKeydown}>
+            <Modal title="Детали ингредиента" onClose={closeAllModals}>
               <IngredientDetails ingredient={ingredientInModal} />
             </Modal>
           )}

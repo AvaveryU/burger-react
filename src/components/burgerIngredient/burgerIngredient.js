@@ -9,7 +9,7 @@ const BurgerIngredient = ({ ingredient, type, onOpenModal }) => {
   }
     return (
       <li type={type} className={ingredientStyles.ingredient__element} key={ingredient._id} onClick={handleOpenModal} id={ingredient._id}>
-        <div style={{visibility: 'hidden'}}><Counter count={'0'} size="default" /></div>
+        <div className={ingredientStyles.ingredient__container}><Counter count={'0'} size="default" /></div>
         <img className={`${ingredientStyles.ingredient__image}`} src={ingredient.image} alt={ingredient.name}  />
         <div>
           <div className={`${ingredientStyles.ingredient__price} mb-1 mt-1`}>
