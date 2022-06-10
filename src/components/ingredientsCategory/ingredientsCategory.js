@@ -1,11 +1,11 @@
 import BurgerIngredient from '../burgerIngredient/burgerIngredient'
 import categoryIngredients from "./ingredientsCategory.module.css";
 import PropTypes from 'prop-types';
-import {BurgerIngredientsContext} from '../../context/burger-ingredients-context'
-import { useContext } from "react";
+import { useSelector } from "react-redux";
 
 const IngredientsCategory = ({ type, title, onOpenModal }) => {
-  const ingredients = useContext(BurgerIngredientsContext);
+  const {ingredients} = useSelector(state => state.ingredients)
+
   const category = ingredients.filter((ingredient) => ingredient.type === `${type}`);
 
     return (

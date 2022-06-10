@@ -4,12 +4,14 @@ import ingredientPropType from '../../utils/prop-types.js';
 import PropTypes from 'prop-types';
 
 const BurgerIngredient = ({ ingredient, type, onOpenModal }) => {
-  const handleOpenModal = (event) => {
-    onOpenModal(event.currentTarget.id)
+  const handleOpenModal = () => {
+    onOpenModal(ingredient._id)
   }
     return (
       <li type={type} className={ingredientStyles.ingredient__element} key={ingredient._id} onClick={handleOpenModal} id={ingredient._id}>
-        <div className={ingredientStyles.ingredient__container}><Counter count={'0'} size="default" /></div>
+        <div className={ingredientStyles.ingredient__container}>
+          <Counter count={'0'} size="default" />
+        </div>
         <img className={`${ingredientStyles.ingredient__image}`} src={ingredient.image} alt={ingredient.name}  />
         <div>
           <div className={`${ingredientStyles.ingredient__price} mb-1 mt-1`}>

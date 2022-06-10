@@ -7,10 +7,14 @@ import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import reportWebVitals from './reportWebVitals';
 
+//вызов расширения Redux DevTools. Проверка наличия объектов window и window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__. Если всё хорошо,
+//вызовется расширение с пустым набором опций. В противном случае — вернется compose.
 const composeEnhancers = typeof window === "object" &&
 window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose;
 
+//расширитель хранилища, функция высшего порядка, которая возвращает новый, расширенный генератор хранилища
 const enhancer = composeEnhancers(applyMiddleware(thunk));
+
 // Инициализируем хранилище с помощью корневого редьюсера
 const store = createStore(rootReducer, enhancer);
 
@@ -20,5 +24,6 @@ ReactDOM.render(
   </Provider>,
   document.getElementById("root")
 );
+
 //функция для отслеживания метрик
 reportWebVitals();

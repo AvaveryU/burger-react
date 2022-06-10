@@ -10,7 +10,7 @@
   width: 100%;
   overflow: scroll;
   overflow-x: hidden;
-  height: 480px;
+  max-height: 480px;
   margin-bottom: 0;
 }
 .constructor__element {
@@ -35,4 +35,27 @@
 }
 .constructor__dragIcon {
   height: 24px;
+}
+.constructor__blank {
+  justify-content: center;
+  background: #1c1c21;
+  border-radius: 40px;
+  height: 80px;
+}
+.constructor__bun_type_top {
+  composes: constructor__blank;
+  border-radius: 88px 88px 40px 40px;
+}
+.constructor__bun_type_down {
+  composes: constructor__blank;
+  border-radius: 40px 40px 88px 88px;
+}
+.constructor__blank:hover {
+  opacity: 0.6;
+}
+.constructor__bun_type_top:hover {
+  opacity: 0.6;
+}
+.constructor__bun_type_down:hover {
+  opacity: 0.6;
 }
