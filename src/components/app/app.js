@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import INFO from "../../utils/data.json";
 
 import { postOrderBurger } from "../../services/action/order.js";
-import { getIngredientsData } from "../../services/action/ingredientList.js";
+import { getIngredientsData } from "../../services/action/ingredients.js";
 import { CLOSE_MODAL, OPEN_INGREDIENT_MODAL, OPEN_ORDER_MODAL } from "../../services/action/details.js";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";

@@ -14,7 +14,7 @@ export function getIngredientsData() {
       .then((result) => {
         dispatch({
           type: GET_INGREDIENTS_SUCCESS,
-          ingredients: result.data,
+          payload: result.data,
         });
       })
       .catch((error) =>

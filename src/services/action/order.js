@@ -14,13 +14,13 @@ export function postOrderBurger(data) {
       .then((result) => {
         dispatch({
           type: CREATE_ORDER_SUCCESS,
-          order: result.order.number,
+          payload: result.order.number,
         });
       })
       .catch((error) =>
         dispatch({
           type: CREATE_ORDER_FAILED,
-          error: error,
+          payload: error,
         })
       );
   };

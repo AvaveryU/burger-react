@@ -9,7 +9,7 @@ const IngredientDetails = ({ingredient}) => {
         <img className={ingredientDetailsStyles.detail__image} src={ingredient.image} alt='ингредиент'/>
       </div>
       <p className={`${ingredientDetailsStyles.detail__description} text text_type_main-medium mt-4 mb-8`}>
-        {ingredient.title} 
+        {ingredient.name} 
       </p>
       <ul className={`${ingredientDetailsStyles.detail__macronutrients} text text_color_inactive`}>
         <li className={ingredientDetailsStyles.detail__macronutrient}>

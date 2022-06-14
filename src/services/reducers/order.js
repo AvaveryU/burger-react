@@ -2,7 +2,7 @@ import { CREATE_ORDER_REQUEST, CREATE_ORDER_SUCCESS, CREATE_ORDER_FAILED } from 
 
 const initialState = {
   order: {
-    number: 0
+    number: 0,
   },
   isLoading: false,
   error: null,
@@ -13,22 +13,22 @@ export const orderReducer = (state = initialState, action) => {
     case CREATE_ORDER_REQUEST:
       return {
         ...state,
-        order: action.order,
+        order: action.payload,
         isLoading: true,
       };
     case CREATE_ORDER_SUCCESS:
       return {
         ...state,
-        order: {...state.order, number: action.order},
+        order: { ...state.order, number: action.payload },
         isLoading: false,
-        error: null
+        error: null,
       };
     case CREATE_ORDER_FAILED:
       return {
         ...state,
         order: {},
         isLoading: false,
-        error: action.error,
+        error: action.payload,
       };
     default:
       return state;
