@@ -21,7 +21,7 @@ export const constructorReducer = (state = initialState, action) => {
     case DELETE_INGREDIENT_CONSTRUCTOR:
       return {
         ...state,
-        data: [...state.data].filter((item) => item._id !== action.id),
+        data: [...state.data].filter((item) => item.id !== action.id),
       };
     case RESET_INGREDIENT_CONSTRUCTOR:
       return {

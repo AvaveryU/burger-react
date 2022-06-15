@@ -3,7 +3,8 @@ import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-c
 import ingredientPropType from "../../utils/prop-types.js";
 import PropTypes from "prop-types";
 import { useDrag } from "react-dnd";
-
+import { useSelector } from "react-redux";
+import { useMemo } from "react";
 const BurgerIngredient = ({ ingredient, type, onOpenModal }) => {
   const handleOpenModal = () => {
     onOpenModal(ingredient._id);
@@ -17,13 +18,17 @@ const BurgerIngredient = ({ ingredient, type, onOpenModal }) => {
       isDrag: monitor.isDragging(),
     }),
   });
+  const orderState = useSelector((state) => state.constructorState);
+  //хук для подсчета кол-ва ингредиентов
+  const count = useMemo(() => {
+    return orderState.data.filter((item) => item._id === ingredient._id).length;
+  }, [orderState, ingredient]);
+
   return (
     <li type={type} className={ingredientStyles.ingredient__element} key={ingredient._id} onClick={handleOpenModal} ref={drag} draggable>
       {isDrag && (
         <>
-          <div className={ingredientStyles.ingredient__container}>
-            <Counter count={`0`} size="default" />
-          </div>
+          {count > 0 && <Counter count={count} size="default" />}
           <img className={`${ingredientStyles.ingredient__image}`} src={ingredient.image} alt={ingredient.name} />
           <div>
             <div className={`${ingredientStyles.ingredient__price} mb-1 mt-1`}>
