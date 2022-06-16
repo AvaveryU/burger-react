@@ -1,5 +1,5 @@
 import constructorStyles from "./burgerConstructor.module.css";
-import { ConstructorElement, DragIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { ConstructorElement, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import CurrencyIcon from "../../images/CurrencyIcon.svg";
 import PropTypes from "prop-types";
 import { useMemo } from "react";
@@ -7,12 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { addItem, deleteItem, resetAfterOrder } from "../../services/action/constructorState";
 import { postOrderBurger } from "../../services/action/order.js";
 import { useDrop } from "react-dnd";
-import { v4 as uuidv4 } from "uuid";
+import ConstructorIngredient from "../constructorIngredient/constructorIngredient";
 
 const BurgerConstructor = ({ onOpenModal }) => {
   const dispatch = useDispatch();
   const { data, bun } = useSelector((state) => state.constructorState);
-  const ownId = uuidv4(); //собственный ID для булок
 
   //хук для подсчета цены ингредиентов
   const totalPrice = useMemo(() => {
@@ -31,7 +30,8 @@ const BurgerConstructor = ({ onOpenModal }) => {
   const onDelete = (id) => {
     dispatch(deleteItem(id)); //удалить ингредиент по id при нажатии на корзину
   };
-
+  
+//хук для области перетаскивания - конструктор
   const [, drop] = useDrop({
     accept: "ingredient",
     drop: (item) => {
@@ -57,19 +57,12 @@ const BurgerConstructor = ({ onOpenModal }) => {
       {/* список ингредиентов между булками */}
       <ul className={`${constructorStyles.constructor__list}`}>
         {data.length !== 0 ? (
-          data.map((item, index) => (
-            <li className={`${constructorStyles.constructor__element}`} key={item.id} index={index}>
-              <div className={`${constructorStyles.constructor__dragIcon} mr-2`}>
-                <DragIcon />
-              </div>
-              <ConstructorElement
-              isLocked={false}
-              text={item.name}
-              price={item.price}
-              thumbnail={item.image_mobile}
-              handleClose={() => onDelete(item.id)} />
-            </li>
-          ))
+          data.map((item, index) =>
+          <ConstructorIngredient
+          key={item.id}
+          index={index}
+          item={item}
+          handleClose={() => onDelete(item.id)} />)
         ) : (
           <li className={`ml-8 mr-2 ${constructorStyles.constructor__blank} ${constructorStyles.constructor__element} text_type_main-medium`}>Выберите начинку</li>
         )}
