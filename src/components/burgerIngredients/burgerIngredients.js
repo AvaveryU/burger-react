@@ -1,22 +1,31 @@
 import ingredientsStyles from "./burgerIngredients.module.css";
 import IngredientsCategory from "../ingredientsCategory/ingredientsCategory";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { useInView } from "react-intersection-observer";
 
 const BurgerIngredients = ({ onOpenModal }) => {
   const [tab, setCurrentTab] = useState("bun");
   //рефы для категорий ингридиентов
-  const [bunRef, inViewBuns] = useInView({ threshold: 0 });
-  const [sauseRef, inViewSauses] = useInView({ threshold: 0 });
-  const [mainRef, inViewMains] = useInView({ threshold: 0 });
+  const bunRef = useRef("bun");
+  const sauseRef = useRef("sauce");
+  const mainRef = useRef("main");
+  //рефы для категорий ингридиентов
+  const [bunsRef, inViewBuns] = useInView({ threshold: 0 });
+  const [sausesRef, inViewSauses] = useInView({ threshold: 0 });
+  const [mainsRef, inViewMains] = useInView({ threshold: 0 });
 
   // хук для скролла до определенной категории ингридиентов при клике
-  const handleCLickTab = useCallback((tab) => {
-    setCurrentTab(tab);
-    const element = document.getElementById(tab);
-    if (element) element.scrollIntoView({ behavior: "smooth" });
+  const handleCLickTab = useCallback((event) => {
+    if (event === "bun") {
+      bunRef.current.scrollIntoView({ behavior: "smooth" });
+    } else if (event === "sauce") {
+      sauseRef.current.scrollIntoView({ behavior: "smooth" });
+    } else if (event === "main") {
+      mainRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+    setCurrentTab(event);
   }, []);
   // хук для подсветки определенной категории ингридиентов при скролле
   useEffect(() => {
@@ -44,14 +53,20 @@ const BurgerIngredients = ({ onOpenModal }) => {
         </Tab>
       </div>
       <div className={`${ingredientsStyles.ingredients__category} mt-10`}>
-        <span ref={bunRef} id='bun'>
-          <IngredientsCategory type="bun" title="Булки" onOpenModal={onOpenModal}/>
+        <span ref={bunsRef}>
+          <span ref={bunRef}>
+            <IngredientsCategory type="bun" title="Булки" onOpenModal={onOpenModal}/>
+          </span>
         </span>
-        <span ref={sauseRef} id='sauce'>
-          <IngredientsCategory type="sauce" title="Соусы" onOpenModal={onOpenModal}/>
+        <span ref={sausesRef}>
+          <span ref={sauseRef}>
+            <IngredientsCategory type="sauce" title="Соусы" onOpenModal={onOpenModal}/>
+          </span>
         </span>
-        <span ref={mainRef} id='main'>
-          <IngredientsCategory type="main" title="Начинки" onOpenModal={onOpenModal}/>
+        <span ref={mainsRef}>
+          <span ref={mainRef}>
+            <IngredientsCategory type="main" title="Начинки" onOpenModal={onOpenModal}/>
+          </span>
         </span>
       </div>
     </div>
