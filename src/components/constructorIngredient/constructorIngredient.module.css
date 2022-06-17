@@ -1,0 +1,9 @@
+.constructor__element {
+  composes: constructor__element from "../burgerConstructor/burgerConstructor.module.css";
+}
+.constructor__dragIcon {
+  composes: constructor__dragIcon from "../burgerConstructor/burgerConstructor.module.css";
+}
+.constructor__drag {
+  opacity: 0;
+}

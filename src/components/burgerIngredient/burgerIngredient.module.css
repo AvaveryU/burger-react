@@ -7,9 +7,6 @@
   height: 208px;
   position: relative;
 }
-.ingredient__container {
-  visibility: hidden;
-}
 .ingredient__image {
   height: 120px;
   width: 272px;
