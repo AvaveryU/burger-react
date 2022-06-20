@@ -38,9 +38,7 @@ const App = () => {
         type: OPEN_INGREDIENT_MODAL,
         payload: ingredients.find((ingredient) => ingredient._id === idIngredient),
       });
-    },
-    [dispatch, ingredients]
-  );
+    }, [dispatch, ingredients]);
   // открытие окна заказа
   const handleOpenOrder = useCallback(() => {
     dispatch({ type: OPEN_ORDER_MODAL });
