@@ -4,10 +4,22 @@ import App from "./components/app/app";
 import { Provider } from "react-redux";
 import { store } from "./services/store";
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { LoginPage } from "./pages";
 
 ReactDOM.render(
   <Provider store={store}> 
-    <App />
+    {/* <App /> */}
+    <Router>
+      <Switch>
+        <Route path="/" exact={true}>
+          <App />
+        </Route>
+        <Route path="/login" exact={true}>
+          <LoginPage />
+        </Route>
+      </Switch>
+    </Router>
   </Provider>,
   document.getElementById("root")
 );

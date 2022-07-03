@@ -1,0 +1,29 @@
+.page {
+  composes: app from "../../components/app/app.module.css";
+  flex-direction: column;
+  min-height: 972px;
+  align-items: center;
+}
+.form {
+  max-width: 480px;
+  min-height: 430px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.content {
+  composes: form;
+  min-height: 232px;
+  justify-content: space-between;
+}
+.button {
+  width: 128px;
+}
+.text {
+  text-align: center;
+}
+.link {
+  text-decoration: none;
+  color: #4c4cff;
+}

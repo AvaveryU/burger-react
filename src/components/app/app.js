@@ -1,3 +1,9 @@
+import { useEffect, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { useHistory } from 'react-router-dom';
+
 import appStyles from "./app.module.css";
 import AppHeader from "../appHeader/appHeader";
 import BurgerIngredients from "../burgerIngredients/burgerIngredients";
@@ -5,14 +11,12 @@ import BurgerConstructor from "../burgerConstructor/burgerConstructor";
 import Modal from "../modal/modal";
 import OrderDetails from "../orderDetails/orderDetails";
 import IngredientDetails from "../ingredientDetails/ingredientDetails";
-import { useEffect, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { getIngredientsData } from "../../services/action/ingredients.js";
 import { CLOSE_MODAL, OPEN_INGREDIENT_MODAL, OPEN_ORDER_MODAL } from "../../services/action/details.js";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 
 const App = () => {
+  const history = useHistory();
+
   const { ingredients, isLoading, error } = useSelector((state) => state.ingredients);
   // Булевые стейты для модального окна заказа, модального окна ингредиента и карточки с ингредиентом
   const { isOrderDetailsOpened, isIngredientDetailsOpened, ingredientInModal } = useSelector((state) => state.details);
