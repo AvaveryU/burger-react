@@ -14,15 +14,36 @@ export const RegisterPage = () => {
     <>
       <AppHeader />
       <main className={styles.page}>
-        <div className={styles.form}>
-          <div className={`${styles.content}`}>
-          <p className="text text_type_main-medium">Регистрация</p>
-            <Input className={`mt-20`} onChange={onChange} value={value} type={"text"} placeholder={"Имя"} name={"name"} />
-            <Input className={`mt-6`} onChange={onChange} value={value} type={"email"} placeholder={"E-mail"} name={"email"} />
-            <PasswordInput className={`mt-6`} onChange={onChange} value={value} name={"password"} />
+        <div className={styles.register}>
+          <div className={`${styles.wrapper}`}>
+            <form name={`form`} id={`register-form`} className={`${styles.form}`} novalidate>
+              <h2 className="text text_type_main-medium">Регистрация</h2>
+              <Input
+                className={`mt-20`}
+                onChange={onChange}
+                value={value}
+                type={"text"}
+                placeholder={"Имя"}
+                name={"name"}
+              />
+              <Input
+                className={`mt-6`}
+                onChange={onChange}
+                value={value}
+                type={"email"}
+                placeholder={"E-mail"}
+                name={"email"}
+              />
+              <PasswordInput
+                className={`mt-6`}
+                onChange={onChange}
+                value={value}
+                name={"password"}
+              />
               <Button type="primary" size="medium">
                 Зарегистрироваться
               </Button>
+            </form>
           </div>
           <div className={`${styles.text} ml-2`}>
             <p className={`text text_type_main-default text_color_inactive`}>

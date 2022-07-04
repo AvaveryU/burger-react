@@ -1,19 +1,30 @@
 .page {
-    composes: page from "../login/login.module.css";
-  }
-  .form {
-    composes: form from "../login/login.module.css";
-    min-height: 478px;
-  }
-  .content {
-    composes: form;
-    min-height: 344px;
-    justify-content: space-between;
-  }
-  .text {
-    text-align: center;
-  }
-  .link {
-    text-decoration: none;
-    color: #4c4cff;
-  }
+  composes: page from "../login/login.module.css";
+}
+.register {
+  composes: login from "../login/login.module.css";
+  min-height: 478px;
+}
+.form {
+  composes: register;
+  min-height: 334px;
+  justify-content: space-between;
+}
+.wrapper {
+  max-width: 480px;
+}
+/*поля ввода*/
+.wrapper div {
+  width: 100%;
+}
+/*картинки слева в полях ввода*/
+.wrapper div div div {
+  max-width: 24px;
+}
+.text {
+  text-align: center;
+}
+.link {
+  text-decoration: none;
+  color: #4c4cff;
+}

@@ -4,7 +4,7 @@
   min-height: 972px;
   align-items: center;
 }
-.form {
+.login {
   min-width: 480px;
   min-height: 430px;
   display: flex;
@@ -12,8 +12,19 @@
   justify-content: space-between;
   align-items: center;
 }
-.content {
-  composes: form;
+.wrapper {
+  max-width: 480px;
+}
+/*поля ввода*/
+.wrapper div {
+  width: 100%;
+}
+/*картинки слева в полях ввода*/
+.wrapper div div div {
+  max-width: 24px;
+}
+.form {
+  composes: login;
   min-height: 262px;
   justify-content: space-between;
 }
