@@ -16,7 +16,7 @@ export const RegisterPage = () => {
       <main className={styles.page}>
         <div className={styles.register}>
           <div className={`${styles.wrapper}`}>
-            <form name={`form`} id={`register-form`} className={`${styles.form}`} novalidate>
+            <form name={`form`} id={`register-form`} className={`${styles.form}`}>
               <h2 className="text text_type_main-medium">Регистрация</h2>
               <Input
                 className={`mt-20`}

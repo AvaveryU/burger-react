@@ -20,7 +20,7 @@ export const LoginPage = () => {
       <main className={styles.page}>
         <div className={styles.login}>
           <div className={`${styles.wrapper}`}>
-            <form name={`form`} id={`login-form`} className={`${styles.form}`} novalidate>
+            <form name={`form`} id={`login-form`} className={`${styles.form}`}>
               <h2 className="text text_type_main-medium">Вход</h2>
               <EmailInput className={`mt-6`} onChange={onChange} value={value} name={"email"} />
               <PasswordInput
