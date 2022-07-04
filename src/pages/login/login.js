@@ -15,22 +15,27 @@ export const LoginPage = () => {
       <AppHeader />
       <main className={styles.page}>
         <div className={styles.form}>
-          <div className={`${styles.content} mt-6`}>
+          <div className={`${styles.content}`}>
+            <p className="text text_type_main-medium">Вход</p>
             <EmailInput className={`mt-6`} onChange={onChange} value={value} name={"email"} />
             <PasswordInput className={`mt-6`} name={"password"} onChange={onChange} value={value} />
-            <div className={styles.button}>
-              <Button type="primary" size="large">Войти</Button>
-            </div>
+            <Button type="primary" size="large">
+              Войти
+            </Button>
           </div>
           <div className={`${styles.text} ml-2`}>
-          <p className={`text text_type_main-default text_color_inactive`}>
-            Вы — новый пользователь?
-            <Link to={{ pathname: `/login/register` }} className={`${styles.link} ml-2`}>Зарегистрироваться</Link>
-          </p>
-          <p className={`text text_type_main-default text_color_inactive mt-4`}>
-            Забыли пароль?
-            <Link to={{ pathname: `/login/forgot-password` }} className={`${styles.link} ml-2`}>Восстановить пароль</Link>
-          </p>
+            <p className={`text text_type_main-default text_color_inactive`}>
+              Вы — новый пользователь?
+              <Link to={{ pathname: `/login/register` }} className={`${styles.link} ml-2`}>
+                Зарегистрироваться
+              </Link>
+            </p>
+            <p className={`text text_type_main-default text_color_inactive mt-4`}>
+              Забыли пароль?
+              <Link to={{ pathname: `/login/forgot-password` }} className={`${styles.link} ml-2`}>
+                Восстановить пароль
+              </Link>
+            </p>
           </div>
         </div>
       </main>
