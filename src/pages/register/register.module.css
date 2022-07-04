@@ -1,0 +1,19 @@
+.page {
+    composes: page from "../login/login.module.css";
+  }
+  .form {
+    composes: form from "../login/login.module.css";
+    min-height: 478px;
+  }
+  .content {
+    composes: form;
+    min-height: 344px;
+    justify-content: space-between;
+  }
+  .text {
+    text-align: center;
+  }
+  .link {
+    text-decoration: none;
+    color: #4c4cff;
+  }
