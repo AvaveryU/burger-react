@@ -1,0 +1,18 @@
+@font-face {
+  src: url("./JetBrainsMono-Regular.ttf") format("opentype");
+  font-family: "JetBrains Mono";
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+    src: url("./JetBrainsMono-Bold.ttf") format("opentype");
+    font-family: "JetBrains Mono";
+    font-weight: 700;
+    font-display: swap;
+  }
+  @font-face {
+    src: url("./Iceland-Regular.ttf") format("opentype");
+    font-family: "Iceland";
+    font-weight: 400;
+    font-display: swap;
+  }

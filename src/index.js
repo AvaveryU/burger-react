@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import { store } from "./services/store";
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { LoginPage, RegisterPage, ForgotPassword } from "./pages";
+import { LoginPage, RegisterPage, ForgotPassword, Profile } from "./pages";
 
 ReactDOM.render(
   <Provider store={store}> 
@@ -23,6 +23,9 @@ ReactDOM.render(
         </Route>
         <Route path="/login/forgot-password" exact={true}>
           <ForgotPassword />
+        </Route>
+        <Route path="/profile" exact={true}>
+          <Profile />
         </Route>
       </Switch>
     </Router>

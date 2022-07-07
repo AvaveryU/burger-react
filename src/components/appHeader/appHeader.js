@@ -8,12 +8,12 @@ const AppHeader = () => {
       <nav>
         <ul className={appHeaderStyles.header__ul}>
           <li>
-            <a className={`${appHeaderStyles.header__link} mr-2 pt-4 pb-4 pl-5 pr-5`} href="#">
+            <Link className={`${appHeaderStyles.header__link} mr-2 pt-4 pb-4 pl-5 pr-5`} to={{ pathname: `/` }}>
               <BurgerIcon type="primary" />
               <p className={`${appHeaderStyles.header__text} text text_type_main-default ml-2`}>
                 Конструктор
               </p>
-            </a>
+            </Link>
           </li>
           <li>
             <a className={`${appHeaderStyles.header__link} pt-4 pb-4 pl-5 pr-5`} href="#">
