@@ -2,24 +2,31 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./forgot-password.module.css";
-import AppHeader from "../../components/appHeader/appHeader";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
+import { useDispatch, useSelector } from "react-redux";
+import { postEmail, addEmail } from "../../services/action/login.js";
+
 export const ForgotPassword = () => {
-  const [value, setValue] = React.useState("");
-  const onChange = (e) => {
-    setValue(e.target.value);
+  const dispatch = useDispatch();
+  const { email } = useSelector((state) => state.login);
+  const onChange = (event) => {
+    dispatch(addEmail(event.target.value));
   };
+  
+  const handleSendEmail = () => {
+      dispatch(postEmail(email)); //отправить данные о email
+  };
+ 
   return (
     <>
-      <AppHeader />
       <main className={styles.page}>
         <div className={styles.content}>
           <div className={`${styles.wrapper}`}>
             <form name={`form`} id={`forgot-form`} className={`${styles.form}`}>
               <h2 className="text text_type_main-medium">Восстановление пароля</h2>
-              <Input onChange={onChange} value={value} type={"text"} placeholder={"Укажите e-mail"} name={"Email"} />
-              <Button type="primary" size="large">
+              <Input onChange={onChange} value={email} type={"text"} placeholder={"Укажите e-mail"} name={"Email"} />
+              <Button type="primary" size="large" onClick={handleSendEmail}>
                 Восстановить
               </Button>
             </form>

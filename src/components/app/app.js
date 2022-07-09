@@ -2,7 +2,8 @@ import { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { useHistory } from 'react-router-dom';
+import { useHistory, BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { LoginPage, RegisterPage, ForgotPassword, Profile, ResetPassword } from "../../pages";
 
 import appStyles from "./app.module.css";
 import AppHeader from "../appHeader/appHeader";
@@ -42,7 +43,9 @@ const App = () => {
         type: OPEN_INGREDIENT_MODAL,
         payload: ingredients.find((ingredient) => ingredient._id === idIngredient),
       });
-    }, [dispatch, ingredients]);
+    },
+    [dispatch, ingredients]
+  );
   // открытие окна заказа
   const handleOpenOrder = useCallback(() => {
     dispatch({ type: OPEN_ORDER_MODAL });
@@ -53,13 +56,35 @@ const App = () => {
   }
   return (
     <>
-      <AppHeader />
-      <DndProvider backend={HTML5Backend}>
-        <main className={appStyles.app}>
-          <BurgerIngredients onOpenModal={handleOpenIngredientDetails} />
-          <BurgerConstructor onOpenModal={handleOpenOrder} />
-        </main>
-      </DndProvider>
+      <Router>
+        <AppHeader />
+        <Switch>
+          <Route path="/" exact={true}>
+            <DndProvider backend={HTML5Backend}>
+              <main className={appStyles.app}>
+                <BurgerIngredients onOpenModal={handleOpenIngredientDetails} />
+                <BurgerConstructor onOpenModal={handleOpenOrder} />
+              </main>
+            </DndProvider>
+          </Route>
+          <Route path="/login" exact={true}>
+            <LoginPage />
+          </Route>
+          <Route path="/register" exact={true}>
+            <RegisterPage />
+          </Route>
+          <Route path="/forgot-password" exact={true}>
+            <ForgotPassword />
+          </Route>
+          <Route path="/reset-password" exact={true}>
+            <ResetPassword />
+          </Route>
+          <Route path="/profile" exact={true}>
+            <Profile />
+          </Route>
+        </Switch>
+      </Router>
+
       {/* модальное окно заказа */}
       {isOrderDetailsOpened && (
         <Modal onClose={closeAllModals}>

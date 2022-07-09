@@ -2,7 +2,6 @@
 import React from "react";
 import { useHistory, useLocation, useRouteMatch, Link } from "react-router-dom";
 import styles from "./register.module.css";
-import AppHeader from "../../components/appHeader/appHeader";
 import { Input, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
 export const RegisterPage = () => {
@@ -12,7 +11,6 @@ export const RegisterPage = () => {
   };
   return (
     <>
-      <AppHeader />
       <main className={styles.page}>
         <div className={styles.register}>
           <div className={`${styles.wrapper}`}>

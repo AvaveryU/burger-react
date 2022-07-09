@@ -16,13 +16,23 @@ export const getIngredients = async () => {
   });
   return checkResponse(response);
 };
-// функция для отправки данных на сервер
+// функция для отправки данных на сервер о заказе
 export const postOrderDetails = async (data) => {
   const urlOrders = "orders";
   const response = await fetch(INFO.baseURL + urlOrders, {
     method: "POST",
     headers: INFO.headers,
     body: JSON.stringify({ 'ingredients': data }),
+  });
+  return checkResponse(response);
+};
+// функция для отправки данных на сервер о e-mail для восстановления пароля (page /password-reset)
+export const postEmailUser = async (data) => {
+  const urlPasswordReset = "password-reset";
+  const response = await fetch(INFO.baseURL + urlPasswordReset, {
+    method: "POST",
+    headers: INFO.headers,
+    body: JSON.stringify({ 'email': data }),
   });
   return checkResponse(response);
 };

@@ -1,8 +1,7 @@
-//страница регистрации
+//страница с настройками профиля пользователя
 import React, { useCallback } from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./profile.module.css";
-import AppHeader from "../../components/appHeader/appHeader";
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
 
 export const Profile = () => {
@@ -27,7 +26,6 @@ export const Profile = () => {
 
   return (
     <>
-      <AppHeader />
       <main className={styles.page}>
         <nav className={`${styles.profile} mr-15`}>
           <ul className={styles.list}>

@@ -2,7 +2,6 @@
 import React from "react";
 import { useHistory, useLocation, useRouteMatch, Link } from "react-router-dom";
 import styles from "./login.module.css";
-import AppHeader from "../../components/appHeader/appHeader";
 import {
   EmailInput,
   PasswordInput,
@@ -10,13 +9,12 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 export const LoginPage = () => {
-  const [value, setValue] = React.useState("password");
+  const [value, setValue] = React.useState("");
   const onChange = (e) => {
     setValue(e.target.value);
   };
   return (
     <>
-      <AppHeader />
       <main className={styles.page}>
         <div className={styles.login}>
           <div className={`${styles.wrapper}`}>
@@ -37,13 +35,13 @@ export const LoginPage = () => {
           <div className={`${styles.text} ml-2`}>
             <p className={`text text_type_main-default text_color_inactive`}>
               Вы — новый пользователь?
-              <Link to={{ pathname: `/login/register` }} className={`${styles.link} ml-2`}>
+              <Link to={{ pathname: `/register` }} className={`${styles.link} ml-2`}>
                 Зарегистрироваться
               </Link>
             </p>
             <p className={`text text_type_main-default text_color_inactive mt-4`}>
               Забыли пароль?
-              <Link to={{ pathname: `/login/forgot-password` }} className={`${styles.link} ml-2`}>
+              <Link to={{ pathname: `/forgot-password` }} className={`${styles.link} ml-2`}>
                 Восстановить пароль
               </Link>
             </p>
