@@ -1,10 +1,10 @@
 import { postEmailUser } from "../../utils/api.js";
-//экшены для форм регистрации/входа/восстановления пароля
+//экшены для форм восстановления пароля
 //запрос на восстановление пароля (при нажатии на 'восстановить')
 export const CREATE_RECOVERY_PASSWORD_REQUEST = "CREATE_RECOVERY_PASSWORD_REQUEST";
 export const CREATE_RECOVERY_PASSWORD_SUCCESS = "CREATE_RECOVERY_PASSWORD_SUCCESS";
 export const CREATE_RECOVERY_PASSWORD_FAILED = "CREATE_RECOVERY_PASSWORD_FAILED";
-export const ADD_EMAIL = "ADD_EMAIL";
+export const SET_EMAIL = "SET_EMAIL";
 
 //мидлвар. На экране /forgot-password пользователь вводит адрес электронной почты и нажимает кнопку «Восстановить»
 export function postEmail(data) {
@@ -23,17 +23,15 @@ export function postEmail(data) {
       .catch((error) =>
         dispatch({
           type: CREATE_RECOVERY_PASSWORD_FAILED,
-          payload: error,
+          payload: error.message,
         })
       );
   };
 }
-//action creator для написания email
-export function addEmail(data) {
+//action creator для восстановления пароля по email
+export function setEmail(data) {
   return {
-    type: ADD_EMAIL,
-    payload: {
-      email: data,
-    },
+    type: SET_EMAIL,
+    payload: { email: data },
   };
 }

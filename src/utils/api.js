@@ -34,5 +34,6 @@ export const postEmailUser = async (data) => {
     headers: INFO.headers,
     body: JSON.stringify({ 'email': data }),
   });
+  console.log(response);
   return checkResponse(response);
 };

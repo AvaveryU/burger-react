@@ -1,5 +1,5 @@
 import { CREATE_RECOVERY_PASSWORD_REQUEST, CREATE_RECOVERY_PASSWORD_SUCCESS, CREATE_RECOVERY_PASSWORD_FAILED,
-  ADD_EMAIL
+  SET_EMAIL
 } from "../action/login.js";
 
 const initialState = {
@@ -7,7 +7,7 @@ const initialState = {
   success: false,
   message: "",
 };
-//редьюсер деталей текущего просматриваемого ингредиента
+//редьюсер для авторизации
 export const loginReducer = (state = initialState, action) => {
   switch (action.type) {
     case CREATE_RECOVERY_PASSWORD_REQUEST:
@@ -29,8 +29,9 @@ export const loginReducer = (state = initialState, action) => {
         success: false,
         message: action.payload,
       };
-      case ADD_EMAIL:
+      case SET_EMAIL:
       return {
+        ...state,
         email: action.payload.email,
       };
     default:

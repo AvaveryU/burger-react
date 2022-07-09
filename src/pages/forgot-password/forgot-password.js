@@ -5,19 +5,20 @@ import styles from "./forgot-password.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { useDispatch, useSelector } from "react-redux";
-import { postEmail, addEmail } from "../../services/action/login.js";
+import { postEmail, setEmail } from "../../services/action/login.js";
 
 export const ForgotPassword = () => {
   const dispatch = useDispatch();
   const { email } = useSelector((state) => state.login);
   const onChange = (event) => {
-    dispatch(addEmail(event.target.value));
+    let inputEmail = event.target.value;
+    dispatch(setEmail(inputEmail));
   };
-  
+
   const handleSendEmail = () => {
-      dispatch(postEmail(email)); //отправить данные о email
+    dispatch(postEmail(email)); //отправить данные о email
   };
- 
+
   return (
     <>
       <main className={styles.page}>
