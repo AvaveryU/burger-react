@@ -1,8 +1,12 @@
 import appHeaderStyles from "./appHeader.module.css";
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const AppHeader = () => {
+  //если пользователь авторизован, будет отображено имя вместо "личный кабинет"
+  const userName = useSelector((state) => state.user.user?.name);
+  
   return (
     <header className={`${appHeaderStyles.header} pt-4 pb-4`}>
       <nav>
@@ -31,7 +35,7 @@ const AppHeader = () => {
       <Link className={`${appHeaderStyles.header__link} pt-4 pb-4 pl-5 pr-5`} to={{ pathname: `/login` }}>
         <ProfileIcon type="secondary" />
         <p className={`${appHeaderStyles.header__text} text text_type_main-default text_color_inactive ml-2`}>
-          Личный кабинет
+        {userName || "Личный кабинет"}
         </p>
       </Link>
     </header>

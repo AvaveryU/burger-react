@@ -1,13 +1,26 @@
 //страница сброса пароля
-import React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./reset-password.module.css";
 import { Input, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
+import { useDispatch, useSelector } from "react-redux";
+import { savePassword, setPassword, setToken } from "../../services/action/login.js";
+
 export const ResetPassword = () => {
-  const [value, setValue] = React.useState("");
-  const onChange = (e) => {
-    setValue(e.target.value);
+  const dispatch = useDispatch();
+  const { password, token } = useSelector((state) => state.login);
+  
+  const onChangePassword = (event) => {
+    let inputPassword = event.target.value;
+    dispatch(setPassword(inputPassword));
+  };
+  const onChangeToken = (event) => {
+    let inputToken = event.target.value;
+    dispatch(setToken(inputToken));
+  };
+  const handleSubmitPassword = () => {
+    dispatch(savePassword(password, token)); //отправить данные о email
   };
   return (
     <>
@@ -16,9 +29,9 @@ export const ResetPassword = () => {
           <div className={`${styles.wrapper}`}>
             <form name={`form`} id={`reset_password-form`} className={`${styles.form}`}>
               <h2 className="text text_type_main-medium">Восстановление пароля</h2>
-              <PasswordInput onChange={onChange} value={value} placeholder={"Введите новый пароль"} name={"password"} />
-              <Input onChange={onChange} value={value} type={"text"} placeholder={"Введите код из письма"} name={"code"} />
-              <Button type="primary" size="large">
+              <PasswordInput onChange={onChangePassword} value={password} placeholder={"Введите новый пароль"} name={"password"} />
+              <Input onChange={onChangeToken} value={token} type={"text"} placeholder={"Введите код из письма"} name={"code"} />
+              <Button type="primary" size="large" onClick={handleSubmitPassword}>
                 Сохранить
               </Button>
             </form>

@@ -14,6 +14,7 @@ import OrderDetails from "../orderDetails/orderDetails";
 import IngredientDetails from "../ingredientDetails/ingredientDetails";
 import { getIngredientsData } from "../../services/action/ingredients.js";
 import { CLOSE_MODAL, OPEN_INGREDIENT_MODAL, OPEN_ORDER_MODAL } from "../../services/action/details.js";
+import { ProtectedRoute } from '../protectedRoute/protectedRoute';
 
 const App = () => {
   const history = useHistory();
@@ -23,6 +24,8 @@ const App = () => {
   const { isOrderDetailsOpened, isIngredientDetailsOpened, ingredientInModal } = useSelector((state) => state.details);
   // данные о заказе
   const isOrder = useSelector((state) => state.order);
+//данные о пользователе зарегистрированном 
+  const isUser = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   // хук для получения данных с сервера
@@ -79,9 +82,9 @@ const App = () => {
           <Route path="/reset-password" exact={true}>
             <ResetPassword />
           </Route>
-          <Route path="/profile" exact={true}>
+          <ProtectedRoute user={isUser} path="/profile" exact={true}>
             <Profile />
-          </Route>
+          </ProtectedRoute>
         </Switch>
       </Router>
 
