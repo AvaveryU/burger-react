@@ -51,7 +51,7 @@ export const resetPassword = async (password, token) => {
   return checkResponse(response);
 };
 // функция для регистрации (page /register)
-export const postRegistration = async (email, password, name) => {
+export const postRegistration = async (password, name, email) => {
   const urlRegister = "auth/register";
   const response = await fetch(INFO.baseURL + urlRegister, {
     method: "POST",

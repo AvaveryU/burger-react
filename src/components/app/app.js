@@ -53,7 +53,7 @@ const App = () => {
   const handleOpenOrder = useCallback(() => {
     dispatch({ type: OPEN_ORDER_MODAL });
   }, [dispatch]);
-
+  
   if (error || isLoading) {
     return null;
   }

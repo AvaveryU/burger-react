@@ -8,19 +8,16 @@ export const SET_PASSWORD = "SET_PASSWORD";
 export const SET_NAME = "SET_NAME";
 export const SET_EMAIL = "SET_EMAIL";
 //мидлвар. На экране /register пользователь вводит данные для регистрации
-export function postNewUser(email, password, name) {
+export function postNewUser(password, name, email) {
   return (dispatch) => {
     dispatch({
       type: USER_REGISTER_REQUEST,
     });
-    postRegistration(email, password, name)
+    postRegistration(password, name, email)
       .then((result) => {
         dispatch({
           type: USER_REGISTER_SUCCESS,
-          payload: {
-            email: result.user.email,
-            name: result.user.name,
-          },
+          payload: result.user,
         });
       })
       .catch((error) =>

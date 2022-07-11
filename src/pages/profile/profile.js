@@ -1,29 +1,34 @@
 //страница с настройками профиля пользователя
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./profile.module.css";
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useSelector } from "react-redux";
 
 export const Profile = () => {
-  const [value, setValue] = React.useState("value");
-
+  //данные из хранилища о текущем пользователе
+  const { user } = useSelector((state) => state.user);
+  // стейты для редактирования данных о текущем пользователе (пока не рабочий функционал)
+  const [isEmail, setEmail] = useState(user.email);
+  const [isName, setName] = useState(user.name);
+  const [isPassword, setPassword] = useState(user.password);
+  // рефы для фокусировки поля
   const inputName = React.useRef("text");
-  const inputLogin = React.useRef("email");
+  const inputEmail = React.useRef("email");
   const inputPassword = React.useRef("password");
-
-  const onChange = (e) => {
-    setValue(e.target.value);
-  };
-  const onIconClick = useCallback((data) => {
-    if (data === "name") {
-      console.log(data);
-      setTimeout(() => inputName.current.focus(), 0);
-    } else if (data === "email") {
-      setTimeout(() => inputLogin.current.focus(), 0);
-    } else if (data === "password") {
-      setTimeout(() => inputPassword.current.focus(), 0);
-    }
-  }, []);
+  //функция при клике на иконку редактирования
+  const onIconClick = useCallback(
+    (data) => {
+      if (inputName === data) {
+        setTimeout(() => inputName.current.focus(), 0);
+      } else if (inputEmail === data) {
+        setTimeout(() => inputEmail.current.focus(), 0);
+      } else if (inputPassword === data) {
+        setTimeout(() => inputPassword.current.focus(), 0);
+      }
+    },
+    [inputName, inputEmail, inputPassword]
+  );
 
   return (
     <>
@@ -50,23 +55,33 @@ export const Profile = () => {
         </nav>
         <div className={`${styles.wrapper}`}>
           <form name={`form`} id={`profile-form`} className={`${styles.form}`}>
-            <Input className={`mt-20`} onChange={onChange} onIconClick={() => onIconClick("name")} value={value} type={"text"} placeholder={"Имя"} name={"name"} icon={"EditIcon"} ref={inputName} />
+            <Input
+              className={`mt-20`}
+              onChange={(e) => setName(e.target.value)}
+              onIconClick={() => onIconClick(inputName)}
+              value={isName}
+              type={"text"}
+              placeholder={"Имя"}
+              name={"name"}
+              icon={"EditIcon"}
+              ref={inputName}
+            />
             <Input
               className={`mt-6`}
-              onChange={onChange}
-              onIconClick={() => onIconClick("email")}
-              value={value}
+              onChange={(e) => setEmail(e.target.value)}
+              onIconClick={() => onIconClick(inputEmail)}
+              value={isEmail}
               type={"email"}
               placeholder={"Логин"}
               name={"email"}
               icon={"EditIcon"}
-              ref={inputLogin}
+              ref={inputEmail}
             />
             <Input
               className={`mt-6`}
-              onChange={onChange}
-              onIconClick={() => onIconClick("password")}
-              value={value}
+              onChange={(e) => setPassword(e.target.value)}
+              onIconClick={() => onIconClick(inputPassword)}
+              value={isPassword}
               type={"password"}
               placeholder={"Пароль"}
               name={"password"}

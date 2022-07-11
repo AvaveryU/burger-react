@@ -22,7 +22,7 @@ export const userReducer = (state = initialState, action) => {
       return {
         ...state,
         success: true,
-        user: action.payload,
+        user: { ...state.user, email: action.payload.user.email, name: action.payload.user.name },
       };
     case USER_REGISTER_FAILED:
       return {
