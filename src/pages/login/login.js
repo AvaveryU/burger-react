@@ -5,12 +5,12 @@ import styles from "./login.module.css";
 import { Input, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { useDispatch, useSelector } from "react-redux";
-import { loginPassword, loginEmail, loginUser } from "../../services/action/login.js";
+import { loginPassword, loginEmail, loginUser } from "../../services/action/user.js";
 
 export const LoginPage = () => {
   const dispatch = useDispatch();
   //данные о пытающемся войти пользователе
-  const { password, email } = useSelector((state) => state.login);
+  const { user: { email }, password } = useSelector((state) => state.user);
   //реф для поля Email
   const refInputEmail = React.useRef("email");
   //функция для ввода пароля

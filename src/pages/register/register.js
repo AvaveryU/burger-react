@@ -9,7 +9,7 @@ import { postNewUser, setPassword, setName, setEmail } from "../../services/acti
 
 export const RegisterPage = () => {
   const dispatch = useDispatch();
-  const { user: {email, password, name} } = useSelector((state) => state.user);
+  const { user: {email, name}, password } = useSelector((state) => state.user);
   const onRegisterName = (event) => {
     let inputName = event.target.value;
     dispatch(setName(inputName));

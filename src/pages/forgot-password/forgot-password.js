@@ -4,11 +4,12 @@ import styles from "./forgot-password.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { useDispatch, useSelector } from "react-redux";
-import { postEmail, setEmail } from "../../services/action/login.js";
+import { postEmail, setEmail } from "../../services/action/user.js";
 
 export const ForgotPassword = () => {
   const dispatch = useDispatch();
-  const { email } = useSelector((state) => state.login);
+  const { user: { email } } = useSelector((state) => state.user);
+  
   const onChange = (event) => {
     let inputEmail = event.target.value;
     dispatch(setEmail(inputEmail));

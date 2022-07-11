@@ -3,7 +3,6 @@ import { ingredientListReducer } from "./ingredients";
 import { constructorReducer } from "./constructorState";
 import { detailsReducer } from "./details";
 import { orderReducer } from "./order.js";
-import { loginReducer } from "./login.js";
 import { userReducer } from "./user.js";
 
 // Корневой редьюсер
@@ -12,6 +11,5 @@ export const rootReducer = combineReducers({
   constructorState: constructorReducer,
   details: detailsReducer,
   order: orderReducer,
-  login: loginReducer,
   user: userReducer
 });

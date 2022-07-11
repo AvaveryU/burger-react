@@ -5,11 +5,11 @@ import styles from "./reset-password.module.css";
 import { Input, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { useDispatch, useSelector } from "react-redux";
-import { savePassword, setPassword, setToken } from "../../services/action/login.js";
+import { savePassword, setPassword, setToken } from "../../services/action/user.js";
 
 export const ResetPassword = () => {
   const dispatch = useDispatch();
-  const { password, token } = useSelector((state) => state.login);
+  const { password, token } = useSelector((state) => state.user);
   
   const onChangePassword = (event) => {
     let inputPassword = event.target.value;

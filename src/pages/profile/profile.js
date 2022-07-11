@@ -7,11 +7,11 @@ import { useSelector } from "react-redux";
 
 export const Profile = () => {
   //данные из хранилища о текущем пользователе
-  const { user } = useSelector((state) => state.user);
+  const { user, password } = useSelector((state) => state.user);
   // стейты для редактирования данных о текущем пользователе (пока не рабочий функционал)
   const [isEmail, setEmail] = useState(user.email);
   const [isName, setName] = useState(user.name);
-  const [isPassword, setPassword] = useState(user.password);
+  const [isPassword, setPassword] = useState(password);
   // рефы для фокусировки поля
   const inputName = React.useRef("text");
   const inputEmail = React.useRef("email");
