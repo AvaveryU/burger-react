@@ -1,5 +1,5 @@
 import INFO from "./data.json";
-import { getCookie } from "./utils.js";
+import { getCookie, setCookie } from "./utils.js";
 
 // проверка ответа от сервера
 // export function checkResponse(response) {
@@ -61,25 +61,32 @@ export const postRegistration = async (password, name, email) => {
   return checkResponse(response);
 };
 // функция для авторизации (page /login)
-export const postLoginUser = async (email, password) => {
+export const postLoginUser = async (password, email) => {
   const urlLogin = "auth/login";
   const response = await fetch(INFO.baseURL + urlLogin, {
     method: "POST",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
     headers: INFO.headers,
-    body: JSON.stringify({ email: email, password: password}),
+    body: JSON.stringify({ email: email, password: password }),
   });
   return checkResponse(response);
 };
-export const getUserRequest = async () => {
-const urlUser = "auth/user";
-const response =  await fetch(INFO.baseURL + urlUser, {
+export const getUser = async () => {
+  const urlUser = "auth/user";
+  const response = await fetch(INFO.baseURL + urlUser, {
     method: "GET",
     mode: "cors",
     cache: "no-cache",
     credentials: "same-origin",
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
-      Authorization: "Bearer " + getCookie("token"),
+      Authorization: "Bearer " + getCookie("accessToken"),
     },
   });
   return checkResponse(response);

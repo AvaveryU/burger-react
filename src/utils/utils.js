@@ -25,3 +25,8 @@ export function setCookie(name, value, props) {
   }
   document.cookie = updatedCookie;
 }
+export function deleteCookie(name) {
+  setCookie(name, "", {
+    "max-age": -1,
+  });
+}

@@ -2,21 +2,18 @@ import {
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
   USER_REGISTER_FAILED,
-  SET_PASSWORD,
-  SET_NAME,
-  SET_EMAIL,
   CREATE_RECOVERY_PASSWORD_REQUEST,
   CREATE_RECOVERY_PASSWORD_SUCCESS,
   CREATE_RECOVERY_PASSWORD_FAILED,
-  SET_TOKEN,
   SAVE_PASSWORD_REQUEST,
   SAVE_PASSWORD_SUCCESS,
   SAVE_PASSWORD_FAILED,
-  LOGIN_USER_EMAIL,
-  LOGIN_USER_PASSWORD,
   LOGIN_USER_REQUEST,
   LOGIN_USER_SUCCESS,
-  LOGIN_USER_FAILED
+  LOGIN_USER_FAILED,
+  CURRENT_USER_REQUEST,
+  CURRENT_USER_SUCCESS,
+  CURRENT_USER_FAILED,
 } from "../action/user.js";
 const initialState = {
   success: false,
@@ -26,74 +23,65 @@ const initialState = {
   },
   password: "",
   message: "",
-  accessToken: "Bearer ...",
-  refreshToken: "",
   token: "",
+  accessToken: "",
+  userInfoLoading: false,
+  isLogin: false,
+  isAuthChecked: false,
+  isRegisterChecked: false, //флаг для регистрации
+  isForgotPasswordChecked: false, //флаг на странице /forgot-password
+  isPasswordChecked: false, //флаг на странице /reset-password
 };
-//редьюсер для регистрации
+//редьюсер регистрации/аутентификации/авторизации
 export const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case USER_REGISTER_REQUEST:
       return {
         ...state,
-        success: false,
+        isRegisterChecked: false,
         message: "await...",
       };
-    case USER_REGISTER_SUCCESS:
+    case USER_REGISTER_SUCCESS: //успешная РЕГИСТРАЦИЯ
       return {
         ...state,
-        success: true,
-        user: { ...state.user, email: action.payload.email, name: action.payload.name },
+        isRegisterChecked: true,
+        user: { email: action.payload.user.email, name: action.payload.user.name },
+        password: action.payload.password,
       };
     case USER_REGISTER_FAILED:
       return {
         ...state,
-        success: false,
+        isRegisterChecked: false,
       };
     case CREATE_RECOVERY_PASSWORD_REQUEST:
       return {
         ...state,
-        success: false,
+        isForgotPasswordChecked: false,
         message: "await...",
       };
-    case CREATE_RECOVERY_PASSWORD_SUCCESS:
+    case CREATE_RECOVERY_PASSWORD_SUCCESS: //успешный СБРОС пароля
       return {
         ...state,
-        user: { ...state.user, email: action.payload },
-        success: true,
+        isForgotPasswordChecked: true,
         message: "Reset email sent",
       };
     case CREATE_RECOVERY_PASSWORD_FAILED:
       return {
         ...state,
-        success: false,
+        isForgotPasswordChecked: false,
         message: action.payload,
       };
-    case SET_PASSWORD:
-      return {
-        ...state,
-        password: action.payload.password
-      };
-    case SET_NAME:
-      return {
-        ...state,
-        user: { ...state.user, name: action.payload.name },
-      };
-    case SET_EMAIL:
-      return {
-        ...state,
-        user: { ...state.user, email: action.payload.email },
-      };
-      case SAVE_PASSWORD_REQUEST:
+    case SAVE_PASSWORD_REQUEST:
       return {
         ...state,
         success: false,
         message: "await...",
+        isPasswordChecked: false,
       };
-    case SAVE_PASSWORD_SUCCESS:
+    case SAVE_PASSWORD_SUCCESS: //успешное ИЗМЕНЕНИЕ пароля
       return {
         ...state,
-        success: true,
+        isPasswordChecked: true,
         message: "Password successfully reset",
         password: action.payload.password,
         token: action.payload.token,
@@ -101,41 +89,41 @@ export const userReducer = (state = initialState, action) => {
     case SAVE_PASSWORD_FAILED:
       return {
         ...state,
-        success: false,
+        isPasswordChecked: false,
         message: action.payload,
       };
-      case SET_TOKEN:
+    case LOGIN_USER_REQUEST:
       return {
         ...state,
-        token: action.payload.token,
-      };
-      case LOGIN_USER_EMAIL:
-      return {
-        ...state,
-        user: { ...state.user, email: action.payload.email },
-      };
-      case LOGIN_USER_PASSWORD:
-      return {
-        ...state,
-        password: action.payload.password,
-      };
-      case LOGIN_USER_REQUEST:
-      return {
-        ...state,
-        success: false,
+        isAuthChecked: false,
         message: "await...",
       };
-      case LOGIN_USER_SUCCESS:
+    case LOGIN_USER_SUCCESS: //успешная АВТОРИЗАЦИЯ пользователя
       return {
         ...state,
-        success: true,
-        password: action.payload.password,
-        user: { ...state.user, email: action.payload.email },
+        isAuthChecked: true
       };
-      case LOGIN_USER_FAILED:
+    case LOGIN_USER_FAILED:
       return {
         ...state,
-        success: false,
+        message: action.payload,
+        isAuthChecked: false
+      };
+    case CURRENT_USER_REQUEST:
+      return {
+        ...state,
+        message: "await...",
+      };
+    case CURRENT_USER_SUCCESS: //успешная ИДЕНТИФИКАЦИЯ пользователя
+      return {
+        ...state,
+        user: action.payload.user,
+        isLogin: true,
+      };
+    case CURRENT_USER_FAILED:
+      return {
+        ...state,
+        isLogin: false,
         message: action.payload,
       };
     default:
