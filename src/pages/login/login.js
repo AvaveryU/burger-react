@@ -42,7 +42,7 @@ export const LoginPage = () => {
   };
   //если сработал флаг авторизации, перебросить на главную страницу
   if (isAuthChecked) {
-    return <Redirect to={location.state?.from || "/"} />;
+    return <Redirect to={location.state?.from || "/profile"} />;
   }
   return (
     <>

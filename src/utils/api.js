@@ -75,6 +75,7 @@ export const postLoginUser = async (password, email) => {
   });
   return checkResponse(response);
 };
+// функция для получения данных о профиле
 export const getUser = async () => {
   const urlUser = "auth/user";
   const response = await fetch(INFO.baseURL + urlUser, {
@@ -88,6 +89,52 @@ export const getUser = async () => {
       "Content-Type": "application/json;charset=utf-8",
       Authorization: "Bearer " + getCookie("accessToken"),
     },
+  });
+  return checkResponse(response);
+};
+// функция для обновления данных в пользователе
+export const patchUser = async (password, email, name) => {
+  const urlUser = "auth/user";
+  const response = await fetch(INFO.baseURL + urlUser, {
+    method: "PATCH",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+      Authorization: "Bearer " + getCookie("accessToken"),
+    },
+    body: JSON.stringify({ email: email, password: password, name: name }),
+  });
+  return checkResponse(response);
+};
+// функция для выхода из профиля
+export const postLogoutUser = async () => {
+  const urlLogout = "auth/logout";
+  const response = await fetch(INFO.baseURL + urlLogout, {
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+    headers: INFO.headers,
+    body: JSON.stringify({ accessToken: localStorage.getItem("accessToken") }),
+  });
+  return checkResponse(response);
+};
+// функция для обновления токена
+export const postToken = async () => {
+  const urlToken = "auth/token";
+  const response = await fetch(INFO.baseURL + urlToken, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+      Authorization: "Bearer " + getCookie("accessToken"),
+    },
+    body: JSON.stringify({ accessToken: localStorage.getItem("accessToken") }),
   });
   return checkResponse(response);
 };

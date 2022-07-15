@@ -34,7 +34,7 @@ if (isForgotPasswordChecked) {
             <form name={`form`} id={`forgot-form`} className={`${styles.form}`}>
               <h2 className="text text_type_main-medium">Восстановление пароля</h2>
               <Input onChange={onChange} value={isEmail} type={"text"} placeholder={"Укажите e-mail"} name={"Email"} />
-              <Button type="primary" size="large" onClick={handleSendEmail}>
+              <Button type="primary" size="large" onClick={handleSendEmail} disabled={isEmail ? false : true }>
                 Восстановить
               </Button>
             </form>

@@ -14,6 +14,13 @@ import {
   CURRENT_USER_REQUEST,
   CURRENT_USER_SUCCESS,
   CURRENT_USER_FAILED,
+  UPDATE_TOKEN_REQUEST,
+  UPDATE_TOKEN_SUCCESS,
+  UPDATE_TOKEN_FAILED,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_FAILED
+
 } from "../action/user.js";
 const initialState = {
   success: false,
@@ -31,6 +38,8 @@ const initialState = {
   isRegisterChecked: false, //флаг для регистрации
   isForgotPasswordChecked: false, //флаг на странице /forgot-password
   isPasswordChecked: false, //флаг на странице /reset-password
+  isRefreshToken: false, //флаг на обновленный токен
+  isUpdateUser: false //флаг на странице /profile
 };
 //редьюсер регистрации/аутентификации/авторизации
 export const userReducer = (state = initialState, action) => {
@@ -101,7 +110,8 @@ export const userReducer = (state = initialState, action) => {
     case LOGIN_USER_SUCCESS: //успешная АВТОРИЗАЦИЯ пользователя
       return {
         ...state,
-        isAuthChecked: true
+        isAuthChecked: true,
+        user: action.payload.user,
       };
     case LOGIN_USER_FAILED:
       return {
@@ -118,6 +128,7 @@ export const userReducer = (state = initialState, action) => {
       return {
         ...state,
         user: action.payload.user,
+        password: action.payload.password,
         isLogin: true,
       };
     case CURRENT_USER_FAILED:
@@ -125,6 +136,41 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         isLogin: false,
         message: action.payload,
+      };
+      case UPDATE_TOKEN_REQUEST:
+      return {
+        ...state,
+        message: "await...",
+      };
+    case UPDATE_TOKEN_SUCCESS: //успешное ОБНОВЛЕНИЕ токена
+      return {
+        ...state,
+        isRefreshToken: true,
+      };
+    case UPDATE_TOKEN_FAILED:
+      return {
+        ...state,
+        isRefreshToken: false,
+        message: action.payload,
+      };
+      case UPDATE_USER_REQUEST:
+      return {
+        ...state,
+        message: "await...",
+      };
+    case UPDATE_USER_SUCCESS: //успешное ОБНОВЛЕНИЕ пользователя
+      return {
+        ...state,
+        user: { email: action.payload.user.email, name: action.payload.user.name },
+        password: action.payload.password,
+        isUpdateUser: true
+      };
+    case UPDATE_USER_FAILED:
+      return {
+        ...state,
+        isRefreshToken: false,
+        message: action.payload,
+        isUpdateUser: false
       };
     default:
       return state;

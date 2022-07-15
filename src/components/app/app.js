@@ -14,30 +14,27 @@ import OrderDetails from "../orderDetails/orderDetails";
 import IngredientDetails from "../ingredientDetails/ingredientDetails";
 import { getIngredientsData } from "../../services/action/ingredients.js";
 import { CLOSE_MODAL, OPEN_INGREDIENT_MODAL, OPEN_ORDER_MODAL } from "../../services/action/details.js";
-import { ProtectedRoute } from '../protectedRoute/protectedRoute';
+import { ProtectedRoute } from "../protectedRoute/protectedRoute";
 import { getUserInfo } from "../../services/action/user";
 
 const App = () => {
   const { ingredients, isLoading, error } = useSelector((state) => state.ingredients);
   // Булевые стейты для модального окна заказа, модального окна ингредиента и карточки с ингредиентом
   const { isOrderDetailsOpened, isIngredientDetailsOpened, ingredientInModal } = useSelector((state) => state.details);
-  // данные о заказе
-  const isOrder = useSelector((state) => state.order);
-//данные о пользователе зарегистрированном 
-  const isUser = useSelector((state) => state.user.user);
+  const isOrder = useSelector((state) => state.order); // данные о заказе
+  const isUser = useSelector((state) => state.user.user);  //данные о пользователе
   const dispatch = useDispatch();
   const location = {
-    pathname: '/',
-  }
+    pathname: "/",
+  };
 
-  // хук для получения данных с сервера
   useEffect(() => {
     //диспатчим ингредиенты, если мы на главной странице
     if (location.pathname) {
       dispatch(getIngredientsData());
     }
     //диспатчим данные о текущем пользователе
-    if (isUser.name !== '' && isUser.email !== '') {
+    if (isUser.name !== "" && isUser.email !== "") {
       dispatch(getUserInfo());
     }
   }, [dispatch, isUser]);
@@ -61,7 +58,7 @@ const App = () => {
   const handleOpenOrder = useCallback(() => {
     dispatch({ type: OPEN_ORDER_MODAL });
   }, [dispatch]);
-  
+
   if (error || isLoading) {
     return null;
   }

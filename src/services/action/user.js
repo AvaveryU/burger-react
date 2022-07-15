@@ -1,5 +1,5 @@
 //экшены для форм регистрации/входа
-import { postRegistration, postEmailUser, resetPassword, postLoginUser, getUser } from "../../utils/api.js";
+import { postRegistration, postEmailUser, resetPassword, postLoginUser, getUser, postToken, patchUser } from "../../utils/api.js";
 import { setCookie, getCookie } from "../../utils/utils.js";
 //запрос на регистрацию (при нажатии на 'зарегистрироваться')
 export const USER_REGISTER_REQUEST = "USER_REGISTER_REQUEST";
@@ -17,6 +17,12 @@ export const LOGIN_USER_FAILED = "LOGIN_USER_FAILED";
 export const CURRENT_USER_REQUEST = "CURRENT_USER_REQUEST";
 export const CURRENT_USER_SUCCESS = "CURRENT_USER_SUCCESS";
 export const CURRENT_USER_FAILED = "CURRENT_USER_FAILED";
+export const UPDATE_TOKEN_REQUEST = "UPDATE_TOKEN_REQUEST";
+export const UPDATE_TOKEN_SUCCESS = "UPDATE_TOKEN_SUCCESS";
+export const UPDATE_TOKEN_FAILED = "UPDATE_TOKEN_FAILED";
+export const UPDATE_USER_REQUEST = "UPDATE_USER_REQUEST";
+export const UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS";
+export const UPDATE_USER_FAILED = "UPDATE_USER_FAILED";
 //мидлвар. На экране /register пользователь вводит данные для регистрации
 export function postNewUser(password, name, email) {
   return (dispatch) => {
@@ -30,7 +36,7 @@ export function postNewUser(password, name, email) {
         localStorage.setItem("accessToken", result.refreshToken);
         dispatch({
           type: USER_REGISTER_SUCCESS,
-          payload: result.user,
+          payload: result,
         });
       })
       .catch((error) =>
@@ -122,14 +128,56 @@ export function getUserInfo() {
         });
       })
       .catch((error) => {
-        if (error.message === "jwt expired") {
-          dispatch(getUserInfo());
-        } else {
           dispatch({
             type: CURRENT_USER_FAILED,
             payload: error.message,
           });
-        }
+        console.log(error);
+      });
+  };
+}
+//мидлвар для обновления инфо о пользователе
+export function refreshUserInfo(password, email, name) {
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_USER_REQUEST,
+    });
+    patchUser(password, email, name)
+      .then((result) => {
+        dispatch({
+          type: UPDATE_USER_SUCCESS,
+          payload: result.user,
+        });
+      })
+      .catch((error) => {
+          dispatch({
+            type: UPDATE_USER_FAILED,
+            payload: error.message,
+          });
+        console.log(error);
+      });
+  };
+}
+//мидлвар для обновления токена
+export function refreshToken() {
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_TOKEN_REQUEST,
+    });
+    postToken()
+      .then((result) => {
+        setCookie("accessToken", result.accessToken);
+        localStorage.setItem("accessToken", result.refreshToken);
+        dispatch({
+          type: UPDATE_TOKEN_SUCCESS,
+          payload: result,
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          type: UPDATE_TOKEN_FAILED,
+          payload: error.message,
+        });
         console.log(error);
       });
   };
