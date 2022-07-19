@@ -5,13 +5,18 @@ import PropTypes from "prop-types";
 import { useDrag } from "react-dnd";
 import { useSelector } from "react-redux";
 import { useMemo } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 const BurgerIngredient = ({ ingredient, type, onOpenModal }) => {
+  const location = useLocation();
+  const orderState = useSelector((state) => state.constructorState);
+
   const handleOpenModal = () => {
     onOpenModal(ingredient._id);
   };
+
   //хук для перетаскиваемого элемента в конструктор
-  const [ isDrag, drag] = useDrag({
+  const [isDrag, drag] = useDrag({
     type: "ingredient",
     item: ingredient,
     //функция, которая получает объект monitor из react-dnd. Он содержит состояние и метаданные действия перетаскивания
@@ -19,18 +24,19 @@ const BurgerIngredient = ({ ingredient, type, onOpenModal }) => {
       isDrag: monitor.isDragging(),
     }),
   });
-  const orderState = useSelector((state) => state.constructorState);
+  
   //хук для подсчета кол-ва ингредиентов
   const count = useMemo(() => {
-    return ([
-      orderState.data.filter((item) => item._id === ingredient._id).length,  //кол-во ингредиентов
-      ([orderState.bun].filter((item) => item._id === ingredient._id).length) * 2 //кол-во булок
-    ])
+    return [
+      orderState.data.filter((item) => item._id === ingredient._id).length, //кол-во ингредиентов
+      [orderState.bun].filter((item) => item._id === ingredient._id).length * 2, //кол-во булок
+    ];
   }, [orderState, ingredient]);
-  
-  return (
+
+  return ( 
+    <Link to={{ pathname: `/ingredients/${ingredient._id}`, state: { background: location } }}>
     <li type={type} className={`${ingredientStyles.ingredient__element}`} key={ingredient._id} onClick={handleOpenModal} ref={drag} draggable>
-      { isDrag && (
+      {isDrag && (
         <>
           {(count[0] > 0 && <Counter count={count[0]} size="default" />) || (count[1] > 0 && <Counter count={count[1]} size="default" />)}
           <img className={`${ingredientStyles.ingredient__image}`} src={ingredient.image} alt={ingredient.name} />
@@ -44,6 +50,7 @@ const BurgerIngredient = ({ ingredient, type, onOpenModal }) => {
         </>
       )}
     </li>
+    </Link>
   );
 };
 

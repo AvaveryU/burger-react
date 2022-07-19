@@ -1,6 +1,6 @@
 //экшены для форм регистрации/входа
 import { postRegistration, postEmailUser, resetPassword, postLoginUser, getUser, postToken, patchUser } from "../../utils/api.js";
-import { setCookie, getCookie } from "../../utils/utils.js";
+import { setCookie } from "../../utils/utils.js";
 //запрос на регистрацию (при нажатии на 'зарегистрироваться')
 export const USER_REGISTER_REQUEST = "USER_REGISTER_REQUEST";
 export const USER_REGISTER_SUCCESS = "USER_REGISTER_SUCCESS";
@@ -33,7 +33,7 @@ export function postNewUser(password, name, email) {
       .then((result) => {
         setCookie("accessToken", result.accessToken);
         //refreshToken используется для выхода из системы и для получения нового accessToken, если у последнего истёк срок
-        localStorage.setItem("accessToken", result.refreshToken);
+        localStorage.setItem("refreshToken", result.refreshToken);
         dispatch({
           type: USER_REGISTER_SUCCESS,
           payload: result,
@@ -64,9 +64,8 @@ export function postEmail(data) {
         dispatch({
           type: CREATE_RECOVERY_PASSWORD_FAILED,
           payload: error.message,
-        })
-        console.log(error); }
-      );
+        });
+      });
   };
 }
 //мидлвар. На экране /reset-password пользователь вводит пароль и код и нажимает кнопку "Сохранить"
@@ -99,7 +98,7 @@ export function loginUser(password, email) {
     postLoginUser(password, email)
       .then((result) => {
         setCookie("accessToken", result.accessToken);
-        localStorage.setItem("accessToken", result.refreshToken);
+        localStorage.setItem("refreshToken", result.refreshToken);
         dispatch({
           type: LOGIN_USER_SUCCESS,
           payload: result,
@@ -110,7 +109,29 @@ export function loginUser(password, email) {
           type: LOGIN_USER_FAILED,
           payload: error.message,
         });
-        console.log(error);
+      });
+  };
+}
+//мидлвар для обновления токена
+export function refreshToken() {
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_TOKEN_REQUEST,
+    });
+    postToken()
+      .then((result) => {
+        setCookie("accessToken", result.accessToken);
+        localStorage.setItem("refreshToken", result.refreshToken);
+        dispatch({
+          type: UPDATE_TOKEN_SUCCESS,
+          payload: result,
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          type: UPDATE_TOKEN_FAILED,
+          payload: error.message,
+        });
       });
   };
 }
@@ -128,11 +149,15 @@ export function getUserInfo() {
         });
       })
       .catch((error) => {
+        if (localStorage.getItem("refreshToken")) {
+          refreshToken();
+          getUserInfo();
+        } else {
           dispatch({
             type: CURRENT_USER_FAILED,
             payload: error.message,
           });
-        console.log(error);
+        }
       });
   };
 }
@@ -144,41 +169,21 @@ export function refreshUserInfo(password, email, name) {
     });
     patchUser(password, email, name)
       .then((result) => {
-        dispatch({
-          type: UPDATE_USER_SUCCESS,
-          payload: result.user,
-        });
-      })
-      .catch((error) => {
           dispatch({
-            type: UPDATE_USER_FAILED,
-            payload: error.message,
+            type: UPDATE_USER_SUCCESS,
+            payload: result.user,
           });
-        console.log(error);
-      });
-  };
-}
-//мидлвар для обновления токена
-export function refreshToken() {
-  return (dispatch) => {
-    dispatch({
-      type: UPDATE_TOKEN_REQUEST,
-    });
-    postToken()
-      .then((result) => {
-        setCookie("accessToken", result.accessToken);
-        localStorage.setItem("accessToken", result.refreshToken);
-        dispatch({
-          type: UPDATE_TOKEN_SUCCESS,
-          payload: result,
-        });
       })
       .catch((error) => {
+        if (localStorage.getItem("refreshToken")) {
+          refreshToken();
+          refreshUserInfo(password, email, name);
+        } else {
         dispatch({
-          type: UPDATE_TOKEN_FAILED,
+          type: UPDATE_USER_FAILED,
           payload: error.message,
         });
-        console.log(error);
+      }
       });
   };
 }

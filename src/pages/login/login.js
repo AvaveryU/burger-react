@@ -6,7 +6,6 @@ import { Input, PasswordInput, Button } from "@ya.praktikum/react-developer-burg
 
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../services/action/user.js";
-
 export const LoginPage = () => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -14,7 +13,7 @@ export const LoginPage = () => {
   const {
     user: { email },
     password,
-    isAuthChecked,
+    isAuthChecked
   } = useSelector((state) => state.user);
   //стейты для полей ввода
   const [isPassword, setPassword] = useState(password);

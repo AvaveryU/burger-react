@@ -1,13 +1,6 @@
 import INFO from "./data.json";
-import { getCookie, setCookie } from "./utils.js";
+import { getCookie } from "./utils.js";
 
-// проверка ответа от сервера
-// export function checkResponse(response) {
-//   if (response.ok) {
-//     return response.json();
-//   }
-//   throw new Error("Ошибка при взаимодействии с сервером!");
-// }
 export function checkResponse(response) {
   return response.ok ? response.json() : response.json().then((error) => Promise.reject(error));
 }
@@ -65,11 +58,6 @@ export const postLoginUser = async (password, email) => {
   const urlLogin = "auth/login";
   const response = await fetch(INFO.baseURL + urlLogin, {
     method: "POST",
-    mode: "cors",
-    cache: "no-cache",
-    credentials: "same-origin",
-    redirect: "follow",
-    referrerPolicy: "no-referrer",
     headers: INFO.headers,
     body: JSON.stringify({ email: email, password: password }),
   });
@@ -80,11 +68,6 @@ export const getUser = async () => {
   const urlUser = "auth/user";
   const response = await fetch(INFO.baseURL + urlUser, {
     method: "GET",
-    mode: "cors",
-    cache: "no-cache",
-    credentials: "same-origin",
-    redirect: "follow",
-    referrerPolicy: "no-referrer",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
       Authorization: "Bearer " + getCookie("accessToken"),
@@ -97,11 +80,6 @@ export const patchUser = async (password, email, name) => {
   const urlUser = "auth/user";
   const response = await fetch(INFO.baseURL + urlUser, {
     method: "PATCH",
-    mode: "cors",
-    cache: "no-cache",
-    credentials: "same-origin",
-    redirect: "follow",
-    referrerPolicy: "no-referrer",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
       Authorization: "Bearer " + getCookie("accessToken"),
@@ -115,13 +93,8 @@ export const postLogoutUser = async () => {
   const urlLogout = "auth/logout";
   const response = await fetch(INFO.baseURL + urlLogout, {
     method: "POST",
-    mode: "cors",
-    cache: "no-cache",
-    credentials: "same-origin",
-    redirect: "follow",
-    referrerPolicy: "no-referrer",
     headers: INFO.headers,
-    body: JSON.stringify({ accessToken: localStorage.getItem("accessToken") }),
+    body: JSON.stringify({ refreshToken: localStorage.getItem("refreshToken") }),
   });
   return checkResponse(response);
 };
@@ -132,9 +105,9 @@ export const postToken = async () => {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
-      Authorization: "Bearer " + getCookie("accessToken"),
+      Authorization: "Bearer " + getCookie("refreshToken"),
     },
-    body: JSON.stringify({ accessToken: localStorage.getItem("accessToken") }),
+    body: JSON.stringify({ refreshToken: localStorage.getItem("refreshToken") }),
   });
   return checkResponse(response);
 };

@@ -23,7 +23,6 @@ import {
 
 } from "../action/user.js";
 const initialState = {
-  success: false,
   user: {
     email: "",
     name: "",
@@ -31,10 +30,8 @@ const initialState = {
   password: "",
   message: "",
   token: "",
-  accessToken: "",
-  userInfoLoading: false,
-  isLogin: false,
-  isAuthChecked: false,
+  isLogin: false, //флаг для идентификации 
+  isAuthChecked: false, //флаг для авторизации 
   isRegisterChecked: false, //флаг для регистрации
   isForgotPasswordChecked: false, //флаг на странице /forgot-password
   isPasswordChecked: false, //флаг на странице /reset-password
@@ -56,6 +53,7 @@ export const userReducer = (state = initialState, action) => {
         isRegisterChecked: true,
         user: { email: action.payload.user.email, name: action.payload.user.name },
         password: action.payload.password,
+        message: "success registration",
       };
     case USER_REGISTER_FAILED:
       return {
@@ -83,7 +81,6 @@ export const userReducer = (state = initialState, action) => {
     case SAVE_PASSWORD_REQUEST:
       return {
         ...state,
-        success: false,
         message: "await...",
         isPasswordChecked: false,
       };
@@ -112,6 +109,8 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         isAuthChecked: true,
         user: action.payload.user,
+        password: action.payload.password,
+        message: "done!",
       };
     case LOGIN_USER_FAILED:
       return {
@@ -128,8 +127,8 @@ export const userReducer = (state = initialState, action) => {
       return {
         ...state,
         user: action.payload.user,
-        password: action.payload.password,
         isLogin: true,
+        message: "done!",
       };
     case CURRENT_USER_FAILED:
       return {
@@ -146,6 +145,7 @@ export const userReducer = (state = initialState, action) => {
       return {
         ...state,
         isRefreshToken: true,
+        message: "token refresh!",
       };
     case UPDATE_TOKEN_FAILED:
       return {
@@ -163,7 +163,8 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         user: { email: action.payload.user.email, name: action.payload.user.name },
         password: action.payload.password,
-        isUpdateUser: true
+        isUpdateUser: true,
+        message: "done!"
       };
     case UPDATE_USER_FAILED:
       return {

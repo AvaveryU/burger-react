@@ -8,9 +8,12 @@ import { addItem, deleteItem, resetAfterOrder } from "../../services/action/cons
 import { postOrderBurger } from "../../services/action/order.js";
 import { useDrop } from "react-dnd";
 import ConstructorIngredient from "../constructorIngredient/constructorIngredient";
+import { useHistory } from "react-router-dom";
 
 const BurgerConstructor = ({ onOpenModal }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const { isAuthChecked } = useSelector((state) => state.user);
   const { data, bun } = useSelector((state) => state.constructorState);
 
   //хук для подсчета цены ингредиентов
@@ -20,18 +23,22 @@ const BurgerConstructor = ({ onOpenModal }) => {
 
   //функция для клика по кнопке
   const handleSendOrder = () => {
-    onOpenModal(); //открыть модальное окно заказа
-    //массив из id ингредиентов в конструкторе
-    const IdIngredients = [bun._id, ...data.map((ingredient) => ingredient._id)];
-    dispatch(postOrderBurger(IdIngredients)); //отправить данные о заказе
-    dispatch(resetAfterOrder()); //очистка конструктора после заказа
+    if (isAuthChecked) {
+      onOpenModal(); //открыть модальное окно заказа
+      //массив из id ингредиентов в конструкторе
+      const IdIngredients = [bun._id, ...data.map((ingredient) => ingredient._id)];
+      dispatch(postOrderBurger(IdIngredients)); //отправить данные о заказе
+      dispatch(resetAfterOrder()); //очистка конструктора после заказа
+    } else {
+      history.push("/login");
+    }
   };
 
   const onDelete = (id) => {
     dispatch(deleteItem(id)); //удалить ингредиент по id при нажатии на корзину
   };
-  
-//хук для области перетаскивания - конструктор
+
+  //хук для области перетаскивания - конструктор
   const [, drop] = useDrop({
     accept: "ingredient",
     drop: (item) => {
@@ -44,12 +51,7 @@ const BurgerConstructor = ({ onOpenModal }) => {
     <div className={`${constructorStyles.constructor__box} mt-25 ml-4`} ref={drop}>
       <div className="ml-8" key={bun.ownId}>
         {Object.keys(bun).length > 0 ? (
-          <ConstructorElement
-          type="top"
-          isLocked={true}
-          text={`${bun.name} (верх)`}
-          thumbnail={bun.image_mobile}
-          price={bun.price} />
+          <ConstructorElement type="top" isLocked={true} text={`${bun.name} (верх)`} thumbnail={bun.image_mobile} price={bun.price} />
         ) : (
           <div className={`ml-2 mr-4 ${constructorStyles.constructor__bun_type_top} ${constructorStyles.constructor__element} text_type_main-medium`}>Выберите булку</div>
         )}
@@ -57,12 +59,7 @@ const BurgerConstructor = ({ onOpenModal }) => {
       {/* список ингредиентов между булками */}
       <ul className={`${constructorStyles.constructor__list}`}>
         {data.length !== 0 ? (
-          data.map((item, index) =>
-          <ConstructorIngredient
-          key={item.id}
-          index={index}
-          item={item}
-          handleClose={() => onDelete(item.id)} />)
+          data.map((item, index) => <ConstructorIngredient key={item.id} index={index} item={item} handleClose={() => onDelete(item.id)} />)
         ) : (
           <li className={`ml-8 mr-2 ${constructorStyles.constructor__blank} ${constructorStyles.constructor__element} text_type_main-medium`}>Выберите начинку</li>
         )}
@@ -70,12 +67,7 @@ const BurgerConstructor = ({ onOpenModal }) => {
       {/* булка нижняя */}
       <div className="ml-8" key={bun.ownId}>
         {Object.keys(bun).length > 0 ? (
-          <ConstructorElement
-          type="bottom"
-          isLocked={true}
-          text={`${bun.name} (низ)`}
-          thumbnail={bun.image_mobile}
-          price={bun.price} />
+          <ConstructorElement type="bottom" isLocked={true} text={`${bun.name} (низ)`} thumbnail={bun.image_mobile} price={bun.price} />
         ) : (
           <div className={`ml-2 mr-4 ${constructorStyles.constructor__bun_type_down} ${constructorStyles.constructor__element} text_type_main-medium`}>Выберите булку</div>
         )}
@@ -84,15 +76,9 @@ const BurgerConstructor = ({ onOpenModal }) => {
         <p className="text text_type_digits-medium mr-2">{totalPrice}</p>
         <img className={`${constructorStyles.constructor__icon} mr-10`} src={CurrencyIcon} alt="иконка"></img>
         {/* отобразить активную кнопку только при условии наличия булки и хотя бы 1 ингредиента */}
-        {data.length !== 0 && Object.keys(bun).length > 0 ? (
-          <Button type="primary" size="large" onClick={handleSendOrder}>
-            Оформить заказ
-          </Button>
-        ) : (
-          <Button type="primary" size="large" disabled>
-            Оформить заказ
-          </Button>
-        )}
+        <Button type="primary" size="large" onClick={handleSendOrder} disabled={data.length !== 0 && Object.keys(bun).length > 0 ? false : true}>
+          Оформить заказ
+        </Button>
       </div>
     </div>
   );
