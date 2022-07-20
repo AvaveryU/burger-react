@@ -84,7 +84,7 @@ export const patchUser = async (password, email, name) => {
       "Content-Type": "application/json;charset=utf-8",
       Authorization: "Bearer " + getCookie("accessToken"),
     },
-    body: JSON.stringify({ email: email, password: password, name: name }),
+    body: JSON.stringify({ email: email, name: name, password: password }),
   });
   return checkResponse(response);
 };
@@ -94,7 +94,7 @@ export const postLogoutUser = async () => {
   const response = await fetch(INFO.baseURL + urlLogout, {
     method: "POST",
     headers: INFO.headers,
-    body: JSON.stringify({ refreshToken: localStorage.getItem("refreshToken") }),
+    body: JSON.stringify({ accessToken: localStorage.getItem("refreshToken") }),
   });
   return checkResponse(response);
 };
@@ -105,9 +105,9 @@ export const postToken = async () => {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
-      Authorization: "Bearer " + getCookie("refreshToken"),
+      Authorization: "Bearer " + getCookie("accessToken"),
     },
-    body: JSON.stringify({ refreshToken: localStorage.getItem("refreshToken") }),
+    body: JSON.stringify({ accessToken: localStorage.getItem("refreshToken") }),
   });
   return checkResponse(response);
 };

@@ -38,10 +38,9 @@
   min-width: 480px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   min-height: 240px;
-  justify-content: space-between;
 }
 .activeNavigationLink {
   color: #f2f2f3;
@@ -53,7 +52,15 @@
 .wrapper div {
   width: 100%;
 }
+/*рамка поля ввода*/
+.wrapper div div {
+  margin-bottom: 24px;
+}
 /*картинки слева в полях ввода*/
 .wrapper div div div {
   max-width: 24px;
+}
+.buttons {
+  display: flex;
+  justify-content: flex-end;
 }

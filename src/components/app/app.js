@@ -16,6 +16,7 @@ import { getIngredientsData } from "../../services/action/ingredients.js";
 import { CLOSE_MODAL, OPEN_INGREDIENT_MODAL, OPEN_ORDER_MODAL } from "../../services/action/details.js";
 import { ProtectedRoute } from "../protectedRoute/protectedRoute";
 import { getUserInfo } from "../../services/action/user";
+import { getCookie } from "../../utils/utils";
 
 const App = () => {
   const location = useLocation();
@@ -26,21 +27,20 @@ const App = () => {
   const { isOrderDetailsOpened, isIngredientDetailsOpened } = useSelector((state) => state.details);
   const isOrder = useSelector((state) => state.order); // данные о заказе
   const isUser = useSelector((state) => state.user.user); //данные о пользователе
-  const { isAuthChecked } = useSelector((state) => state.user); //флаг авторизированного пользователя
   const background = location.state?.background;
 
   useEffect(() => {
     //диспатчим данные об ингредиентах
     dispatch(getIngredientsData());
     //диспатчим данные о текущем пользователе
-    if (isAuthChecked) {
+    if (getCookie("accessToken")) {
       dispatch(getUserInfo());
     }
   }, [dispatch]);
 
   // закрытие всех модалок
   const closeAllModals = useCallback(() => {
-      history.goBack(); //вернуться на одну страницу назад в истории сеансов
+    history.goBack(); //вернуться на одну страницу назад в истории сеансов
     dispatch({ type: CLOSE_MODAL });
   }, [dispatch]);
 

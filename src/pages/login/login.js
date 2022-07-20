@@ -13,11 +13,12 @@ export const LoginPage = () => {
   const {
     user: { email },
     password,
-    isAuthChecked
+    isAuthChecked,
+    isLogin,
   } = useSelector((state) => state.user);
   //стейты для полей ввода
-  const [isPassword, setPassword] = useState(password);
-  const [isEmail, setEmail] = useState(email);
+  const [inputPassword, setPassword] = useState(password);
+  const [inputEmail, setEmail] = useState(email);
   //реф для поля Email
   const refInputEmail = React.useRef("email");
   //функция для ввода пароля
@@ -37,10 +38,10 @@ export const LoginPage = () => {
   //диспатчим данные для авторизации при клике на "Войти"
   const handleLogin = (event) => {
     event.preventDefault();
-    dispatch(loginUser(isPassword, isEmail));
+    dispatch(loginUser(inputPassword, inputEmail));
   };
   //если сработал флаг авторизации, перебросить на главную страницу
-  if (isAuthChecked) {
+  if (isAuthChecked || isLogin) {
     return <Redirect to={location.state?.from || "/profile"} />;
   }
   return (
@@ -48,20 +49,20 @@ export const LoginPage = () => {
       <main className={styles.page}>
         <div className={styles.login}>
           <div className={`${styles.wrapper}`}>
-            <form name={`form`} id={`login-form`} className={`${styles.form}`}>
+            <form name={`form`} id={`login-form`} className={`${styles.form}`} onSubmit={handleLogin}>
               <h2 className="text text_type_main-medium">Вход</h2>
               <Input
                 className={`mt-6`}
                 onChange={onLoginEmail}
                 onIconClick={() => onIconClick(refInputEmail)}
-                value={isEmail}
+                value={inputEmail}
                 name={"email"}
                 icon={"EditIcon"}
                 placeholder={"E-mail"}
                 ref={refInputEmail}
               />
-              <PasswordInput className={`mt-6`} name={"password"} onChange={onLoginPassword} value={isPassword} />
-              <Button type="primary" size="large" onClick={handleLogin} disabled={(isEmail && isPassword ) ? false : true }>
+              <PasswordInput className={`mt-6`} name={"password"} onChange={onLoginPassword} value={inputPassword} />
+              <Button type="primary" size="large" disabled={inputEmail && inputPassword ? false : true}>
                 Войти
               </Button>
             </form>

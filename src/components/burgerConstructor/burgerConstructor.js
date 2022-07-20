@@ -13,7 +13,7 @@ import { useHistory } from "react-router-dom";
 const BurgerConstructor = ({ onOpenModal }) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { isAuthChecked } = useSelector((state) => state.user);
+  const { isAuthChecked, isLogin } = useSelector((state) => state.user);
   const { data, bun } = useSelector((state) => state.constructorState);
 
   //хук для подсчета цены ингредиентов
@@ -23,7 +23,7 @@ const BurgerConstructor = ({ onOpenModal }) => {
 
   //функция для клика по кнопке
   const handleSendOrder = () => {
-    if (isAuthChecked) {
+    if (isAuthChecked || isLogin) {
       onOpenModal(); //открыть модальное окно заказа
       //массив из id ингредиентов в конструкторе
       const IdIngredients = [bun._id, ...data.map((ingredient) => ingredient._id)];

@@ -12,8 +12,8 @@ export const ResetPassword = () => {
   const location = useLocation();
   const { password, token, isPasswordChecked } = useSelector((state) => state.user);
   //стейты для полей ввода
-  const [isPassword, setPassword] = useState(password);
-  const [isToken, setToken] = useState(token);
+  const [inputPassword, setPassword] = useState(password);
+  const [valueToken, setToken] = useState(token);
 
   const onChangePassword = (event) => {
     setPassword(event.target.value);
@@ -23,24 +23,22 @@ export const ResetPassword = () => {
   };
   const handleSubmitPassword = (event) => {
     event.preventDefault();
-    dispatch(savePassword(isPassword, isToken)); //диспатчить данные о email
+    dispatch(savePassword(inputPassword, valueToken)); //диспатчить данные о email
   };
-//если сработал флаг изменения пароля, перебросить на /profile
-if (isPasswordChecked) {
-  return (<Redirect
-    to={location.state?.from || '/profile'}
-  />)
-}
+  //если сработал флаг изменения пароля, перебросить на /profile
+  if (isPasswordChecked) {
+    return <Redirect to={location.state?.from || "/profile"} />;
+  }
   return (
     <>
       <main className={styles.page}>
         <div className={styles.content}>
           <div className={`${styles.wrapper}`}>
-            <form name={`form`} id={`reset_password-form`} className={`${styles.form}`}>
+            <form name={`form`} id={`reset_password-form`} className={`${styles.form}`} onSubmit={handleSubmitPassword}>
               <h2 className="text text_type_main-medium">Восстановление пароля</h2>
-              <PasswordInput onChange={onChangePassword} value={isPassword} placeholder={"Введите новый пароль"} name={"password"} />
-              <Input onChange={onChangeToken} value={isToken} type={"text"} placeholder={"Введите код из письма"} name={"code"} />
-              <Button type="primary" size="large" onClick={handleSubmitPassword} disabled={(isPassword && isToken) ? false : true }>
+              <PasswordInput onChange={onChangePassword} value={inputPassword} placeholder={"Введите новый пароль"} name={"password"} />
+              <Input onChange={onChangeToken} value={valueToken} type={"text"} placeholder={"Введите код из письма"} name={"code"} />
+              <Button type="primary" size="large" disabled={inputPassword && valueToken ? false : true}>
                 Сохранить
               </Button>
             </form>
