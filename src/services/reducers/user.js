@@ -20,6 +20,9 @@ import {
   UPDATE_USER_REQUEST,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_FAILED,
+  LOGOUT_USER_REQUEST,
+  LOGOUT_USER_SUCCESS,
+  LOGOUT_USER_FAILED,
 } from "../action/user.js";
 const initialState = {
   user: {
@@ -29,13 +32,15 @@ const initialState = {
   password: "",
   message: "",
   token: "", //код для сброса пароля
-  isLogin: false, //флаг для идентификации
-  isAuthChecked: false, //флаг для авторизации
+  isAuthChecked: false, //флаг для идентификации
+  isLogin: false, //флаг для авторизации
   isRegisterChecked: false, //флаг для регистрации
   isForgotPasswordChecked: false, //флаг на странице /forgot-password
   isPasswordChecked: false, //флаг на странице /reset-password
   isRefreshToken: false, //флаг на обновленный токен
   isUpdateUser: false, //флаг на странице /profile
+  isLogOut: false, //флаг выхода из ЛК
+  loginUserError: false, //флаг ошибки при неверных логин/пароль
 };
 //редьюсер регистрации/аутентификации/авторизации
 export const userReducer = (state = initialState, action) => {
@@ -100,39 +105,52 @@ export const userReducer = (state = initialState, action) => {
     case LOGIN_USER_REQUEST:
       return {
         ...state,
-        isAuthChecked: false,
-        message: "await...",
+        isLogin: false,
+        message: "Ждите...",
       };
     case LOGIN_USER_SUCCESS: //успешная АВТОРИЗАЦИЯ пользователя
       return {
         ...state,
-        isAuthChecked: true,
+        isLogin: true,
         user: action.payload.user,
         password: action.payload.password,
         message: "done!",
+        loginUserError: false,
       };
     case LOGIN_USER_FAILED:
+      if (action.payload === "email or password are incorrect") {
+        return {
+          ...state,
+          loginUserError: true,
+          message: "E-mail или пароль введен неверно",
+          isLogin: false,
+        };
+      }
       return {
         ...state,
         message: action.payload,
-        isAuthChecked: false,
+        loginUserError: action.payload,
+        isLogin: false,
       };
     case CURRENT_USER_REQUEST:
       return {
         ...state,
         message: "await...",
+        isAuthChecked: false,
       };
     case CURRENT_USER_SUCCESS: //успешная ИДЕНТИФИКАЦИЯ пользователя
       return {
         ...state,
         user: { email: action.payload.user.email, name: action.payload.user.name },
+        isAuthChecked: true,
         isLogin: true,
         message: "done!",
+        isLogOut: false,
       };
     case CURRENT_USER_FAILED:
       return {
         ...state,
-        isLogin: false,
+        isAuthChecked: false,
         message: action.payload,
       };
     case UPDATE_TOKEN_REQUEST:
@@ -145,6 +163,7 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         isRefreshToken: true,
         message: "token refresh!",
+        isAuthChecked: true,
       };
     case UPDATE_TOKEN_FAILED:
       return {
@@ -171,6 +190,26 @@ export const userReducer = (state = initialState, action) => {
         isRefreshToken: false,
         message: action.payload,
         isUpdateUser: false,
+      };
+    case LOGOUT_USER_REQUEST:
+      return {
+        ...state,
+        message: "await...",
+      };
+    case LOGOUT_USER_SUCCESS: //успешный ВЫХОД из ЛК
+      return {
+        ...state,
+        user: {},
+        isLogOut: true,
+        isLogin: false,
+        isAuthChecked: false,
+        message: action.payload.message,
+      };
+    case LOGOUT_USER_FAILED:
+      return {
+        ...state,
+        message: action.payload,
+        isLogOut: false,
       };
     default:
       return state;

@@ -25,7 +25,6 @@ const App = () => {
   const { isLoading, error } = useSelector((state) => state.ingredients);
   // Булевые стейты для модального окна заказа, модального окна ингредиента и карточки с ингредиентом
   const { isOrderDetailsOpened, isIngredientDetailsOpened } = useSelector((state) => state.details);
-  const isOrder = useSelector((state) => state.order); // данные о заказе
   const isUser = useSelector((state) => state.user.user); //данные о пользователе
   const background = location.state?.background;
 
@@ -33,16 +32,20 @@ const App = () => {
     //диспатчим данные об ингредиентах
     dispatch(getIngredientsData());
     //диспатчим данные о текущем пользователе
-    if (getCookie("accessToken")) {
+    if (getCookie("accessToken") || localStorage.getItem("refreshToken")) {
       dispatch(getUserInfo());
     }
   }, [dispatch]);
 
   // закрытие всех модалок
   const closeAllModals = useCallback(() => {
-    history.goBack(); //вернуться на одну страницу назад в истории сеансов
-    dispatch({ type: CLOSE_MODAL });
-  }, [dispatch]);
+    if (isIngredientDetailsOpened) {
+      history.goBack(); //вернуться на одну страницу назад в истории сеансов
+      dispatch({ type: CLOSE_MODAL });
+    } else {
+      dispatch({ type: CLOSE_MODAL });
+    }
+  }, [dispatch, isIngredientDetailsOpened, history]);
 
   // открытие окна с ингредиентом
   const handleOpenIngredientDetails = () => {
@@ -52,9 +55,9 @@ const App = () => {
   };
 
   // открытие окна заказа
-  const handleOpenOrder = useCallback(() => {
+  const handleOpenOrder = () => {
     dispatch({ type: OPEN_ORDER_MODAL });
-  }, [dispatch]);
+  };
 
   if (error || isLoading) {
     return null;
@@ -83,7 +86,7 @@ const App = () => {
         <ProtectedRoute path="/reset-password" exact={true}>
           <ResetPassword />
         </ProtectedRoute>
-        <ProtectedRoute user={isUser} path="/profile" exact={true}>
+        <ProtectedRoute anonymous={true} user={isUser} path="/profile" exact={true}>
           <Profile />
         </ProtectedRoute>
         <Route path="/ingredients/:id">
@@ -93,7 +96,7 @@ const App = () => {
       {/* модальное окно заказа */}
       {isOrderDetailsOpened && (
         <Modal onClose={closeAllModals}>
-          <OrderDetails isOrder={isOrder} />
+          <OrderDetails />
         </Modal>
       )}
       {/* модальное окно ингредиента */}

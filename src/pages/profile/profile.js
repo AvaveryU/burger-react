@@ -1,15 +1,15 @@
 //страница с настройками профиля пользователя
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./profile.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector, useDispatch } from "react-redux";
-import { refreshUserInfo } from "../../services/action/user";
+import { refreshUserInfo, logOutUser, getUserInfo } from "../../services/action/user";
 
 export const Profile = () => {
   const dispatch = useDispatch();
   //данные из хранилища о текущем пользователе
-  const { user, password } = useSelector((state) => state.user);
+  const { user, password, isUpdateUser } = useSelector((state) => state.user);
   // стейты для редактирования данных о текущем пользователе (пока не рабочий функционал)
   const [inputEmail, setEmail] = useState(user.email);
   const [inputName, setName] = useState(user.name);
@@ -19,6 +19,10 @@ export const Profile = () => {
   const refName = React.useRef("text");
   const refEmail = React.useRef("email");
   const refPassword = React.useRef("password");
+  //на странице сразу получим актуальные данные о пользователе
+  useEffect(() => {
+    dispatch(getUserInfo());
+  }, [dispatch]);
   //функция при клике на иконку редактирования
   const onIconClick = useCallback(
     (data) => {
@@ -35,6 +39,9 @@ export const Profile = () => {
   const handleSubmitFormProfile = (event) => {
     event.preventDefault();
     dispatch(refreshUserInfo(inputPassword, inputEmail, inputName));
+    if (isUpdateUser) {
+      setShowButtons(false);
+    }
   };
 
   const handleCancelFormProfile = () => {
@@ -42,6 +49,11 @@ export const Profile = () => {
     setName(user.name);
     setPassword(password);
     setShowButtons(false);
+  };
+  //выход из ЛК
+  const logOut = (event) => {
+    event.preventDefault();
+    dispatch(logOutUser());
   };
 
   return (
@@ -60,7 +72,7 @@ export const Profile = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink to={`/login`} className={styles.navigation} activeClassName={styles.activeNavigationLink}>
+              <NavLink to={`/login`} className={styles.navigation} activeClassName={styles.activeNavigationLink} onClick={logOut}>
                 Выход
               </NavLink>
             </li>
@@ -76,7 +88,7 @@ export const Profile = () => {
                 setShowButtons(true);
               }}
               onIconClick={() => onIconClick(refName)}
-              value={inputName}
+              value={inputName || ""}
               type={"text"}
               placeholder={"Имя"}
               name={"name"}
@@ -90,7 +102,7 @@ export const Profile = () => {
                 setShowButtons(true);
               }}
               onIconClick={() => onIconClick(refEmail)}
-              value={inputEmail}
+              value={inputEmail || ""}
               type={"email"}
               placeholder={"Логин"}
               name={"email"}
@@ -104,7 +116,7 @@ export const Profile = () => {
                 setShowButtons(true);
               }}
               onIconClick={() => onIconClick(refPassword)}
-              value={inputPassword}
+              value={inputPassword || ""}
               type={"password"}
               placeholder={"Пароль"}
               name={"password"}

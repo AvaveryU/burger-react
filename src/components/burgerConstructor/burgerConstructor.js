@@ -13,9 +13,8 @@ import { useHistory } from "react-router-dom";
 const BurgerConstructor = ({ onOpenModal }) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { isAuthChecked, isLogin } = useSelector((state) => state.user);
   const { data, bun } = useSelector((state) => state.constructorState);
-
+  const { isLogin, isAuthChecked } = useSelector((state) => state.user);
   //хук для подсчета цены ингредиентов
   const totalPrice = useMemo(() => {
     return (Object.keys(bun).length ? bun.price * 2 : 0) + data.reduce((s, v) => s + v.price, 0);
@@ -23,13 +22,14 @@ const BurgerConstructor = ({ onOpenModal }) => {
 
   //функция для клика по кнопке
   const handleSendOrder = () => {
-    if (isAuthChecked || isLogin) {
+    if (isAuthChecked) {
       onOpenModal(); //открыть модальное окно заказа
       //массив из id ингредиентов в конструкторе
       const IdIngredients = [bun._id, ...data.map((ingredient) => ingredient._id)];
       dispatch(postOrderBurger(IdIngredients)); //отправить данные о заказе
       dispatch(resetAfterOrder()); //очистка конструктора после заказа
-    } else {
+    }
+    if (!isAuthChecked || !isLogin) {
       history.push("/login");
     }
   };

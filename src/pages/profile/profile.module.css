@@ -53,7 +53,7 @@
   width: 100%;
 }
 /*рамка поля ввода*/
-.wrapper div div {
+.form > div {
   margin-bottom: 24px;
 }
 /*картинки слева в полях ввода*/

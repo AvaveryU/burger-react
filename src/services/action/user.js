@@ -1,5 +1,5 @@
-import { postRegistration, postEmailUser, resetPassword, postLoginUser, getUser, postToken, patchUser, getCookie } from "../../utils/api.js";
-import { setCookie } from "../../utils/utils";
+import { postRegistration, postEmailUser, resetPassword, postLoginUser, postLogoutUser, getUser, postToken, patchUser } from "../../utils/api.js";
+import { setCookie, deleteCookie } from "../../utils/utils";
 //экшены для регистрации
 export const USER_REGISTER_REQUEST = "USER_REGISTER_REQUEST";
 export const USER_REGISTER_SUCCESS = "USER_REGISTER_SUCCESS";
@@ -28,6 +28,10 @@ export const UPDATE_TOKEN_FAILED = "UPDATE_TOKEN_FAILED";
 export const UPDATE_USER_REQUEST = "UPDATE_USER_REQUEST";
 export const UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS";
 export const UPDATE_USER_FAILED = "UPDATE_USER_FAILED";
+//экшены для выхода пользователя
+export const LOGOUT_USER_REQUEST = "LOGOUT_USER_REQUEST";
+export const LOGOUT_USER_SUCCESS = "LOGOUT_USER_SUCCESS";
+export const LOGOUT_USER_FAILED = "LOGOUT_USER_FAILED";
 
 //мидлвар. На экране /register пользователь вводит данные для регистрации
 export function postNewUser(password, name, email) {
@@ -37,7 +41,7 @@ export function postNewUser(password, name, email) {
     });
     postRegistration(password, name, email)
       .then((result) => {
-        setCookie("accessToken", result.accessToken.split("Bearer ")[1]); //отделяем схему авторизации
+        setCookie("token", result.accessToken.split("Bearer ")[1]); //отделяем схему авторизации
         localStorage.setItem("refreshToken", result.refreshToken);
         dispatch({
           type: USER_REGISTER_SUCCESS,
@@ -102,7 +106,7 @@ export function loginUser(password, email) {
     });
     postLoginUser(password, email)
       .then((result) => {
-        setCookie("accessToken", result.accessToken.split("Bearer ")[1]); //отделяем схему авторизации
+        setCookie("token", result.accessToken.split("Bearer ")[1]); //отделяем схему авторизации
         localStorage.setItem("refreshToken", result.refreshToken);
         dispatch({
           type: LOGIN_USER_SUCCESS,
@@ -126,7 +130,7 @@ export function refreshToken() {
     postToken()
       .then((result) => {
         console.log("токен обновлен");
-        setCookie("accessToken", result.accessToken.split("Bearer ")[1]); //отделяем схему авторизации
+        setCookie("token", result.accessToken.split("Bearer ")[1]); //отделяем схему авторизации
         localStorage.setItem("refreshToken", result.refreshToken);
         dispatch({
           type: UPDATE_TOKEN_SUCCESS,
@@ -151,19 +155,19 @@ export function getUserInfo() {
     getUser()
       .then((result) => {
         if (result.success) {
-          console.log("инфо обновлено");
           dispatch({
             type: CURRENT_USER_SUCCESS,
             payload: result,
           });
+        } else {
+          dispatch(refreshToken());
         }
       })
       .catch((error) => {
-        if (error.message === "Token is invalid") {
+        if (error.message === "Token is invalid" || error.message === "jwt malformed") {
           dispatch(refreshToken());
           dispatch(getUserInfo());
         } else {
-          console.log("инфо о пользователе не обновлено");
           dispatch({
             type: CURRENT_USER_FAILED,
             payload: error.message,
@@ -189,7 +193,6 @@ export function refreshUserInfo(password, email, name) {
         console.log(result);
       })
       .catch((error) => {
-        console.log(error.message);
         if (localStorage.getItem("refreshToken")) {
           dispatch(refreshToken());
           dispatch(refreshUserInfo(password, email, name));
@@ -199,6 +202,29 @@ export function refreshUserInfo(password, email, name) {
             payload: error.message,
           });
         }
+      });
+  };
+}
+//мидлвар для выхода из приложения (на странице /profile кнопка 'Выйти')
+export function logOutUser() {
+  return (dispatch) => {
+    dispatch({
+      type: LOGOUT_USER_REQUEST,
+    });
+    postLogoutUser()
+      .then((result) => {
+        localStorage.removeItem("refreshToken");
+        deleteCookie("token");
+        dispatch({
+          type: LOGOUT_USER_SUCCESS,
+          payload: result,
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          type: LOGOUT_USER_FAILED,
+          payload: error.message,
+        });
       });
   };
 }

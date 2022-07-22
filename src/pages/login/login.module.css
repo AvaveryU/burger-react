@@ -42,3 +42,6 @@
 .content > div > div {
   width: 100%;
 }
+.error {
+  color: #e52b1a;
+}

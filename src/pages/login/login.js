@@ -13,8 +13,9 @@ export const LoginPage = () => {
   const {
     user: { email },
     password,
-    isAuthChecked,
     isLogin,
+    loginUserError,
+    message,
   } = useSelector((state) => state.user);
   //стейты для полей ввода
   const [inputPassword, setPassword] = useState(password);
@@ -40,10 +41,11 @@ export const LoginPage = () => {
     event.preventDefault();
     dispatch(loginUser(inputPassword, inputEmail));
   };
-  //если сработал флаг авторизации, перебросить на главную страницу
-  if (isAuthChecked || isLogin) {
+  //если сработали флаги авторизации, перебросить на главную страницу
+  if (isLogin) {
     return <Redirect to={location.state?.from || "/profile"} />;
   }
+  console.log();
   return (
     <>
       <main className={styles.page}>
@@ -55,18 +57,19 @@ export const LoginPage = () => {
                 className={`mt-6`}
                 onChange={onLoginEmail}
                 onIconClick={() => onIconClick(refInputEmail)}
-                value={inputEmail}
+                value={inputEmail || ""}
                 name={"email"}
                 icon={"EditIcon"}
                 placeholder={"E-mail"}
                 ref={refInputEmail}
               />
-              <PasswordInput className={`mt-6`} name={"password"} onChange={onLoginPassword} value={inputPassword} />
+              <PasswordInput className={`mt-6`} name={"password"} onChange={onLoginPassword} value={inputPassword || ""} />
               <Button type="primary" size="large" disabled={inputEmail && inputPassword ? false : true}>
                 Войти
               </Button>
             </form>
           </div>
+          {loginUserError && <span className={`${styles.error} text text_type_main-small`}>{message}</span>}
           <div className={`${styles.text} ml-2`}>
             <p className={`text text_type_main-default text_color_inactive`}>
               Вы — новый пользователь?
