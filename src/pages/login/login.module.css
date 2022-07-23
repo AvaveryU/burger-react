@@ -1,0 +1,47 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 972px;
+  margin-top: 180px;
+  justify-content: flex-start;
+}
+.login {
+  min-width: 480px;
+  min-height: 430px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.wrapper {
+  max-width: 480px;
+}
+/*поля ввода*/
+.wrapper div {
+  width: 100%;
+}
+/*картинки слева в полях ввода*/
+.wrapper div div div {
+  max-width: 24px;
+}
+.form {
+  composes: login;
+  min-height: 286px;
+  justify-content: space-between;
+}
+.button {
+  width: 128px;
+}
+.text {
+  text-align: center;
+}
+.link {
+  text-decoration: none;
+  color: #4c4cff;
+}
+.content > div > div {
+  width: 100%;
+}
+.error {
+  color: #e52b1a;
+}

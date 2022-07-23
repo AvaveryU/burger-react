@@ -33,7 +33,7 @@ const ConstructorIngredient = ({ index, item, handleClose }) => {
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) return;
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) return;
       //диспатч для изменения индекса ингредиента в конструкторе. Выполняется при проведении курсора с захваченным ингредиентом
-      dispatch(moveItem(dragIndex, hoverIndex)); 
+      dispatch(moveItem(dragIndex, hoverIndex));
       item.index = hoverIndex;
     },
   });
@@ -55,12 +55,7 @@ const ConstructorIngredient = ({ index, item, handleClose }) => {
       <div className={`${constructorIngredientStyles.constructor__dragIcon} mr-2`}>
         <DragIcon />
       </div>
-      <ConstructorElement
-      isLocked={false}
-      text={item.name}
-      price={item.price}
-      thumbnail={item.image_mobile}
-      handleClose={handleClose} />
+      <ConstructorElement isLocked={false} text={item.name} price={item.price} thumbnail={item.image_mobile} handleClose={handleClose} />
     </li>
   );
 };

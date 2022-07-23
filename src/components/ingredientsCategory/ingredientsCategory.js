@@ -5,9 +5,8 @@ import { useSelector } from "react-redux";
 
 const IngredientsCategory = ({ type, title, onOpenModal }) => {
   const { ingredients } = useSelector((state) => state.ingredients);
-
   const category = ingredients.filter((ingredient) => ingredient.type === `${type}`);
-
+  
   return (
     <>
       <h3 className={`${categoryIngredients.ingredient__title} text text_type_main-medium m-0`}>{title}</h3>

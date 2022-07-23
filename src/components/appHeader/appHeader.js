@@ -1,25 +1,27 @@
 import appHeaderStyles from "./appHeader.module.css";
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Link, useRouteMatch } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const AppHeader = () => {
+  //если пользователь авторизован, будет отображено имя вместо "личный кабинет"
+  const userName = useSelector((state) => state.user.user?.name);
+  const pageProfile = useRouteMatch("/profile");
+
   return (
     <header className={`${appHeaderStyles.header} pt-4 pb-4`}>
       <nav>
         <ul className={appHeaderStyles.header__ul}>
           <li>
-            <a className={`${appHeaderStyles.header__link} mr-2 pt-4 pb-4 pl-5 pr-5`} href="#">
+            <Link className={`${appHeaderStyles.header__link} mr-2 pt-4 pb-4 pl-5 pr-5`} to={{ pathname: `/` }}>
               <BurgerIcon type="primary" />
-              <p className={`${appHeaderStyles.header__text} text text_type_main-default ml-2`}>
-                Конструктор
-              </p>
-            </a>
+              <p className={`${appHeaderStyles.header__text} text text_type_main-default ml-2`}>Конструктор</p>
+            </Link>
           </li>
           <li>
             <a className={`${appHeaderStyles.header__link} pt-4 pb-4 pl-5 pr-5`} href="#">
               <ListIcon type="secondary" />
-              <p className={`${appHeaderStyles.header__text} text text_type_main-default text_color_inactive ml-2`}>
-                Лента заказов
-              </p>
+              <p className={`${appHeaderStyles.header__text} text text_type_main-default text_color_inactive ml-2`}>Лента заказов</p>
             </a>
           </li>
         </ul>
@@ -27,12 +29,10 @@ const AppHeader = () => {
       <div className={`${appHeaderStyles.header__logo}`}>
         <Logo />
       </div>
-      <a className={`${appHeaderStyles.header__link} pt-4 pb-4 pl-5 pr-5`} href="#">
-        <ProfileIcon type="secondary" />
-        <p className={`${appHeaderStyles.header__text} text text_type_main-default text_color_inactive ml-2`}>
-          Личный кабинет
-        </p>
-      </a>
+      <Link className={`${appHeaderStyles.header__link} pt-4 pb-4 pl-5 pr-5`} to={{ pathname: `/profile` }}>
+        <ProfileIcon type={pageProfile ? "primary" : "secondary"} />
+        <p className={`${appHeaderStyles.header__text} text text_type_main-default text_color_inactive ml-2`}>{userName || "Личный кабинет"}</p>
+      </Link>
     </header>
   );
 };
