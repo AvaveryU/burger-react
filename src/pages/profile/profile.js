@@ -2,14 +2,21 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./profile.module.css";
-import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import {
+  Input,
+  Button,
+} from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector, useDispatch } from "react-redux";
-import { refreshUserInfo, logOutUser, getUserInfo } from "../../services/action/user";
+import {
+  refreshUserInfo,
+  logOutUser,
+  getUserInfo,
+} from "../../services/action/user";
 
-export const Profile = () => {
+export const ProfilePage = () => {
   const dispatch = useDispatch();
   //данные из хранилища о текущем пользователе
-  const { user, password, isUpdateUser } = useSelector((state) => state.user);
+  const { user, password } = useSelector((state) => state.user);
   // стейты для редактирования данных о текущем пользователе (пока не рабочий функционал)
   const [inputEmail, setEmail] = useState(user.email);
   const [inputName, setName] = useState(user.name);
@@ -39,9 +46,7 @@ export const Profile = () => {
   const handleSubmitFormProfile = (event) => {
     event.preventDefault();
     dispatch(refreshUserInfo(inputPassword, inputEmail, inputName));
-    if (isUpdateUser) {
-      setShowButtons(false);
-    }
+    return setShowButtons(false);
   };
 
   const handleCancelFormProfile = () => {
@@ -62,25 +67,45 @@ export const Profile = () => {
         <nav className={`${styles.profile} mr-15`}>
           <ul className={styles.list}>
             <li>
-              <NavLink to={`/profile`} className={styles.navigation} activeClassName={styles.activeNavigationLink}>
+              <NavLink
+                to={`/profile`}
+                className={styles.navigation}
+                activeClassName={styles.activeNavigationLink}
+              >
                 Профиль
               </NavLink>
             </li>
             <li>
-              <NavLink to={`/profile/orders`} className={styles.navigation} activeClassName={styles.activeNavigationLink}>
+              <NavLink
+                to={`/profile/orders`}
+                className={styles.navigation}
+                activeClassName={styles.activeNavigationLink}
+              >
                 История заказов
               </NavLink>
             </li>
             <li>
-              <NavLink to={`/login`} className={styles.navigation} activeClassName={styles.activeNavigationLink} onClick={logOut}>
+              <NavLink
+                to={`/login`}
+                className={styles.navigation}
+                activeClassName={styles.activeNavigationLink}
+                onClick={logOut}
+              >
                 Выход
               </NavLink>
             </li>
           </ul>
-          <p className={`${styles.note} mt-20`}>В этом разделе вы можете изменить&nbsp;свои персональные данные</p>
+          <p className={`${styles.note} mt-20`}>
+            В этом разделе вы можете изменить&nbsp;свои персональные данные
+          </p>
         </nav>
         <div className={`${styles.wrapper}`}>
-          <form name={`form`} id={`profile-form`} className={`${styles.form}`} onSubmit={handleSubmitFormProfile}>
+          <form
+            name={`form`}
+            id={`profile-form`}
+            className={`${styles.form}`}
+            onSubmit={handleSubmitFormProfile}
+          >
             <Input
               className={`mt-20`}
               onChange={(e) => {
@@ -125,7 +150,11 @@ export const Profile = () => {
             />
             {buttons ? (
               <div className={`${styles.buttons}`}>
-                <Button type="secondary" size="medium" onClick={handleCancelFormProfile}>
+                <Button
+                  type="secondary"
+                  size="medium"
+                  onClick={handleCancelFormProfile}
+                >
                   Отмена
                 </Button>
                 <Button type="primary" size="medium">

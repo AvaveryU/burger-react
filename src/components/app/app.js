@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { Switch, Route } from "react-router-dom";
-import { LoginPage, RegisterPage, ForgotPassword, Profile, ResetPassword } from "../../pages";
+import { LoginPage, RegisterPage, ForgotPassword, ProfilePage, ResetPassword, FeedPage } from "../../pages";
 import { useLocation, useHistory } from "react-router-dom";
 import appStyles from "./app.module.css";
 import AppHeader from "../appHeader/appHeader";
@@ -83,11 +83,14 @@ const App = () => {
         <Route path="/forgot-password" exact={true}>
           <ForgotPassword />
         </Route>
+        <Route path="/feed" exact={true}>
+          <FeedPage />
+        </Route>
         <ProtectedRoute path="/reset-password" exact={true}>
           <ResetPassword />
         </ProtectedRoute>
         <ProtectedRoute anonymous={true} user={isUser} path="/profile" exact={true}>
-          <Profile />
+          <ProfilePage />
         </ProtectedRoute>
         <Route path="/ingredients/:id">
           <IngredientDetails title="Детали ингредиента" />
