@@ -1,0 +1,67 @@
+.order_box {
+  width: 608px;
+  height: 100%;
+}
+.order_list {
+  height: 852px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+.order_card {
+  max-width: 584px;
+  min-height: 214px;
+  background: #1c1c21;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 2px rgba(0, 0, 0, 0.06),
+    0px 0px 1px rgba(0, 0, 0, 0.04);
+  border-radius: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+.order_caption {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.order_info {
+  color: #f2f2f3;
+}
+.order_ingredients {
+  height: 64px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.order_iconsList {
+  composes: order_ingredients;
+}
+.order_icons {
+  width: 64px;
+  height: 64px;
+  border-radius: 100px;
+  border: 2px solid #4c4cff;
+  background: #131316;
+}
+/* наложение иконок ингредиентов друг на друга */
+.order_icons:nth-of-type(n) {
+  margin-right: -16px;
+}
+.order_image {
+  width: 64px;
+  height: 100%;
+  object-fit: cover;
+}
+.order_price {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+.ingredient__digits {
+  color: #f2f2f3;
+}
+.order_iconPrice {
+  height: 22px;
+  width: 22px;
+}
