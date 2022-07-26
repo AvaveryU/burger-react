@@ -6,6 +6,9 @@
   height: 852px;
   overflow: scroll;
   overflow-x: hidden;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 .order_card {
   max-width: 584px;
@@ -32,9 +35,11 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 }
 .order_iconsList {
   composes: order_ingredients;
+  flex-direction: row-reverse;
 }
 .order_icons {
   width: 64px;

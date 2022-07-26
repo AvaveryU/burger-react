@@ -13,8 +13,9 @@ const OrderList = () => {
     <>
       <div className={`${styles.order_box} mt-10 mb-5`}>
         <h2 className={`text text_type_main-large mb-5`}>Лента&nbsp;заказов</h2>
-        <div className={`${styles.order_list}`}>
-          <div className={`${styles.order_card} p-6`} onClick={handlerOpenOrder}>
+        {/* список карточек с заказами */}
+        <ul className={`${styles.order_list}`}>
+          <li className={`${styles.order_card} p-6 mb-4`} onClick={handlerOpenOrder}>
             <div className={`${styles.order_caption}`}>
               <p className={`text text_type_digits-default`}>#034535</p>
               <p className={`text text_type_main-default text_color_inactive`}>
@@ -49,8 +50,8 @@ const OrderList = () => {
                 <img className={`${styles.order_iconPrice}`} src={CurrencyIcon} />
               </div>
             </div>
-          </div>
-        </div>
+          </li>
+        </ul>
       </div>
     </>
   );
