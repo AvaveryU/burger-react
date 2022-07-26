@@ -17,6 +17,7 @@ import { CLOSE_MODAL, OPEN_INGREDIENT_MODAL, OPEN_ORDER_MODAL } from "../../serv
 import { ProtectedRoute } from "../protectedRoute/protectedRoute";
 import { getUserInfo } from "../../services/action/user";
 import { getCookie } from "../../utils/utils";
+import OrderId from "../orderId/orderId";
 
 const App = () => {
   const location = useLocation();
@@ -85,6 +86,10 @@ const App = () => {
         </Route>
         <Route path="/feed" exact={true}>
           <FeedPage />
+        </Route>
+        {/* <Route path="/feed/:id"> */}
+        <Route path="/fee">
+          <OrderId />
         </Route>
         <ProtectedRoute path="/reset-password" exact={true}>
           <ResetPassword />

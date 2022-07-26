@@ -1,0 +1,54 @@
+.order_card {
+  max-width: 640px;
+  min-height: 620px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  margin: 122px auto 0;
+  color: #f2f2f3;
+}
+.order_number {
+  text-align: center;
+}
+.order_status {
+  composes: stats_item from "../stats/stats.module.css";
+}
+.order_ingredients {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  max-height: 312px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+.order_item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.order_part {
+  composes: order_item;
+  justify-content: flex-start;
+}
+.order_image {
+  width: 64px;
+  height: 64px;
+  border-radius: 100px;
+  border: 2px solid #4c4cff;
+  background: #131316;
+  box-sizing: border-box;
+  object-fit: cover;
+}
+.order_info {
+  composes: order_item;
+}
+.order_price {
+  composes: order_item;
+  justify-content: flex-end;
+}
+.order_iconPrice {
+  height: 22px;
+  width: 22px;
+}
