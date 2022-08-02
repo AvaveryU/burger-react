@@ -18,10 +18,6 @@ const OrderList = () => {
   }, [dispatch]);
   const orders = useSelector((state) => state.wsData.orders);
 
-  const handlerOpenOrder = (event) => {
-    event.preventDefault();
-  };
-
   return (
     <>
       {orders.map((order) => (
@@ -43,7 +39,7 @@ export default OrderList;
 //детали каждого заказа
 const OrderDetails = ({ order }) => {
   const { name, number, createdAt, ingredients, status } = order;
-  //все ингредиенты
+  //все ингредиенты сайта
   const allIngredients = useSelector((state) => state.ingredients.ingredients);
 
   //массив ингредиентов в заказе, найденных в общем списке ингредиентов
@@ -51,20 +47,20 @@ const OrderDetails = ({ order }) => {
     () => ingredients.map((ingredientInOrder) => allIngredients.find((item) => ingredientInOrder === item._id)),
     [ingredients, allIngredients]
   );
+
   //массив из найденных ингредиентов в каждом заказе
   const ingredientData = useMemo(() => ingredientsInOrder.map((item) => item), [ingredientsInOrder]);
 
   const orderDate = getTimeStampString(createdAt);
   const orderStatus = getOrderStatus(status);
 
-  const totalPrice = ingredients.reduce((previousValue, currentItem) => {
-    const ingredient = allIngredients.find((item) => currentItem === item._id);
+  const totalPrice = useMemo(() => {
+    return (
+      ingredientsInOrder.filter((item) => item.type === "bun")[0].price * 2 +
+      ingredientsInOrder.filter((item) => item.type !== "bun").reduce((s, v) => s + v.price, 0)
+    );
+  }, [ingredientsInOrder]);
 
-    if (!ingredient) {
-      return previousValue;
-    }
-    return previousValue + ingredient.price;
-  }, 0);
   const countItems = useMemo(() => {
     return ingredients.length - 6;
   }, [ingredients.length]);
@@ -84,30 +80,35 @@ const OrderDetails = ({ order }) => {
       <div className={`${styles.order_ingredients}`}>
         {/* список иконок ингредиентов в заказе*/}
         <div className={`${styles.order_iconsList}`}>
-          {ingredients.length && countItems <= 0
-            ? ingredientData.map((ingredientInOrder, index) => (
-                <div className={`${styles.order_icons}`} key={index}>
-                  {ingredientInOrder && (
-                    <img
-                      className={`${styles.order_image}`}
-                      src={ingredientInOrder.image}
-                      alt={ingredientInOrder.name}
-                    />
-                  )}
-                </div>
-              ))
-            : ingredientData.slice(0, 5).map((ingredientInOrder, index) => (
-                <div className={`${styles.order_icons}`} key={index}>
-                  {ingredientInOrder && countItems > 0 && (
-                    <img
-                      className={`${styles.order_image}`}
-                      src={ingredientInOrder.image}
-                      alt={ingredientInOrder.name}
-                    />
-                  )}
-                  + {countItems}
-                </div>
-              ))}
+          {/* если ингредиентов больше 7 штук, то добавляем счетчик */}
+          {ingredients.length > 6 && (
+            <div className={`${styles.order_icons} `}>
+              <span className={`text text_type_main-default ${styles.order_count}`}>{`+${countItems}`}</span>
+              {ingredientData.slice(5, 6).map((ingredientInOrder) => {
+                ingredientInOrder && (
+                  <img className={`${styles.order_image}`} src={ingredientInOrder.image} alt={ingredientInOrder.name} />
+                );
+              })}
+            </div>
+          )}
+          {/* если ингредиентов до 6 штук включительно */}
+          {ingredients.length <= 5 &&
+            ingredientData.map((ingredientInOrder, index) => (
+              <div className={`${styles.order_icons}`} key={index}>
+                {ingredientInOrder && (
+                  <img className={`${styles.order_image}`} src={ingredientInOrder.image} alt={ingredientInOrder.name} />
+                )}
+              </div>
+            ))}
+          {/* если ингредиентов больше 6 штук, то разметка для этих 6 штук */}
+          {ingredients.length > 6 &&
+            ingredientData.slice(0, 5).map((ingredientInOrder, index) => (
+              <div className={`${styles.order_icons}`} key={index}>
+                {ingredientInOrder && (
+                  <img className={`${styles.order_image}`} src={ingredientInOrder.image} alt={ingredientInOrder.name} />
+                )}
+              </div>
+            ))}
         </div>
         <div className={`${styles.order_price} ml-6`}>
           <p className={`${styles.ingredient__digits} text text_type_digits-default mr-2`}>{totalPrice}</p>
