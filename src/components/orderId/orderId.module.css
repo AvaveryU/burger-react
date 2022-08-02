@@ -52,3 +52,11 @@
   height: 22px;
   width: 22px;
 }
+.order_ingredients::-webkit-scrollbar {
+  width: 8px;
+  background: #2f2f37;
+}
+.order_ingredients::-webkit-scrollbar-thumb {
+  height: 194px;
+  background: #8585ad;
+}

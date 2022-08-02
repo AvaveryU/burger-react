@@ -1,5 +1,22 @@
+import {
+  WS_CONNECTION_CLOSED,
+  WS_CONNECTION_ERROR,
+  WS_CONNECTION_START,
+  WS_CONNECTION_SUCCESS,
+  WS_GET_MESSAGE,
+  WS_CONNECTION_CLOSE,
+  WS_AUTH_USER_START,
+  WS_AUTH_USER_CLOSE,
+  WS_AUTH_USER_SUCCESS,
+  WS_AUTH_USER_CLOSED,
+  WS_AUTH_USER_ERROR,
+  WS_AUTH_USER_GET_ORDER,
+} from "../services/action/wsActions";
+
 export function getCookie(name) {
-  const matches = document.cookie.match(new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") + "=([^;]*)"));
+  const matches = document.cookie.match(
+    new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") + "=([^;]*)")
+  );
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
@@ -28,3 +45,73 @@ export function setCookie(name, value, props) {
 export function deleteCookie(name) {
   setCookie(name, null, { expires: -1 });
 }
+//эндпоинты webSocket
+export const BURGER_API_WSS_ORDERS = "wss://norma.nomoreparties.space/orders";
+export const BURGER_API_WSS_FEED = "wss://norma.nomoreparties.space/orders/all";
+//объект с экшенами
+export const wsActions = {
+  wsInit: WS_CONNECTION_START,
+  wsClose: WS_CONNECTION_CLOSE,
+  onOpen: WS_CONNECTION_SUCCESS,
+  onClose: WS_CONNECTION_CLOSED,
+  onError: WS_CONNECTION_ERROR,
+  onMessage: WS_GET_MESSAGE,
+};
+//объект с экшенами
+export const wsActionsAuthUser = {
+  wsInit: WS_AUTH_USER_START,
+  wsClose: WS_AUTH_USER_CLOSE,
+  onOpen: WS_AUTH_USER_SUCCESS,
+  onClose: WS_AUTH_USER_CLOSED,
+  onError: WS_AUTH_USER_ERROR,
+  onMessage: WS_AUTH_USER_GET_ORDER,
+};
+
+export const formatDate = (date) => {
+  const today = new Date();
+  const todayISOstring = today.toISOString();
+  const slicedTodayISOString = todayISOstring.slice(0, 10);
+  const slicedOrderDateISOString = date.slice(0, 10);
+  const parsedToday = Date.parse(slicedTodayISOString);
+  const parsedOrderDate = Date.parse(slicedOrderDateISOString);
+
+  const daysDiff = (parsedToday - parsedOrderDate) / (1000 * 60 * 60 * 24);
+
+  return daysDiff;
+};
+
+const formatDaysDiff = (num) => {
+  if (num === 0) return "Сегодня";
+  if (num === 1) return "Вчера";
+  return num <= 4 ? `${num} дня назад` : `${num} дней назад`;
+};
+
+export const getTimeStampString = (date) => {
+  const dateObj = new Date(date);
+  const daysDiff = formatDate(date);
+  const formatedDaysDiff = formatDaysDiff(daysDiff);
+  const hours = dateObj.getHours();
+  const minutes = dateObj.getMinutes();
+  const hoursToString = hours <= 9 ? `0${hours}` : `${hours}`;
+  const minutesToString = minutes <= 9 ? `0${minutes}` : `${minutes}`;
+  const timeZone = Math.abs(dateObj.getTimezoneOffset() / 60);
+
+  return `${formatedDaysDiff}, ${hoursToString}:${minutesToString} i-GMT+${timeZone}`;
+};
+//статус заказа
+export const getOrderStatus = (status) => {
+  switch (status) {
+    case "done": {
+      return "Выполнен";
+    }
+    case "pending": {
+      return "Готовится";
+    }
+    case "created": {
+      return "Создан";
+    }
+    default: {
+      return "";
+    }
+  }
+};

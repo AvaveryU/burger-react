@@ -105,9 +105,20 @@ export const postToken = async () => {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
-      Authorization: "Bearer " + getCookie("accessToken"),
+      Authorization: "Bearer " + getCookie("token"),
     },
     body: JSON.stringify({ token: localStorage.getItem("refreshToken") }),
   });
   return checkResponse(response);
 };
+//функция для получения всех заказов
+// export const getOrdersAll = async () => {
+//   const response = await fetch("wss://norma.nomoreparties.space/orders/all", {
+//     method: "GET",
+//     headers: {
+//       "Content-Type": "application/json;charset=utf-8",
+//       Authorization: getCookie("token"),
+//     },
+//   });
+//   return checkResponse(response);
+// };

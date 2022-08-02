@@ -18,6 +18,7 @@ import { ProtectedRoute } from "../protectedRoute/protectedRoute";
 import { getUserInfo } from "../../services/action/user";
 import { getCookie } from "../../utils/utils";
 import OrderId from "../orderId/orderId";
+import OrderList from "../orderList/orderList";
 
 const App = () => {
   const location = useLocation();
@@ -33,7 +34,7 @@ const App = () => {
     //диспатчим данные об ингредиентах
     dispatch(getIngredientsData());
     //диспатчим данные о текущем пользователе
-    if (getCookie("accessToken") || localStorage.getItem("refreshToken")) {
+    if (getCookie("token") || localStorage.getItem("refreshToken")) {
       dispatch(getUserInfo());
     }
   }, [dispatch]);
@@ -87,8 +88,7 @@ const App = () => {
         <Route path="/feed" exact={true}>
           <FeedPage />
         </Route>
-        {/* <Route path="/feed/:id"> */}
-        <Route path="/fee">
+        <Route path="/feed/:id">
           <OrderId />
         </Route>
         <ProtectedRoute path="/reset-password" exact={true}>
@@ -96,6 +96,12 @@ const App = () => {
         </ProtectedRoute>
         <ProtectedRoute anonymous={true} user={isUser} path="/profile" exact={true}>
           <ProfilePage />
+        </ProtectedRoute>
+        <ProtectedRoute path="/profile/orders" exact={true}>
+          <ProfilePage />
+        </ProtectedRoute>
+        <ProtectedRoute path="/profile/orders/:id">
+          <OrderList />
         </ProtectedRoute>
         <Route path="/ingredients/:id">
           <IngredientDetails title="Детали ингредиента" />

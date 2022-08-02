@@ -1,17 +1,12 @@
 //страница с настройками профиля пользователя
 import React, { useCallback, useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useRouteMatch, Link, useLocation, useParams } from "react-router-dom";
 import styles from "./profile.module.css";
-import {
-  Input,
-  Button,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  refreshUserInfo,
-  logOutUser,
-  getUserInfo,
-} from "../../services/action/user";
+import { refreshUserInfo, logOutUser, getUserInfo } from "../../services/action/user";
+import OrderList from "../../components/orderList/orderList";
+import { wsConnectionStart, wsConnectionClosed } from "../../services/action/wsActions";
 
 export const ProfilePage = () => {
   const dispatch = useDispatch();
@@ -29,6 +24,10 @@ export const ProfilePage = () => {
   //на странице сразу получим актуальные данные о пользователе
   useEffect(() => {
     dispatch(getUserInfo());
+    // dispatch(wsConnectionStart());
+    // return () => {
+    //   dispatch(wsConnectionClosed());
+    // };
   }, [dispatch]);
   //функция при клике на иконку редактирования
   const onIconClick = useCallback(
@@ -60,6 +59,8 @@ export const ProfilePage = () => {
     event.preventDefault();
     dispatch(logOutUser());
   };
+  const pageProfile = useRouteMatch({ path: "/profile", exact: true });
+  const pageOrdersProfile = useRouteMatch({ path: "/profile/orders", exact: true });
 
   return (
     <>
@@ -69,6 +70,7 @@ export const ProfilePage = () => {
             <li>
               <NavLink
                 to={`/profile`}
+                exact={true}
                 className={styles.navigation}
                 activeClassName={styles.activeNavigationLink}
               >
@@ -78,6 +80,7 @@ export const ProfilePage = () => {
             <li>
               <NavLink
                 to={`/profile/orders`}
+                exact={true}
                 className={styles.navigation}
                 activeClassName={styles.activeNavigationLink}
               >
@@ -87,6 +90,7 @@ export const ProfilePage = () => {
             <li>
               <NavLink
                 to={`/login`}
+                exact={true}
                 className={styles.navigation}
                 activeClassName={styles.activeNavigationLink}
                 onClick={logOut}
@@ -95,77 +99,75 @@ export const ProfilePage = () => {
               </NavLink>
             </li>
           </ul>
-          <p className={`${styles.note} mt-20`}>
-            В этом разделе вы можете изменить&nbsp;свои персональные данные
-          </p>
+          <p className={`${styles.note} mt-20`}>В этом разделе вы можете изменить&nbsp;свои персональные данные</p>
         </nav>
-        <div className={`${styles.wrapper}`}>
-          <form
-            name={`form`}
-            id={`profile-form`}
-            className={`${styles.form}`}
-            onSubmit={handleSubmitFormProfile}
-          >
-            <Input
-              className={`mt-20`}
-              onChange={(e) => {
-                setName(e.target.value);
-                setShowButtons(true);
-              }}
-              onIconClick={() => onIconClick(refName)}
-              value={inputName || ""}
-              type={"text"}
-              placeholder={"Имя"}
-              name={"name"}
-              icon={"EditIcon"}
-              ref={refName}
-            />
-            <Input
-              className={`mt-6`}
-              onChange={(e) => {
-                setEmail(e.target.value);
-                setShowButtons(true);
-              }}
-              onIconClick={() => onIconClick(refEmail)}
-              value={inputEmail || ""}
-              type={"email"}
-              placeholder={"Логин"}
-              name={"email"}
-              icon={"EditIcon"}
-              ref={refEmail}
-            />
-            <Input
-              className={`mt-6`}
-              onChange={(e) => {
-                setPassword(e.target.value);
-                setShowButtons(true);
-              }}
-              onIconClick={() => onIconClick(refPassword)}
-              value={inputPassword || ""}
-              type={"password"}
-              placeholder={"Пароль"}
-              name={"password"}
-              icon={"EditIcon"}
-              ref={refPassword}
-            />
-            {buttons ? (
-              <div className={`${styles.buttons}`}>
-                <Button
-                  type="secondary"
-                  size="medium"
-                  onClick={handleCancelFormProfile}
-                >
-                  Отмена
-                </Button>
-                <Button type="primary" size="medium">
-                  Сохранить
-                </Button>
-              </div>
-            ) : (
-              <span></span>
-            )}
-          </form>
-        </div>
+        {/* пользователь на странице /profile */}
+        {pageProfile && (
+          <div className={`${styles.wrapper}`}>
+            <form name={`form`} id={`profile-form`} className={`${styles.form}`} onSubmit={handleSubmitFormProfile}>
+              <Input
+                className={`mt-20`}
+                onChange={(e) => {
+                  setName(e.target.value);
+                  setShowButtons(true);
+                }}
+                onIconClick={() => onIconClick(refName)}
+                value={inputName || ""}
+                type={"text"}
+                placeholder={"Имя"}
+                name={"name"}
+                icon={"EditIcon"}
+                ref={refName}
+              />
+              <Input
+                className={`mt-6`}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setShowButtons(true);
+                }}
+                onIconClick={() => onIconClick(refEmail)}
+                value={inputEmail || ""}
+                type={"email"}
+                placeholder={"Логин"}
+                name={"email"}
+                icon={"EditIcon"}
+                ref={refEmail}
+              />
+              <Input
+                className={`mt-6`}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setShowButtons(true);
+                }}
+                onIconClick={() => onIconClick(refPassword)}
+                value={inputPassword || ""}
+                type={"password"}
+                placeholder={"Пароль"}
+                name={"password"}
+                icon={"EditIcon"}
+                ref={refPassword}
+              />
+              {buttons ? (
+                <div className={`${styles.buttons}`}>
+                  <Button type="secondary" size="medium" onClick={handleCancelFormProfile}>
+                    Отмена
+                  </Button>
+                  <Button type="primary" size="medium">
+                    Сохранить
+                  </Button>
+                </div>
+              ) : (
+                <span></span>
+              )}
+            </form>
+          </div>
+        )}
+        {/* пользователь на странице /profile/orders */}
+        {pageOrdersProfile && (
+          <ul className={`${styles.order_list}`}>
+            <OrderList />
+          </ul>
+        )}
       </main>
     </>
   );

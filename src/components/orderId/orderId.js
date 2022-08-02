@@ -46,9 +46,9 @@ const OrderId = () => {
         <p className={`text text_type_main-medium mt-10`}>Death Star Starship Main бургер</p>
         <p className={`${styles.order_status} text text_type_main-default mt-3`}>Выполнен</p>
         {/* список ингредиентов заказа */}
-        <p className={`text text_type_main-medium mt-15`}>Состав:</p>
+        <p className={`text text_type_main-medium mt-15 mb-6`}>Состав:</p>
         <ul className={`${styles.order_ingredients}`}>
-          <li className={`${styles.order_item} mt-6 mb-4 mr-6`}>
+          <li className={`${styles.order_item} mb-4 mr-6`}>
             <div className={`${styles.order_part}`}>
               <img className={`${styles.order_image}`} src={ingredient?.image_mobile} alt={ingredient?.name} />
               <p className={`text text_type_main-default ml-4`}>{ingredient?.name}</p>
