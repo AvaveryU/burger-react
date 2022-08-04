@@ -10,13 +10,12 @@ import { OPEN_ORDER_USERS_MODAL } from "../../services/action/details.js";
 export const OrderList = () => {
   const location = useLocation();
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(wsConnectionStart());
     return () => {
       dispatch(wsCloseConnection());
     };
-  }, [dispatch]);
+  }, []);
 
   const orders = useSelector((state) => state.wsData.orders);
 
@@ -39,7 +38,7 @@ export const OrderList = () => {
             onClick={handleOpenOrderUsers}
           >
             {/* детали каждого заказа */}
-            <OrderItem order={order} />
+            <OrderItem order={order} onClick={handleOpenOrderUsers} />
           </Link>
         ))}
       </>

@@ -1,13 +1,13 @@
 import styles from "./orderItem.module.css";
 import CurrencyIcon from "../../images/CurrencyIcon.svg";
-import { useMemo, useEffect } from "react";
+import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { getTimeStampString } from "../../utils/utils";
 
 //детали каждого заказа
 const OrderItem = ({ order }) => {
-  const { name, number, createdAt, ingredients, status } = order;
-  useEffect(() => {}, [order]);
+  const { name, number, createdAt, ingredients } = order;
+
   //все ингредиенты сайта
   const allIngredients = useSelector((state) => state.ingredients.ingredients);
 
@@ -45,11 +45,6 @@ const OrderItem = ({ order }) => {
           <p className={`text text_type_main-default text_color_inactive`}>{orderDate}</p>
         </div>
         <p className={`${styles.order_info} text text_type_main-medium`}>{name}</p>
-        {/* {status !== "Выполнен" ? (
-          <p className="text text_type_main-default">{}</p>
-        ) : (
-          <p className={`text text_type_main-default `}>{orderStatus}</p>
-        )} */}
         <div className={`${styles.order_ingredients}`}>
           {/* список иконок ингредиентов в заказе*/}
           <div className={`${styles.order_iconsList}`}>

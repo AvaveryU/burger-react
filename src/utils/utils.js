@@ -71,7 +71,7 @@ export const formatDate = (date) => {
   const today = new Date();
   const todayISOstring = today.toISOString();
   const slicedTodayISOString = todayISOstring.slice(0, 10);
-  const slicedOrderDateISOString = date.slice(0, 10);
+  const slicedOrderDateISOString = date?.slice(0, 10);
   const parsedToday = Date.parse(slicedTodayISOString);
   const parsedOrderDate = Date.parse(slicedOrderDateISOString);
 

@@ -1,23 +1,33 @@
 //страница заказа
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styles from "./orderId.module.css";
 import CurrencyIcon from "../../images/CurrencyIcon.svg";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { wsConnectionStart, wsCloseConnection } from "../../services/action/wsActions";
 import { getTimeStampString, getOrderStatus } from "../../utils/utils";
 
 const OrderId = () => {
   const { id } = useParams();
+  const dispatch = useDispatch();
   const orders = useSelector((state) => state.wsData.orders);
-  const order = orders.find((item) => item._id === id);
+
+  useEffect(() => {
+    dispatch(wsConnectionStart());
+    return () => {
+      dispatch(wsCloseConnection());
+    };
+  }, []);
+
+  const order = orders?.find((item) => item._id === id);
 
   //все ингредиенты сайта
   const allIngredients = useSelector((state) => state.ingredients.ingredients);
 
   //массив ингредиентов в заказе, найденных в общем списке ингредиентов
   const ingredientsInOrder = useMemo(
-    () => order.ingredients.map((ingredientInOrder) => allIngredients.find((item) => ingredientInOrder === item._id)),
-    [order.ingredients, allIngredients]
+    () => order?.ingredients.map((ingredientInOrder) => allIngredients.find((item) => ingredientInOrder === item._id)),
+    [order?.ingredients, allIngredients]
   );
   //новый массив ингредиентов в заказе без повторяющихся позиций
   const ingredientList = [...new Set(ingredientsInOrder)];
@@ -28,19 +38,19 @@ const OrderId = () => {
     const counterIngredient = data.length;
     return counterIngredient;
   }
-  const orderDate = getTimeStampString(order.createdAt); //дата заказа
-  const orderStatus = getOrderStatus(order.status); //статус заказа
+  const orderDate = getTimeStampString(order?.createdAt); //дата заказа
+  const orderStatus = getOrderStatus(order?.status); //статус заказа
 
   const totalPrice = useMemo(() => {
     let price = 0;
-    order.ingredients.forEach((item) => {
+    order?.ingredients.forEach((item) => {
       const ingri = allIngredients.find((ingredientInOrder) => ingredientInOrder._id === item);
       if (ingri?.price) {
         price += ingri.price;
       }
     });
     return price;
-  }, [order.ingredients]);
+  }, [order?.ingredients]);
 
   return (
     <>

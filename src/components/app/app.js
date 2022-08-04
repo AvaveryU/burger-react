@@ -41,13 +41,13 @@ const App = () => {
 
   // закрытие всех модалок
   const closeAllModals = useCallback(() => {
-    if (isIngredientDetailsOpened || isOrderUsersOpened) {
+    if (isIngredientDetailsOpened || isOrderDetailsOpened || isOrderUsersOpened) {
       history.goBack(); //вернуться на одну страницу назад в истории сеансов
       dispatch({ type: CLOSE_MODAL });
     } else {
       dispatch({ type: CLOSE_MODAL });
     }
-  }, [dispatch, isIngredientDetailsOpened, isOrderUsersOpened, history]);
+  }, [dispatch, isIngredientDetailsOpened, isOrderUsersOpened, isOrderDetailsOpened, history]);
 
   // открытие окна с ингредиентом
   const handleOpenIngredientDetails = () => {
