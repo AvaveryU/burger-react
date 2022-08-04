@@ -4,3 +4,13 @@
   max-width: 1240px;
   margin: auto;
 }
+.order_card {
+  max-width: 640px;
+  min-height: 620px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  margin: 0 auto;
+  color: #f2f2f3;
+}

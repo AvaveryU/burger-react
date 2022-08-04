@@ -1,6 +1,6 @@
 //страница ленты заказов
 import styles from "./feed.module.css";
-import OrderList from "../../components/orderList/orderList";
+import { OrderList } from "../../components/orderList/orderList";
 import Stats from "../../components/stats/stats";
 
 export const FeedPage = () => {

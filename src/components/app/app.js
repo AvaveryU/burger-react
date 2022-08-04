@@ -18,7 +18,7 @@ import { ProtectedRoute } from "../protectedRoute/protectedRoute";
 import { getUserInfo } from "../../services/action/user";
 import { getCookie } from "../../utils/utils";
 import OrderId from "../orderId/orderId";
-import OrderList from "../orderList/orderList";
+import { OrderList } from "../orderList/orderList";
 
 const App = () => {
   const location = useLocation();
@@ -26,7 +26,7 @@ const App = () => {
   const dispatch = useDispatch();
   const { isLoading, error } = useSelector((state) => state.ingredients);
   // Булевые стейты для модального окна заказа, модального окна ингредиента и карточки с ингредиентом
-  const { isOrderDetailsOpened, isIngredientDetailsOpened } = useSelector((state) => state.details);
+  const { isOrderDetailsOpened, isIngredientDetailsOpened, isOrderUsersOpened } = useSelector((state) => state.details);
   const isUser = useSelector((state) => state.user.user); //данные о пользователе
   const background = location.state?.background;
 
@@ -41,13 +41,13 @@ const App = () => {
 
   // закрытие всех модалок
   const closeAllModals = useCallback(() => {
-    if (isIngredientDetailsOpened) {
+    if (isIngredientDetailsOpened || isOrderUsersOpened) {
       history.goBack(); //вернуться на одну страницу назад в истории сеансов
       dispatch({ type: CLOSE_MODAL });
     } else {
       dispatch({ type: CLOSE_MODAL });
     }
-  }, [dispatch, isIngredientDetailsOpened, history]);
+  }, [dispatch, isIngredientDetailsOpened, isOrderUsersOpened, history]);
 
   // открытие окна с ингредиентом
   const handleOpenIngredientDetails = () => {
@@ -118,6 +118,16 @@ const App = () => {
         <Route path="/ingredients/:id">
           <Modal title="Детали ингредиента" onClose={closeAllModals}>
             <IngredientDetails />
+          </Modal>
+        </Route>
+      )}
+      {/* окно заказа с ингредиентами */}
+      {background && isOrderUsersOpened && (
+        <Route path="/feed/:id">
+          <Modal onClose={closeAllModals}>
+            <span className={`${appStyles.order_card}`}>
+              <OrderId />
+            </span>
           </Modal>
         </Route>
       )}

@@ -5,7 +5,7 @@ import styles from "./profile.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector, useDispatch } from "react-redux";
 import { refreshUserInfo, logOutUser, getUserInfo } from "../../services/action/user";
-import OrderList from "../../components/orderList/orderList";
+import { OrderList } from "../../components/orderList/orderList";
 import { wsConnectionStart, wsConnectionClosed } from "../../services/action/wsActions";
 
 export const ProfilePage = () => {
