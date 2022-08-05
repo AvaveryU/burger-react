@@ -1,4 +1,13 @@
-import { postRegistration, postEmailUser, resetPassword, postLoginUser, postLogoutUser, getUser, postToken, patchUser } from "../../utils/api.js";
+import {
+  postRegistration,
+  postEmailUser,
+  resetPassword,
+  postLoginUser,
+  postLogoutUser,
+  getUser,
+  postToken,
+  patchUser,
+} from "../../utils/api.js";
 import { setCookie, deleteCookie } from "../../utils/utils";
 //экшены для регистрации
 export const USER_REGISTER_REQUEST = "USER_REGISTER_REQUEST";
@@ -130,7 +139,7 @@ export function refreshToken() {
     postToken()
       .then((result) => {
         console.log("токен обновлен");
-        setCookie("token", result.accessToken.split("Bearer ")[1]); //отделяем схему авторизации
+        setCookie("token", result.accessToken.split("Bearer ")[1], { expires: 1200 }); //отделяем схему авторизации
         localStorage.setItem("refreshToken", result.refreshToken);
         dispatch({
           type: UPDATE_TOKEN_SUCCESS,
@@ -159,12 +168,10 @@ export function getUserInfo() {
             type: CURRENT_USER_SUCCESS,
             payload: result,
           });
-        } else {
-          dispatch(refreshToken());
         }
       })
       .catch((error) => {
-        if (error.message === "Token is invalid" || error.message === "jwt malformed") {
+        if (localStorage.getItem("refreshToken")) {
           dispatch(refreshToken());
           dispatch(getUserInfo());
         } else {
@@ -184,12 +191,10 @@ export function refreshUserInfo(password, email, name) {
     });
     patchUser(password, email, name)
       .then((result) => {
-        if (result.success) {
-          dispatch({
-            type: UPDATE_USER_SUCCESS,
-            payload: result,
-          });
-        }
+        dispatch({
+          type: UPDATE_USER_SUCCESS,
+          payload: result,
+        });
         console.log(result);
       })
       .catch((error) => {

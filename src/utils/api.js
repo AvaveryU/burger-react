@@ -18,6 +18,9 @@ export const postOrderDetails = async (data) => {
   const urlOrders = "orders";
   const response = await fetch(INFO.baseURL + urlOrders, {
     method: "POST",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
       Authorization: "Bearer " + getCookie("token"),
@@ -62,6 +65,11 @@ export const postLoginUser = async (password, email) => {
   const response = await fetch(INFO.baseURL + urlLogin, {
     method: "POST",
     headers: INFO.headers,
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
     body: JSON.stringify({ email: email, password: password }),
   });
   return checkResponse(response);
@@ -71,6 +79,11 @@ export const getUser = async () => {
   const urlUser = "auth/user";
   const response = await fetch(INFO.baseURL + urlUser, {
     method: "GET",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
       Authorization: "Bearer " + getCookie("token"),
@@ -97,6 +110,11 @@ export const postLogoutUser = async () => {
   const response = await fetch(INFO.baseURL + urlLogout, {
     method: "POST",
     headers: INFO.headers,
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
     body: JSON.stringify({ token: localStorage.getItem("refreshToken") }),
   });
   return checkResponse(response);

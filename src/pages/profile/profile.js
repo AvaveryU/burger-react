@@ -6,8 +6,6 @@ import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-component
 import { useSelector, useDispatch } from "react-redux";
 import { refreshUserInfo, logOutUser, getUserInfo } from "../../services/action/user";
 import { OrderList } from "../../components/orderList/orderList";
-import { wsConnectionStartUser, wsCloseConnectionUser } from "../../services/action/wsActionsUser";
-import { getCookie } from "../../utils/utils";
 
 export const ProfilePage = () => {
   const dispatch = useDispatch();
@@ -22,13 +20,10 @@ export const ProfilePage = () => {
   const refName = React.useRef("text");
   const refEmail = React.useRef("email");
   const refPassword = React.useRef("password");
+
   //на странице сразу получим актуальные данные о пользователе
   useEffect(() => {
     dispatch(getUserInfo());
-    dispatch(wsConnectionStartUser(getCookie("token")));
-    return () => {
-      dispatch(wsCloseConnectionUser());
-    };
   }, [dispatch]);
   //функция при клике на иконку редактирования
   const onIconClick = useCallback(

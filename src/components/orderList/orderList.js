@@ -3,30 +3,26 @@ import styles from "./orderList.module.css";
 import { Link, useLocation, useRouteMatch } from "react-router-dom";
 import { useEffect } from "react";
 import { wsConnectionStart, wsCloseConnection } from "../../services/action/wsActions";
+import { wsConnectionStartUser, wsCloseConnectionUser } from "../../services/action/wsActionsUser";
 import { useDispatch, useSelector } from "react-redux";
 import OrderItem from "../orderItem/orderItem";
 import { OPEN_ORDER_USERS_MODAL } from "../../services/action/details.js";
+import { BURGER_API_WSS_ORDERS, getCookie } from "../../utils/utils";
 
 export const OrderList = () => {
   const location = useLocation();
   const dispatch = useDispatch();
-  const { isLogin, user } = useSelector((state) => state.user);
-  const pageOrdersProfile = useRouteMatch({ path: "/profile/orders", exact: true });
+  const pageOrdersProfile = useRouteMatch({ path: "/profile/orders" });
+  const accessToken = getCookie("token");
+  useEffect(() => {
+    pageOrdersProfile
+      ? dispatch(wsConnectionStartUser(BURGER_API_WSS_ORDERS + `?token=${accessToken}`))
+      : dispatch(wsConnectionStart());
+    return () => {
+      pageOrdersProfile ? dispatch(wsCloseConnectionUser()) : dispatch(wsCloseConnection());
+    };
+  }, [dispatch]);
 
-  useEffect(() => {
-    dispatch(wsConnectionStart());
-    return () => {
-      dispatch(wsCloseConnection());
-    };
-  }, []);
-  useEffect(() => {
-    if (isLogin) {
-      dispatch(wsConnectionStart());
-    }
-    return () => {
-      dispatch(wsCloseConnection());
-    };
-  }, [dispatch, user]);
   const orders = useSelector((state) => state.wsData.orders);
   const ordersUser = useSelector((state) => state.wsAuth.orders);
 
@@ -35,25 +31,24 @@ export const OrderList = () => {
     dispatch({ type: OPEN_ORDER_USERS_MODAL });
   };
 
-  if (!orders) {
+  if (!orders || !ordersUser) {
     return <p>Загружаем...</p>;
-  } else {
-    return (
-      <>
-        {/* если пользователь есть и находится на странице профиля, то брать массив заказов пользователя */}
-        {(isLogin && user && pageOrdersProfile ? ordersUser : orders)?.map((order) => (
-          // каждый заказ
-          <Link
-            to={{ pathname: `${location.pathname}/${order._id}`, state: { background: location } }}
-            className={`${styles.order_link}`}
-            key={order._id}
-            onClick={handleOpenOrderUsers}
-          >
-            {/* детали каждого заказа */}
-            <OrderItem order={order} />
-          </Link>
-        ))}
-      </>
-    );
   }
+  return (
+    <>
+      {/* если пользователь есть и находится на странице профиля, то брать массив заказов пользователя */}
+      {(pageOrdersProfile ? ordersUser : orders).map((order) => (
+        // каждый заказ
+        <Link
+          to={{ pathname: `${location.pathname}/${order._id}`, state: { background: location } }}
+          className={`${styles.order_link}`}
+          key={order._id}
+          onClick={handleOpenOrderUsers}
+        >
+          {/* детали каждого заказа */}
+          <OrderItem order={order} />
+        </Link>
+      ))}
+    </>
+  );
 };

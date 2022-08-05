@@ -67,7 +67,7 @@ export const wsActionsAuthUser = {
   onClose: WS_AUTH_USER_CLOSED,
   onError: WS_AUTH_USER_ERROR,
   onMessage: WS_AUTH_USER_GET_ORDER,
-  wsSendUserOrder: WS_AUTH_USER_SEND_ORDER,
+  wsSendData: WS_AUTH_USER_SEND_ORDER,
 };
 
 export const formatDate = (date) => {

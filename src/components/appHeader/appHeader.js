@@ -19,7 +19,7 @@ const AppHeader = () => {
             <Link
               className={`${appHeaderStyles.header__link} mr-2 pt-4 pb-4 pl-5 pr-5`}
               to={{ pathname: `/` }}
-              exact={true}
+              exact="true"
             >
               <BurgerIcon type={pageHome ? "primary" : "secondary"} />
               <p
@@ -33,7 +33,7 @@ const AppHeader = () => {
             <Link
               className={`${appHeaderStyles.header__link} pt-4 pb-4 pl-5 pr-5`}
               to={{ pathname: `/feed` }}
-              exact={true}
+              exact="true"
             >
               <ListIcon type={pageFeed ? "primary" : "secondary"} />
               <p

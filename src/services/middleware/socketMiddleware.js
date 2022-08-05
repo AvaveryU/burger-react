@@ -1,7 +1,7 @@
 export const socketMiddleware = (wsActions) => {
   return (store) => {
     let socket = null;
-    const { wsInit, wsClose, wsSendUserOrder, onOpen, onClose, onError, onMessage } = wsActions;
+    const { wsInit, wsClose, wsSendData, onOpen, onClose, onError, onMessage } = wsActions;
 
     return (next) => (action) => {
       const { dispatch } = store;
@@ -36,7 +36,7 @@ export const socketMiddleware = (wsActions) => {
         socket.close();
       }
 
-      if (wsSendUserOrder && type === wsSendUserOrder && socket) {
+      if (wsSendData && type === wsSendData && socket) {
         socket.send(JSON.stringify(payload));
       }
 

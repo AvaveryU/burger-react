@@ -18,7 +18,6 @@ import { ProtectedRoute } from "../protectedRoute/protectedRoute";
 import { getUserInfo } from "../../services/action/user";
 import { getCookie } from "../../utils/utils";
 import OrderId from "../orderId/orderId";
-import { OrderList } from "../orderList/orderList";
 
 const App = () => {
   const location = useLocation();
@@ -27,25 +26,27 @@ const App = () => {
   const { isLoading, error } = useSelector((state) => state.ingredients);
   // Булевые стейты для модальных окон
   const { isOrderDetailsOpened, isIngredientDetailsOpened, isOrderUsersOpened } = useSelector((state) => state.details);
-  const isUser = useSelector((state) => state.user.user); //данные о пользователе
+  const { isLogin, user } = useSelector((state) => state.user); //данные о пользователе
   const background = location.state?.background;
 
+  const refreshToken = localStorage.getItem("refreshToken");
   useEffect(() => {
     //диспатчим данные об ингредиентах
     dispatch(getIngredientsData());
     //диспатчим данные о текущем пользователе
-    if (getCookie("token") || localStorage.getItem("refreshToken")) {
+    if (getCookie("token") && !isLogin) {
       dispatch(getUserInfo());
     }
-  }, [dispatch]);
+  }, [dispatch, isLogin, refreshToken]);
 
   // закрытие всех модалок
   const closeAllModals = useCallback(() => {
-    if (isIngredientDetailsOpened || isOrderDetailsOpened || isOrderUsersOpened) {
-      history.goBack(); //вернуться на одну страницу назад в истории сеансов
+    if (isIngredientDetailsOpened || isOrderDetailsOpened) {
+      //history.goBack(); //вернуться на одну страницу назад в истории сеансов
+      history.replace("/");
       dispatch({ type: CLOSE_MODAL });
     } else {
-      dispatch({ type: CLOSE_MODAL });
+      history.goBack();
     }
   }, [dispatch, isIngredientDetailsOpened, isOrderUsersOpened, isOrderDetailsOpened, history]);
 
@@ -94,7 +95,7 @@ const App = () => {
         <ProtectedRoute path="/reset-password" exact={true}>
           <ResetPassword />
         </ProtectedRoute>
-        <ProtectedRoute anonymous={true} user={isUser} path="/profile" exact={true}>
+        <ProtectedRoute anonymous={true} user={user} path="/profile" exact={true}>
           <ProfilePage />
         </ProtectedRoute>
         <ProtectedRoute path="/profile/orders" exact={true}>
