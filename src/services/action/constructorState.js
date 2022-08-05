@@ -5,7 +5,7 @@ export const DELETE_INGREDIENT_CONSTRUCTOR = "REMOVE_INGREDIENT_CONSTRUCTOR";
 export const RESET_INGREDIENT_CONSTRUCTOR = "RESET_INGREDIENT_CONSTRUCTOR";
 export const MOVE_INGREDIENT_CONSTRUCTOR = "MOVE_INGREDIENT_CONSTRUCTOR";
 
-//action creator для добавления ингредиента из конструктора
+//action creator для добавления ингредиента в конструктор
 export function addItem(item) {
   return {
     type: ADD_INGREDIENT_CONSTRUCTOR,
@@ -33,6 +33,6 @@ export function moveItem(dragIndex, hoverIndex) {
   return {
     type: MOVE_INGREDIENT_CONSTRUCTOR,
     dragIndex: dragIndex,
-    hoverIndex: hoverIndex
+    hoverIndex: hoverIndex,
   };
 }

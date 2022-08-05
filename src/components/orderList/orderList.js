@@ -1,6 +1,6 @@
 //на странице /feed заказы
 import styles from "./orderList.module.css";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useRouteMatch } from "react-router-dom";
 import { useEffect } from "react";
 import { wsConnectionStart, wsCloseConnection } from "../../services/action/wsActions";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,14 +10,25 @@ import { OPEN_ORDER_USERS_MODAL } from "../../services/action/details.js";
 export const OrderList = () => {
   const location = useLocation();
   const dispatch = useDispatch();
+  const { isLogin, user } = useSelector((state) => state.user);
+  const pageOrdersProfile = useRouteMatch({ path: "/profile/orders", exact: true });
+
   useEffect(() => {
     dispatch(wsConnectionStart());
     return () => {
       dispatch(wsCloseConnection());
     };
   }, []);
-
+  useEffect(() => {
+    if (isLogin) {
+      dispatch(wsConnectionStart());
+    }
+    return () => {
+      dispatch(wsCloseConnection());
+    };
+  }, [dispatch, user]);
   const orders = useSelector((state) => state.wsData.orders);
+  const ordersUser = useSelector((state) => state.wsAuth.orders);
 
   // открытие модалки состава заказа
   const handleOpenOrderUsers = () => {
@@ -29,7 +40,8 @@ export const OrderList = () => {
   } else {
     return (
       <>
-        {orders.map((order) => (
+        {/* если пользователь есть и находится на странице профиля, то брать массив заказов пользователя */}
+        {(isLogin && user && pageOrdersProfile ? ordersUser : orders)?.map((order) => (
           // каждый заказ
           <Link
             to={{ pathname: `${location.pathname}/${order._id}`, state: { background: location } }}
@@ -38,7 +50,7 @@ export const OrderList = () => {
             onClick={handleOpenOrderUsers}
           >
             {/* детали каждого заказа */}
-            <OrderItem order={order} onClick={handleOpenOrderUsers} />
+            <OrderItem order={order} />
           </Link>
         ))}
       </>

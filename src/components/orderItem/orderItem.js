@@ -2,11 +2,13 @@ import styles from "./orderItem.module.css";
 import CurrencyIcon from "../../images/CurrencyIcon.svg";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
-import { getTimeStampString } from "../../utils/utils";
+import { getTimeStampString, getOrderStatus } from "../../utils/utils";
+import { useRouteMatch } from "react-router-dom";
 
 //детали каждого заказа
 const OrderItem = ({ order }) => {
-  const { name, number, createdAt, ingredients } = order;
+  const pageOrdersProfile = useRouteMatch({ path: "/profile/orders", exact: true });
+  const { name, number, createdAt, ingredients, status } = order;
 
   //все ингредиенты сайта
   const allIngredients = useSelector((state) => state.ingredients.ingredients);
@@ -21,6 +23,7 @@ const OrderItem = ({ order }) => {
   const ingredientData = useMemo(() => ingredientsInOrder.map((item) => item), [ingredientsInOrder]);
 
   const orderDate = getTimeStampString(createdAt); //дата заказа
+  const orderStatus = getOrderStatus(status); //статус заказа
 
   const totalPrice = useMemo(() => {
     let price = 0;
@@ -39,13 +42,18 @@ const OrderItem = ({ order }) => {
 
   return (
     <>
-      <li className={`${styles.order_card} p-6 mb-4`}>
+      <li className={`${styles.order_card} ${pageOrdersProfile ? styles.order_user : ``} p-6 mb-4`}>
         <div className={`${styles.order_caption}`}>
           <p className={`text text_type_digits-default`}>{`#` + number}</p>
           <p className={`text text_type_main-default text_color_inactive`}>{orderDate}</p>
         </div>
         <p className={`${styles.order_info} text text_type_main-medium`}>{name}</p>
-        <div className={`${styles.order_ingredients}`}>
+        {pageOrdersProfile ? (
+          <p className={`text text_type_main-default ${status === "done" ? styles.order_status : ""} `}>
+            {orderStatus}
+          </p>
+        ) : null}
+        <div className={`${styles.order_ingredients} mt-6`}>
           {/* список иконок ингредиентов в заказе*/}
           <div className={`${styles.order_iconsList}`}>
             {/* если ингредиентов больше 7 штук, то добавляем счетчик */}

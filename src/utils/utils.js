@@ -5,14 +5,16 @@ import {
   WS_CONNECTION_SUCCESS,
   WS_GET_MESSAGE,
   WS_CONNECTION_CLOSE,
+} from "../services/action/wsActions";
+import {
   WS_AUTH_USER_START,
   WS_AUTH_USER_CLOSE,
   WS_AUTH_USER_SUCCESS,
   WS_AUTH_USER_CLOSED,
   WS_AUTH_USER_ERROR,
   WS_AUTH_USER_GET_ORDER,
-} from "../services/action/wsActions";
-
+  WS_AUTH_USER_SEND_ORDER,
+} from "../services/action/wsActionsUser";
 export function getCookie(name) {
   const matches = document.cookie.match(
     new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") + "=([^;]*)")
@@ -65,6 +67,7 @@ export const wsActionsAuthUser = {
   onClose: WS_AUTH_USER_CLOSED,
   onError: WS_AUTH_USER_ERROR,
   onMessage: WS_AUTH_USER_GET_ORDER,
+  wsSendUserOrder: WS_AUTH_USER_SEND_ORDER,
 };
 
 export const formatDate = (date) => {

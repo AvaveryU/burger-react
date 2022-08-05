@@ -1,12 +1,13 @@
 //страница с настройками профиля пользователя
 import React, { useCallback, useState, useEffect } from "react";
-import { NavLink, useRouteMatch, Link, useLocation, useParams } from "react-router-dom";
+import { NavLink, useRouteMatch } from "react-router-dom";
 import styles from "./profile.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector, useDispatch } from "react-redux";
 import { refreshUserInfo, logOutUser, getUserInfo } from "../../services/action/user";
 import { OrderList } from "../../components/orderList/orderList";
-import { wsConnectionStart, wsConnectionClosed } from "../../services/action/wsActions";
+import { wsConnectionStartUser, wsCloseConnectionUser } from "../../services/action/wsActionsUser";
+import { getCookie } from "../../utils/utils";
 
 export const ProfilePage = () => {
   const dispatch = useDispatch();
@@ -24,10 +25,10 @@ export const ProfilePage = () => {
   //на странице сразу получим актуальные данные о пользователе
   useEffect(() => {
     dispatch(getUserInfo());
-    // dispatch(wsConnectionStart());
-    // return () => {
-    //   dispatch(wsConnectionClosed());
-    // };
+    dispatch(wsConnectionStartUser(getCookie("token")));
+    return () => {
+      dispatch(wsCloseConnectionUser());
+    };
   }, [dispatch]);
   //функция при клике на иконку редактирования
   const onIconClick = useCallback(

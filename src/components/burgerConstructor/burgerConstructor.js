@@ -25,7 +25,7 @@ const BurgerConstructor = ({ onOpenModal }) => {
     if (isAuthChecked) {
       onOpenModal(); //открыть модальное окно заказа
       //массив из id ингредиентов в конструкторе
-      const IdIngredients = [bun._id, ...data.map((ingredient) => ingredient._id)];
+      const IdIngredients = [bun._id, bun._id, ...data.map((ingredient) => ingredient._id)];
       dispatch(postOrderBurger(IdIngredients)); //отправить данные о заказе
       dispatch(resetAfterOrder()); //очистка конструктора после заказа
     }
@@ -51,32 +51,63 @@ const BurgerConstructor = ({ onOpenModal }) => {
     <div className={`${constructorStyles.constructor__box} mt-25 ml-4`} ref={drop}>
       <div className="ml-8" key={bun.ownId}>
         {Object.keys(bun).length > 0 ? (
-          <ConstructorElement type="top" isLocked={true} text={`${bun.name} (верх)`} thumbnail={bun.image_mobile} price={bun.price} />
+          <ConstructorElement
+            type="top"
+            isLocked={true}
+            text={`${bun.name} (верх)`}
+            thumbnail={bun.image_mobile}
+            price={bun.price}
+          />
         ) : (
-          <div className={`ml-2 mr-4 ${constructorStyles.constructor__bun_type_top} ${constructorStyles.constructor__element} text_type_main-medium`}>Выберите булку</div>
+          <div
+            className={`ml-2 mr-4 ${constructorStyles.constructor__bun_type_top} ${constructorStyles.constructor__element} text_type_main-medium`}
+          >
+            Выберите булку
+          </div>
         )}
       </div>
       {/* список ингредиентов между булками */}
       <ul className={`${constructorStyles.constructor__list}`}>
         {data.length !== 0 ? (
-          data.map((item, index) => <ConstructorIngredient key={item.id} index={index} item={item} handleClose={() => onDelete(item.id)} />)
+          data.map((item, index) => (
+            <ConstructorIngredient key={item.id} index={index} item={item} handleClose={() => onDelete(item.id)} />
+          ))
         ) : (
-          <li className={`ml-8 mr-2 ${constructorStyles.constructor__blank} ${constructorStyles.constructor__element} text_type_main-medium`}>Выберите начинку</li>
+          <li
+            className={`ml-8 mr-2 ${constructorStyles.constructor__blank} ${constructorStyles.constructor__element} text_type_main-medium`}
+          >
+            Выберите начинку
+          </li>
         )}
       </ul>
       {/* булка нижняя */}
       <div className="ml-8" key={bun.ownId}>
         {Object.keys(bun).length > 0 ? (
-          <ConstructorElement type="bottom" isLocked={true} text={`${bun.name} (низ)`} thumbnail={bun.image_mobile} price={bun.price} />
+          <ConstructorElement
+            type="bottom"
+            isLocked={true}
+            text={`${bun.name} (низ)`}
+            thumbnail={bun.image_mobile}
+            price={bun.price}
+          />
         ) : (
-          <div className={`ml-2 mr-4 ${constructorStyles.constructor__bun_type_down} ${constructorStyles.constructor__element} text_type_main-medium`}>Выберите булку</div>
+          <div
+            className={`ml-2 mr-4 ${constructorStyles.constructor__bun_type_down} ${constructorStyles.constructor__element} text_type_main-medium`}
+          >
+            Выберите булку
+          </div>
         )}
       </div>
       <div className={`${constructorStyles.constructor__button} mr-10 mt-10`}>
         <p className="text text_type_digits-medium mr-2">{totalPrice}</p>
         <img className={`${constructorStyles.constructor__icon} mr-10`} src={CurrencyIcon} alt="иконка"></img>
         {/* отобразить активную кнопку только при условии наличия булки и хотя бы 1 ингредиента */}
-        <Button type="primary" size="large" onClick={handleSendOrder} disabled={data.length !== 0 && Object.keys(bun).length > 0 ? false : true}>
+        <Button
+          type="primary"
+          size="large"
+          onClick={handleSendOrder}
+          disabled={data.length !== 0 && Object.keys(bun).length > 0 ? false : true}
+        >
           Оформить заказ
         </Button>
       </div>

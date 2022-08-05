@@ -18,7 +18,10 @@ export const postOrderDetails = async (data) => {
   const urlOrders = "orders";
   const response = await fetch(INFO.baseURL + urlOrders, {
     method: "POST",
-    headers: INFO.headers,
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+      Authorization: "Bearer " + getCookie("token"),
+    },
     body: JSON.stringify({ ingredients: data }),
   });
   return checkResponse(response);
@@ -111,14 +114,3 @@ export const postToken = async () => {
   });
   return checkResponse(response);
 };
-//функция для получения всех заказов
-// export const getOrdersAll = async () => {
-//   const response = await fetch("wss://norma.nomoreparties.space/orders/all", {
-//     method: "GET",
-//     headers: {
-//       "Content-Type": "application/json;charset=utf-8",
-//       Authorization: getCookie("token"),
-//     },
-//   });
-//   return checkResponse(response);
-// };

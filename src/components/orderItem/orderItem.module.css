@@ -78,3 +78,9 @@
   height: 22px;
   width: 22px;
 }
+.order_user {
+  min-height: 246px;
+}
+.order_status {
+  composes: stats_item from "../stats/stats.module.css";
+}

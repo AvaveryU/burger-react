@@ -25,7 +25,7 @@ const App = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { isLoading, error } = useSelector((state) => state.ingredients);
-  // Булевые стейты для модального окна заказа, модального окна ингредиента и карточки с ингредиентом
+  // Булевые стейты для модальных окон
   const { isOrderDetailsOpened, isIngredientDetailsOpened, isOrderUsersOpened } = useSelector((state) => state.details);
   const isUser = useSelector((state) => state.user.user); //данные о пользователе
   const background = location.state?.background;
@@ -101,7 +101,7 @@ const App = () => {
           <ProfilePage />
         </ProtectedRoute>
         <ProtectedRoute path="/profile/orders/:id">
-          <OrderList />
+          <OrderId />
         </ProtectedRoute>
         <Route path="/ingredients/:id">
           <IngredientDetails title="Детали ингредиента" />
@@ -125,9 +125,15 @@ const App = () => {
       {background && isOrderUsersOpened && (
         <Route path="/feed/:id">
           <Modal onClose={closeAllModals}>
-            <span className={`${appStyles.order_card}`}>
-              <OrderId />
-            </span>
+            <OrderId />
+          </Modal>
+        </Route>
+      )}
+      {/* окно заказа с ингредиентами */}
+      {background && isOrderUsersOpened && (
+        <Route path="/profile/orders/:id">
+          <Modal onClose={closeAllModals}>
+            <OrderId />
           </Modal>
         </Route>
       )}

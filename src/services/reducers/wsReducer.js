@@ -2,7 +2,7 @@ import { WS_CONNECTION_SUCCESS, WS_CONNECTION_ERROR, WS_CONNECTION_CLOSED, WS_GE
 
 const initialState = {
   wsConnected: false, //статус соединения WebSocket
-  orders: [], //входящие заказы
+  orders: [], // все заказы с сервера
   error: null, //ошибка от ws
   total: null,
   totalToday: null,
@@ -26,7 +26,7 @@ export const wsReducer = (state = initialState, action) => {
         ...state,
         wsConnected: false,
       };
-    case WS_GET_MESSAGE: //с сервера возвращаются данные
+    case WS_GET_MESSAGE: //с сервера возвращаются данные о всех заказах
       return {
         ...state,
         orders: action.payload.data.orders,

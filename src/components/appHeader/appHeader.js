@@ -8,6 +8,7 @@ const AppHeader = () => {
   const userName = useSelector((state) => state.user.user?.name);
   const pageHome = useRouteMatch({ path: "/", exact: true });
   const pageProfile = useRouteMatch("/profile");
+  const pageLogin = useRouteMatch("/login");
   const pageFeed = useRouteMatch("/feed");
 
   return (
@@ -49,7 +50,11 @@ const AppHeader = () => {
       </div>
       <Link className={`${appHeaderStyles.header__link} pt-4 pb-4 pl-5 pr-5`} to={{ pathname: `/profile` }}>
         <ProfileIcon type={pageProfile ? "primary" : "secondary"} />
-        <p className={`${pageProfile ? `text_color_active` : `text_color_inactive`} text text_type_main-default ml-2`}>
+        <p
+          className={`${
+            pageProfile || pageLogin ? `text_color_active` : `text_color_inactive`
+          } text text_type_main-default ml-2`}
+        >
           {userName || "Личный кабинет"}
         </p>
       </Link>
