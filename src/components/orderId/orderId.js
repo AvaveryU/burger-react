@@ -64,11 +64,7 @@ const OrderId = () => {
           {ingredientList.map((ingredientInOrder, index) => (
             <li className={`${styles.order_item} mb-4 mr-6`} key={index}>
               <div className={`${styles.order_part}`}>
-                <img
-                  className={`${styles.order_image}`}
-                  src={ingredientInOrder.image_mobile}
-                  alt={ingredientInOrder.name}
-                />
+                <img className={`${styles.order_image}`} src={ingredientInOrder.image} alt={ingredientInOrder.name} />
                 <p className={`text text_type_main-default ml-4`}>{ingredientInOrder.name}</p>
               </div>
               <div className={`${styles.order_part}`}>
