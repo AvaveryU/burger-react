@@ -139,7 +139,7 @@ export function refreshToken() {
     postToken()
       .then((result) => {
         console.log("токен обновлен");
-        setCookie("token", result.accessToken.split("Bearer ")[1], { expires: 1200 }); //отделяем схему авторизации
+        setCookie("token", result.accessToken.split("Bearer ")[1]); //отделяем схему авторизации
         localStorage.setItem("refreshToken", result.refreshToken);
         dispatch({
           type: UPDATE_TOKEN_SUCCESS,
