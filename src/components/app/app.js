@@ -29,18 +29,18 @@ const App = () => {
   const { isLogin, user } = useSelector((state) => state.user); //данные о пользователе
   const background = location.state?.background;
   const refreshToken = localStorage.getItem("refreshToken");
-
+  const accessToken = getCookie("token");
   useEffect(() => {
     //диспатчим данные об ингредиентах
     dispatch(getIngredientsData());
     //диспатчим данные о текущем пользователе
-    if (!isLogin && refreshToken && getCookie("token")) {
+    if (!isLogin && refreshToken && accessToken) {
       dispatch(getUserInfo());
     }
-    if (!getCookie("token") && refreshToken) {
-      dispatch(refreshToken());
-    }
-  }, [dispatch, refreshToken, isLogin]);
+    // if (!accessToken && refreshToken) {
+    //   dispatch(getUserInfo());
+    // }
+  }, [dispatch, refreshToken, accessToken, isLogin]);
   // закрытие всех модалок
   const closeAllModals = useCallback(() => {
     if (isIngredientDetailsOpened || isOrderDetailsOpened) {

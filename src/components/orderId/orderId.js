@@ -61,6 +61,9 @@ const OrderId = () => {
     return price;
   }, [order?.ingredients]);
 
+  if (!order) {
+    return <p>Загружаем...</p>;
+  }
   return (
     <>
       <span className={`${styles.order_card}`}>
