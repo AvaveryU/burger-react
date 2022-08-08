@@ -30,6 +30,7 @@ const App = () => {
   const background = location.state?.background;
   const refreshToken = localStorage.getItem("refreshToken");
   const accessToken = getCookie("token");
+
   useEffect(() => {
     //диспатчим данные об ингредиентах
     dispatch(getIngredientsData());
@@ -37,9 +38,6 @@ const App = () => {
     if (!isLogin && refreshToken && accessToken) {
       dispatch(getUserInfo());
     }
-    // if (!accessToken && refreshToken) {
-    //   dispatch(getUserInfo());
-    // }
   }, [dispatch, refreshToken, accessToken, isLogin]);
   // закрытие всех модалок
   const closeAllModals = useCallback(() => {
