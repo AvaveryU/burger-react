@@ -152,6 +152,7 @@ export function refreshToken() {
           type: UPDATE_TOKEN_FAILED,
           payload: error.message,
         });
+        dispatch(logOutUser());
       });
   };
 }
@@ -171,7 +172,11 @@ export function getUserInfo() {
         }
       })
       .catch((error) => {
-        if (localStorage.getItem("refreshToken")) {
+        if (
+          error.message === "Token is invalid" ||
+          error.message === "jwt malformed"
+          // error.message === "jwt expired"
+        ) {
           dispatch(refreshToken());
           dispatch(getUserInfo());
         } else {
@@ -218,8 +223,8 @@ export function logOutUser() {
     });
     postLogoutUser()
       .then((result) => {
-        localStorage.removeItem("refreshToken");
         deleteCookie("token");
+        localStorage.removeItem("refreshToken");
         dispatch({
           type: LOGOUT_USER_SUCCESS,
           payload: result,

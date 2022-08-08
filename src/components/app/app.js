@@ -28,21 +28,22 @@ const App = () => {
   const { isOrderDetailsOpened, isIngredientDetailsOpened, isOrderUsersOpened } = useSelector((state) => state.details);
   const { isLogin, user } = useSelector((state) => state.user); //данные о пользователе
   const background = location.state?.background;
-
   const refreshToken = localStorage.getItem("refreshToken");
+
   useEffect(() => {
     //диспатчим данные об ингредиентах
     dispatch(getIngredientsData());
     //диспатчим данные о текущем пользователе
-    if (getCookie("token") && !isLogin) {
+    if (!isLogin && refreshToken && getCookie("token")) {
       dispatch(getUserInfo());
     }
-  }, [dispatch, isLogin, refreshToken]);
-
+    if (!getCookie("token") && refreshToken) {
+      dispatch(refreshToken());
+    }
+  }, [dispatch, refreshToken, isLogin]);
   // закрытие всех модалок
   const closeAllModals = useCallback(() => {
     if (isIngredientDetailsOpened || isOrderDetailsOpened) {
-      //history.goBack(); //вернуться на одну страницу назад в истории сеансов
       history.replace("/");
       dispatch({ type: CLOSE_MODAL });
     } else {

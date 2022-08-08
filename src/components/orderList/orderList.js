@@ -21,7 +21,7 @@ export const OrderList = () => {
     return () => {
       pageOrdersProfile ? dispatch(wsCloseConnectionUser()) : dispatch(wsCloseConnection());
     };
-  }, [dispatch]);
+  }, [dispatch, accessToken]);
 
   const orders = useSelector((state) => state.wsData.orders);
   const ordersUser = useSelector((state) => state.wsAuth.orders);

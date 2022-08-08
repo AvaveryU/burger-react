@@ -24,7 +24,7 @@ export const ProfilePage = () => {
   //на странице сразу получим актуальные данные о пользователе
   useEffect(() => {
     dispatch(getUserInfo());
-  }, [dispatch]);
+  }, []);
   //функция при клике на иконку редактирования
   const onIconClick = useCallback(
     (data) => {
