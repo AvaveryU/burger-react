@@ -12,7 +12,7 @@ import { BURGER_API_WSS_ORDERS, getCookie } from "../../utils/utils";
 export const OrderList = () => {
   const location = useLocation();
   const dispatch = useDispatch();
-  const pageOrdersProfile = useRouteMatch({ pathname: "/profile/orders", exact: true });
+  const pageOrdersProfile = useRouteMatch({ path: "/profile/orders", exact: true });
   const accessToken = getCookie("token");
   useEffect(() => {
     pageOrdersProfile

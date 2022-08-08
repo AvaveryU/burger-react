@@ -13,7 +13,7 @@ import { wsConnectionStartUser, wsCloseConnectionUser } from "../../services/act
 const OrderId = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const pageOrdersProfile = useRouteMatch({ pathname: "/profile/orders" });
+  const pageOrdersProfile = useRouteMatch({ path: "/profile/orders" });
   const accessToken = getCookie("token");
   const orders = useSelector((state) => state.wsData.orders);
   const ordersUser = useSelector((state) => state.wsAuth.orders);
