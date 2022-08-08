@@ -115,7 +115,7 @@ const App = () => {
         </Modal>
       )}
       {/* модальное окно ингредиента */}
-      {background && isIngredientDetailsOpened && (
+      {background && (
         <Route path="/ingredients/:id">
           <Modal title="Детали ингредиента" onClose={closeAllModals}>
             <IngredientDetails />
@@ -123,7 +123,7 @@ const App = () => {
         </Route>
       )}
       {/* окно заказа с ингредиентами */}
-      {background && isOrderUsersOpened && (
+      {background && (
         <Route path="/feed/:id">
           <Modal onClose={closeAllModals}>
             <OrderId />
@@ -131,12 +131,12 @@ const App = () => {
         </Route>
       )}
       {/* окно заказа с ингредиентами */}
-      {background && isOrderUsersOpened && (
-        <Route path="/profile/orders/:id">
+      {background && (
+        <ProtectedRoute path="/profile/orders/:id">
           <Modal onClose={closeAllModals}>
             <OrderId />
           </Modal>
-        </Route>
+        </ProtectedRoute>
       )}
     </>
   );

@@ -6,20 +6,29 @@ import CurrencyIcon from "../../images/CurrencyIcon.svg";
 import { useSelector, useDispatch } from "react-redux";
 import { wsConnectionStart, wsCloseConnection } from "../../services/action/wsActions";
 import { getTimeStampString, getOrderStatus } from "../../utils/utils";
+import { useRouteMatch } from "react-router-dom";
+import { BURGER_API_WSS_ORDERS, getCookie } from "../../utils/utils";
+import { wsConnectionStartUser, wsCloseConnectionUser } from "../../services/action/wsActionsUser";
 
 const OrderId = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const pageOrdersProfile = useRouteMatch({ pathname: "/profile/orders" });
+  const accessToken = getCookie("token");
   const orders = useSelector((state) => state.wsData.orders);
+  const ordersUser = useSelector((state) => state.wsAuth.orders);
 
+  const ordersInModal = pageOrdersProfile ? ordersUser : orders;
   useEffect(() => {
-    dispatch(wsConnectionStart());
+    pageOrdersProfile
+      ? dispatch(wsConnectionStartUser(BURGER_API_WSS_ORDERS + `?token=${accessToken}`))
+      : dispatch(wsConnectionStart());
     return () => {
-      dispatch(wsCloseConnection());
+      pageOrdersProfile ? dispatch(wsCloseConnectionUser()) : dispatch(wsCloseConnection());
     };
-  }, []);
+  }, [dispatch]);
 
-  const order = orders?.find((item) => item._id === id);
+  const order = ordersInModal?.find((item) => item._id === id);
 
   //все ингредиенты сайта
   const allIngredients = useSelector((state) => state.ingredients.ingredients);
