@@ -1,4 +1,13 @@
-import { postRegistration, postEmailUser, resetPassword, postLoginUser, postLogoutUser, getUser, postToken, patchUser } from "../../utils/api.js";
+import {
+  postRegistration,
+  postEmailUser,
+  resetPassword,
+  postLoginUser,
+  postLogoutUser,
+  getUser,
+  postToken,
+  patchUser,
+} from "../../utils/api.js";
 import { setCookie, deleteCookie } from "../../utils/utils";
 //экшены для регистрации
 export const USER_REGISTER_REQUEST = "USER_REGISTER_REQUEST";
@@ -143,6 +152,7 @@ export function refreshToken() {
           type: UPDATE_TOKEN_FAILED,
           payload: error.message,
         });
+        dispatch(logOutUser());
       });
   };
 }
@@ -159,12 +169,14 @@ export function getUserInfo() {
             type: CURRENT_USER_SUCCESS,
             payload: result,
           });
-        } else {
-          dispatch(refreshToken());
         }
       })
       .catch((error) => {
-        if (error.message === "Token is invalid" || error.message === "jwt malformed") {
+        if (
+          error.message === "Token is invalid" ||
+          error.message === "jwt malformed"
+          // error.message === "jwt expired"
+        ) {
           dispatch(refreshToken());
           dispatch(getUserInfo());
         } else {
@@ -184,12 +196,10 @@ export function refreshUserInfo(password, email, name) {
     });
     patchUser(password, email, name)
       .then((result) => {
-        if (result.success) {
-          dispatch({
-            type: UPDATE_USER_SUCCESS,
-            payload: result,
-          });
-        }
+        dispatch({
+          type: UPDATE_USER_SUCCESS,
+          payload: result,
+        });
         console.log(result);
       })
       .catch((error) => {
@@ -213,8 +223,8 @@ export function logOutUser() {
     });
     postLogoutUser()
       .then((result) => {
-        localStorage.removeItem("refreshToken");
         deleteCookie("token");
+        localStorage.removeItem("refreshToken");
         dispatch({
           type: LOGOUT_USER_SUCCESS,
           payload: result,

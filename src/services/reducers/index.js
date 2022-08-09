@@ -4,6 +4,8 @@ import { constructorReducer } from "./constructorState";
 import { detailsReducer } from "./details";
 import { orderReducer } from "./order.js";
 import { userReducer } from "./user.js";
+import { wsReducer } from "./wsReducer.js";
+import { wsAuthReducer } from "./wsReducerUser.js";
 
 // Корневой редьюсер
 export const rootReducer = combineReducers({
@@ -11,5 +13,7 @@ export const rootReducer = combineReducers({
   constructorState: constructorReducer,
   details: detailsReducer,
   order: orderReducer,
-  user: userReducer
+  user: userReducer,
+  wsData: wsReducer,
+  wsAuth: wsAuthReducer,
 });

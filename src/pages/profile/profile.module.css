@@ -64,3 +64,15 @@
   display: flex;
   justify-content: flex-end;
 }
+.order_list {
+  height: 916px;
+  min-width: 844px;
+  overflow: scroll;
+  overflow-x: hidden;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.order_link {
+  composes: order_link from "../feed/feed.module.css";
+}

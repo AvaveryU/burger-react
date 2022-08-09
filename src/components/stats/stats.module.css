@@ -1,0 +1,36 @@
+.stats_box {
+  width: 580px;
+  height: 626px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.stats_boards {
+  display: grid;
+  grid-template-columns: repeat(2, 272px);
+  grid-template-rows: 54px 152px;
+  column-gap: 36px;
+  color: #f2f2f3;
+}
+.stats_done {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+.stats_item {
+  color: #00cccc;
+}
+.stats_inwork {
+  composes: stats_done;
+}
+.stats_completed {
+  color: #f2f2f3;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.stats_digits {
+  text-shadow: 0px 0px 16px rgba(51, 51, 255, 0.25), 0px 0px 8px rgba(51, 51, 255, 0.25),
+    0px 4px 32px rgba(51, 51, 255, 0.5);
+}

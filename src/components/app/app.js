@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { Switch, Route } from "react-router-dom";
-import { LoginPage, RegisterPage, ForgotPassword, Profile, ResetPassword } from "../../pages";
+import { LoginPage, RegisterPage, ForgotPassword, ProfilePage, ResetPassword, FeedPage } from "../../pages";
 import { useLocation, useHistory } from "react-router-dom";
 import appStyles from "./app.module.css";
 import AppHeader from "../appHeader/appHeader";
@@ -17,35 +17,37 @@ import { CLOSE_MODAL, OPEN_INGREDIENT_MODAL, OPEN_ORDER_MODAL } from "../../serv
 import { ProtectedRoute } from "../protectedRoute/protectedRoute";
 import { getUserInfo } from "../../services/action/user";
 import { getCookie } from "../../utils/utils";
+import OrderId from "../orderId/orderId";
 
 const App = () => {
   const location = useLocation();
   const history = useHistory();
   const dispatch = useDispatch();
   const { isLoading, error } = useSelector((state) => state.ingredients);
-  // Булевые стейты для модального окна заказа, модального окна ингредиента и карточки с ингредиентом
-  const { isOrderDetailsOpened, isIngredientDetailsOpened } = useSelector((state) => state.details);
-  const isUser = useSelector((state) => state.user.user); //данные о пользователе
+  // Булевые стейты для модальных окон
+  const { isOrderDetailsOpened, isIngredientDetailsOpened, isOrderUsersOpened } = useSelector((state) => state.details);
+  const { isLogin, user } = useSelector((state) => state.user); //данные о пользователе
   const background = location.state?.background;
+  const refreshToken = localStorage.getItem("refreshToken");
+  const accessToken = getCookie("token");
 
   useEffect(() => {
     //диспатчим данные об ингредиентах
     dispatch(getIngredientsData());
     //диспатчим данные о текущем пользователе
-    if (getCookie("accessToken") || localStorage.getItem("refreshToken")) {
+    if (!isLogin && refreshToken && accessToken) {
       dispatch(getUserInfo());
     }
-  }, [dispatch]);
-
+  }, [dispatch, refreshToken, accessToken, isLogin]);
   // закрытие всех модалок
   const closeAllModals = useCallback(() => {
-    if (isIngredientDetailsOpened) {
-      history.goBack(); //вернуться на одну страницу назад в истории сеансов
+    if (isIngredientDetailsOpened || isOrderDetailsOpened) {
+      history.replace("/");
       dispatch({ type: CLOSE_MODAL });
     } else {
-      dispatch({ type: CLOSE_MODAL });
+      history.goBack();
     }
-  }, [dispatch, isIngredientDetailsOpened, history]);
+  }, [dispatch, isIngredientDetailsOpened, isOrderUsersOpened, isOrderDetailsOpened, history]);
 
   // открытие окна с ингредиентом
   const handleOpenIngredientDetails = () => {
@@ -83,11 +85,23 @@ const App = () => {
         <Route path="/forgot-password" exact={true}>
           <ForgotPassword />
         </Route>
+        <Route path="/feed" exact={true}>
+          <FeedPage />
+        </Route>
+        <Route path="/feed/:id">
+          <OrderId />
+        </Route>
         <ProtectedRoute path="/reset-password" exact={true}>
           <ResetPassword />
         </ProtectedRoute>
-        <ProtectedRoute anonymous={true} user={isUser} path="/profile" exact={true}>
-          <Profile />
+        <ProtectedRoute anonymous={true} user={user} path="/profile" exact={true}>
+          <ProfilePage />
+        </ProtectedRoute>
+        <ProtectedRoute path="/profile/orders" exact={true}>
+          <ProfilePage />
+        </ProtectedRoute>
+        <ProtectedRoute path="/profile/orders/:id">
+          <OrderId />
         </ProtectedRoute>
         <Route path="/ingredients/:id">
           <IngredientDetails title="Детали ингредиента" />
@@ -100,12 +114,28 @@ const App = () => {
         </Modal>
       )}
       {/* модальное окно ингредиента */}
-      {background && isIngredientDetailsOpened && (
+      {background && (
         <Route path="/ingredients/:id">
           <Modal title="Детали ингредиента" onClose={closeAllModals}>
             <IngredientDetails />
           </Modal>
         </Route>
+      )}
+      {/* окно заказа с ингредиентами */}
+      {background && (
+        <Route path="/feed/:id">
+          <Modal onClose={closeAllModals}>
+            <OrderId />
+          </Modal>
+        </Route>
+      )}
+      {/* окно заказа с ингредиентами */}
+      {background && (
+        <ProtectedRoute path="/profile/orders/:id">
+          <Modal onClose={closeAllModals}>
+            <OrderId />
+          </Modal>
+        </ProtectedRoute>
       )}
     </>
   );
