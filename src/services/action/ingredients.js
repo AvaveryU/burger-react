@@ -1,4 +1,4 @@
-import { getIngredients } from "../../utils/api.js";
+import { getIngredients } from "../../utils/api.ts";
 //экшены для массива с ингредиентами
 export const GET_INGREDIENTS_REQUEST = "GET_INGREDIENTS_REQUEST";
 export const GET_INGREDIENTS_SUCCESS = "GET_INGREDIENTS_SUCCESS";

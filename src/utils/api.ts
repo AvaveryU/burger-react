@@ -1,7 +1,15 @@
 import INFO from "./data.json";
-import { getCookie } from "./utils.js";
+import { getCookie } from "./utils";
+import {
+  TOrderDetails,
+  TUserEmailForgotten,
+  TUserEmailResetOrLogout,
+  TUserRegistration,
+  TUser,
+  TRefreshToken,
+} from "./types";
 
-export function checkResponse(response) {
+export function checkResponse<T>(response: Response): Promise<T> {
   return response.ok ? response.json() : response.json().then((error) => Promise.reject(error));
 }
 // функция для получения данных с сервера
@@ -14,7 +22,7 @@ export const getIngredients = async () => {
   return checkResponse(response);
 };
 // функция для отправки данных на сервер о заказе
-export const postOrderDetails = async (data) => {
+export const postOrderDetails = async (data: Array<string>) => {
   const urlOrders = "orders";
   const response = await fetch(INFO.baseURL + urlOrders, {
     method: "POST",
@@ -27,40 +35,40 @@ export const postOrderDetails = async (data) => {
     },
     body: JSON.stringify({ ingredients: data }),
   });
-  return checkResponse(response);
+  return checkResponse<TOrderDetails>(response);
 };
 // функция для отправки данных на сервер о e-mail для восстановления пароля (page /forgot-password)
-export const postEmailUser = async (data) => {
+export const postEmailUser = async (data: string) => {
   const urlPasswordForgot = "password-reset";
   const response = await fetch(INFO.baseURL + urlPasswordForgot, {
     method: "POST",
     headers: INFO.headers,
     body: JSON.stringify({ email: data }),
   });
-  return checkResponse(response);
+  return checkResponse<TUserEmailForgotten>(response);
 };
 // функция для отправки данных на сервер с паролем и токеном для восстановления пароля (page /reset-password)
-export const resetPassword = async (password, token) => {
+export const resetPassword = async (password: string, token: string) => {
   const urlPasswordReset = "password-reset/reset";
   const response = await fetch(INFO.baseURL + urlPasswordReset, {
     method: "POST",
     headers: INFO.headers,
     body: JSON.stringify({ password: password, token: token }),
   });
-  return checkResponse(response);
+  return checkResponse<TUserEmailResetOrLogout>(response);
 };
 // функция для регистрации (page /register)
-export const postRegistration = async (password, name, email) => {
+export const postRegistration = async (password: string, name: string, email: string) => {
   const urlRegister = "auth/register";
   const response = await fetch(INFO.baseURL + urlRegister, {
     method: "POST",
     headers: INFO.headers,
     body: JSON.stringify({ email: email, password: password, name: name }),
   });
-  return checkResponse(response);
+  return checkResponse<TUserRegistration>(response);
 };
 // функция для авторизации (page /login)
-export const postLoginUser = async (password, email) => {
+export const postLoginUser = async (password: string, email: string) => {
   const urlLogin = "auth/login";
   const response = await fetch(INFO.baseURL + urlLogin, {
     method: "POST",
@@ -72,7 +80,7 @@ export const postLoginUser = async (password, email) => {
     referrerPolicy: "no-referrer",
     body: JSON.stringify({ email: email, password: password }),
   });
-  return checkResponse(response);
+  return checkResponse<TUser>(response);
 };
 // функция для получения данных о профиле
 export const getUser = async () => {
@@ -89,10 +97,10 @@ export const getUser = async () => {
       Authorization: "Bearer " + getCookie("token"),
     },
   });
-  return checkResponse(response);
+  return checkResponse<TUser>(response);
 };
 // функция для обновления данных в пользователе
-export const patchUser = async (password, email, name) => {
+export const patchUser = async (password: string, email: string, name: string) => {
   const urlUser = "auth/user";
   const response = await fetch(INFO.baseURL + urlUser, {
     method: "PATCH",
@@ -102,7 +110,7 @@ export const patchUser = async (password, email, name) => {
     },
     body: JSON.stringify({ email: email, name: name, password: password }),
   });
-  return checkResponse(response);
+  return checkResponse<TUser>(response);
 };
 // функция для выхода из профиля
 export const postLogoutUser = async () => {
@@ -117,7 +125,7 @@ export const postLogoutUser = async () => {
     referrerPolicy: "no-referrer",
     body: JSON.stringify({ token: localStorage.getItem("refreshToken") }),
   });
-  return checkResponse(response);
+  return checkResponse<TUserEmailResetOrLogout>(response);
 };
 // функция для обновления токена
 export const postToken = async () => {
@@ -130,5 +138,5 @@ export const postToken = async () => {
     },
     body: JSON.stringify({ token: localStorage.getItem("refreshToken") }),
   });
-  return checkResponse(response);
+  return checkResponse<TRefreshToken>(response);
 };

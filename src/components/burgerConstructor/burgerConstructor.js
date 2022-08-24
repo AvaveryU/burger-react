@@ -25,8 +25,8 @@ const BurgerConstructor = ({ onOpenModal }) => {
     if (isAuthChecked) {
       onOpenModal(); //открыть модальное окно заказа
       //массив из id ингредиентов в конструкторе
-      const IdIngredients = [bun._id, bun._id, ...data.map((ingredient) => ingredient._id)];
-      dispatch(postOrderBurger(IdIngredients)); //отправить данные о заказе
+      const idIngredients = [bun._id, bun._id, ...data.map((ingredient) => ingredient._id)];
+      dispatch(postOrderBurger(idIngredients)); //отправить данные о заказе
       dispatch(resetAfterOrder()); //очистка конструктора после заказа
     }
     if (!isAuthChecked || !isLogin) {

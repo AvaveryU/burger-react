@@ -7,7 +7,7 @@ import {
   getUser,
   postToken,
   patchUser,
-} from "../../utils/api.js";
+} from "../../utils/api.ts";
 import { setCookie, deleteCookie } from "../../utils/utils";
 //экшены для регистрации
 export const USER_REGISTER_REQUEST = "USER_REGISTER_REQUEST";

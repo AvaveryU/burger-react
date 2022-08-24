@@ -15,14 +15,16 @@ import {
   WS_AUTH_USER_GET_ORDER,
   WS_AUTH_USER_SEND_ORDER,
 } from "../services/action/wsActionsUser";
-export function getCookie(name) {
+import { IwsActions, IwsActionsAuthUser } from "./types";
+
+export function getCookie(name: string) {
   const matches = document.cookie.match(
     new RegExp("(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") + "=([^;]*)")
   );
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-export function setCookie(name, value, props) {
+export function setCookie(name: string, value: string, props: Record<string, string | number | boolean | Date>) {
   props = props || {};
   let exp = props.expires;
   if (typeof exp == "number" && exp) {
@@ -30,7 +32,7 @@ export function setCookie(name, value, props) {
     d.setTime(d.getTime() + exp * 1000);
     exp = props.expires = d;
   }
-  if (exp && exp.toUTCString) {
+  if (exp instanceof Date && exp.toUTCString) {
     props.expires = exp.toUTCString();
   }
   value = encodeURIComponent(value);
@@ -44,14 +46,15 @@ export function setCookie(name, value, props) {
   }
   document.cookie = updatedCookie;
 }
-export function deleteCookie(name) {
-  setCookie(name, null, { expires: -1 });
+export function deleteCookie(name: string) {
+  setCookie(name, "", { expires: -1 });
 }
 //эндпоинты webSocket
 export const BURGER_API_WSS_ORDERS = "wss://norma.nomoreparties.space/orders";
 export const BURGER_API_WSS_FEED = "wss://norma.nomoreparties.space/orders/all";
 //объект с экшенами
-export const wsActions = {
+//!как типизировать лучше?
+export const wsActions: IwsActions = {
   wsInit: WS_CONNECTION_START,
   wsClose: WS_CONNECTION_CLOSE,
   onOpen: WS_CONNECTION_SUCCESS,
@@ -60,7 +63,8 @@ export const wsActions = {
   onMessage: WS_GET_MESSAGE,
 };
 //объект с экшенами
-export const wsActionsAuthUser = {
+//!как типизировать лучше?
+export const wsActionsAuthUser: IwsActionsAuthUser = {
   wsInit: WS_AUTH_USER_START,
   wsClose: WS_AUTH_USER_CLOSE,
   onOpen: WS_AUTH_USER_SUCCESS,
@@ -70,7 +74,7 @@ export const wsActionsAuthUser = {
   wsSendData: WS_AUTH_USER_SEND_ORDER,
 };
 
-export const formatDate = (date) => {
+export const formatDate = (date: string) => {
   const today = new Date();
   const todayISOstring = today.toISOString();
   const slicedTodayISOString = todayISOstring.slice(0, 10);
@@ -83,13 +87,13 @@ export const formatDate = (date) => {
   return daysDiff;
 };
 
-const formatDaysDiff = (num) => {
+const formatDaysDiff = (num: number) => {
   if (num === 0) return "Сегодня";
   if (num === 1) return "Вчера";
   return num <= 4 ? `${num} дня назад` : `${num} дней назад`;
 };
 
-export const getTimeStampString = (date) => {
+export const getTimeStampString = (date: string) => {
   const dateObj = new Date(date);
   const daysDiff = formatDate(date);
   const formatedDaysDiff = formatDaysDiff(daysDiff);
@@ -102,7 +106,7 @@ export const getTimeStampString = (date) => {
   return `${formatedDaysDiff}, ${hoursToString}:${minutesToString} i-GMT+${timeZone}`;
 };
 //статус заказа
-export const getOrderStatus = (status) => {
+export const getOrderStatus = (status: string) => {
   switch (status) {
     case "done": {
       return "Выполнен";
