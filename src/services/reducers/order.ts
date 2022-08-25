@@ -2,7 +2,9 @@ import { CREATE_ORDER_REQUEST, CREATE_ORDER_SUCCESS, CREATE_ORDER_FAILED, TOrder
 import { TOrderDetails } from "../../utils/types";
 
 type TInitialState = {
-  order: TOrderDetails;
+  order: {
+    number: number;
+  };
   isLoading: boolean;
   error: boolean;
 };

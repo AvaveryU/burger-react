@@ -1,5 +1,5 @@
 import { postOrderDetails } from "../../utils/api";
-import { AppThunk, TOrdersDetails, TOrderDetails } from "../../utils/types";
+import { AppThunk, TOrderDetails } from "../../utils/types";
 //экшены для заказа в бургерной
 export const CREATE_ORDER_REQUEST: "CREATE_ORDER_REQUEST" = "CREATE_ORDER_REQUEST";
 export const CREATE_ORDER_SUCCESS: "CREATE_ORDER_REQUEST" = "CREATE_ORDER_REQUEST";
@@ -13,7 +13,7 @@ interface ICreateOrderReguest {
 }
 interface ICreateOrderSuccess {
   readonly type: typeof CREATE_ORDER_SUCCESS;
-  readonly payload: TOrderDetails;
+  readonly payload: number;
 }
 interface ICreateOrderFailed {
   readonly type: typeof CREATE_ORDER_FAILED;
@@ -25,7 +25,7 @@ const createOrderReguest = (): ICreateOrderReguest => {
     type: CREATE_ORDER_REQUEST,
   };
 };
-const createOrderSuccess = (result: { order: TOrderDetails }): ICreateOrderSuccess => {
+const createOrderSuccess = (result: TOrderDetails): ICreateOrderSuccess => {
   return {
     type: CREATE_ORDER_SUCCESS,
     payload: result.order.number,

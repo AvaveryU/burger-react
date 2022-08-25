@@ -36,13 +36,9 @@ export interface TingredientPropType {
 }
 //тип структуры заказа
 export type TOrderDetails = {
-  readonly createdAt?: string;
-  readonly ingredients?: ReadonlyArray<string>;
-  readonly name?: string;
-  readonly number?: number;
-  readonly status?: string;
-  readonly updatedAt?: string;
-  readonly _id?: string;
+  name: string;
+  order: { number: number };
+  success: boolean;
 };
 //!тип структуры ответа о восстановлении пароля
 export type TUserEmailForgottenOrLogout = {
