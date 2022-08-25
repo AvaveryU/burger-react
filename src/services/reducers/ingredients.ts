@@ -1,12 +1,24 @@
-import { GET_INGREDIENTS_REQUEST, GET_INGREDIENTS_SUCCESS, GET_INGREDIENTS_FAILED } from "../action/ingredients.js";
+import {
+  GET_INGREDIENTS_REQUEST,
+  GET_INGREDIENTS_SUCCESS,
+  GET_INGREDIENTS_FAILED,
+  TIngredientsActions,
+} from "../action/ingredients";
+import { TingredientPropType } from "../../utils/types";
 
-const initialState = {
+type TInitialState = {
+  ingredients: Array<TingredientPropType>;
+  isLoading: boolean;
+  error: boolean;
+};
+
+const initialState: TInitialState = {
   ingredients: [],
   isLoading: false,
   error: false,
 };
 //редьюсер массива с ингредиентами
-export const ingredientListReducer = (state = initialState, action) => {
+export const ingredientListReducer = (state = initialState, action: TIngredientsActions) => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST:
       return {

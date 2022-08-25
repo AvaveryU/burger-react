@@ -1,11 +1,22 @@
-import { ADD_INGREDIENT_CONSTRUCTOR, DELETE_INGREDIENT_CONSTRUCTOR, RESET_INGREDIENT_CONSTRUCTOR, MOVE_INGREDIENT_CONSTRUCTOR } from "../action/constructorState.js";
+import {
+  ADD_INGREDIENT_CONSTRUCTOR,
+  DELETE_INGREDIENT_CONSTRUCTOR,
+  RESET_INGREDIENT_CONSTRUCTOR,
+  MOVE_INGREDIENT_CONSTRUCTOR,
+  TConstructorActions,
+} from "../action/constructorState";
+//!убрать any
+type TInitialState = {
+  data: any;
+  readonly bun: {};
+};
 
-const initialState = {
+const initialState: TInitialState = {
   data: [], //массив из ингредиентов в конструкторе
   bun: {}, //булки в конструкторе
 };
 //редьюсер для конструктора (массив выбранных ингредиентов и тип булки)
-export const constructorReducer = (state = initialState, action) => {
+export const constructorReducer = (state = initialState, action: TConstructorActions) => {
   switch (action.type) {
     case ADD_INGREDIENT_CONSTRUCTOR:
       if (action.payload.type === "bun") {

@@ -2,8 +2,8 @@ import INFO from "./data.json";
 import { getCookie } from "./utils";
 import {
   TOrderDetails,
-  TUserEmailForgotten,
-  TUserEmailResetOrLogout,
+  TUserEmailForgottenOrLogout,
+  TUserEmailReset,
   TUserRegistration,
   TUser,
   TRefreshToken,
@@ -45,7 +45,7 @@ export const postEmailUser = async (data: string) => {
     headers: INFO.headers,
     body: JSON.stringify({ email: data }),
   });
-  return checkResponse<TUserEmailForgotten>(response);
+  return checkResponse<TUserEmailForgottenOrLogout>(response);
 };
 // функция для отправки данных на сервер с паролем и токеном для восстановления пароля (page /reset-password)
 export const resetPassword = async (password: string, token: string) => {
@@ -55,7 +55,7 @@ export const resetPassword = async (password: string, token: string) => {
     headers: INFO.headers,
     body: JSON.stringify({ password: password, token: token }),
   });
-  return checkResponse<TUserEmailResetOrLogout>(response);
+  return checkResponse<TUserEmailReset>(response);
 };
 // функция для регистрации (page /register)
 export const postRegistration = async (password: string, name: string, email: string) => {
@@ -125,7 +125,7 @@ export const postLogoutUser = async () => {
     referrerPolicy: "no-referrer",
     body: JSON.stringify({ token: localStorage.getItem("refreshToken") }),
   });
-  return checkResponse<TUserEmailResetOrLogout>(response);
+  return checkResponse<TUserEmailForgottenOrLogout>(response);
 };
 // функция для обновления токена
 export const postToken = async () => {

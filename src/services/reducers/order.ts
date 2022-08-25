@@ -1,14 +1,21 @@
-import { CREATE_ORDER_REQUEST, CREATE_ORDER_SUCCESS, CREATE_ORDER_FAILED } from "../action/order.js";
+import { CREATE_ORDER_REQUEST, CREATE_ORDER_SUCCESS, CREATE_ORDER_FAILED, TOrderActions } from "../action/order";
+import { TOrderDetails } from "../../utils/types";
 
-const initialState = {
+type TInitialState = {
+  order: TOrderDetails;
+  isLoading: boolean;
+  error: boolean;
+};
+const initialState: TInitialState = {
   order: {
     number: 0,
   },
   isLoading: false,
-  error: null,
+  error: false,
 };
+
 //редьюсер заказа
-export const orderReducer = (state = initialState, action) => {
+export const orderReducer = (state = initialState, action: TOrderActions) => {
   switch (action.type) {
     case CREATE_ORDER_REQUEST:
       return {
@@ -21,7 +28,7 @@ export const orderReducer = (state = initialState, action) => {
         ...state,
         order: { ...state.order, number: action.payload },
         isLoading: false,
-        error: null,
+        error: false,
       };
     case CREATE_ORDER_FAILED:
       return {

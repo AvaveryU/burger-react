@@ -1,3 +1,9 @@
+import { rootReducer } from "../services/reducers/index";
+import { ThunkAction, ThunkDispatch } from "redux-thunk";
+import { TConstructorActions } from "../services/action/constructorState";
+import { TIngredientsActions } from "../services/action/ingredients";
+import { TOrderActions } from "../services/action/order";
+
 //интерфейс для объекта с экшенами вебсокета для неавторизованного пользователя
 export interface IwsActions {
   readonly wsInit: string;
@@ -11,8 +17,8 @@ export interface IwsActions {
 export interface IwsActionsAuthUser extends IwsActions {
   readonly wsSendData: string;
 }
-//!тип для структуры получаемого ингредиента с сервера
-export type TingredientPropType = {
+//интерфейс для структуры получаемого ингредиента с сервера
+export interface TingredientPropType {
   readonly _id: string;
   readonly name: string;
   readonly type: string;
@@ -25,24 +31,26 @@ export type TingredientPropType = {
   readonly image_mobile: string;
   readonly image_large: string;
   readonly __v: number;
-};
+  readonly id?: string;
+  count?: number;
+}
 //тип структуры заказа
 export type TOrderDetails = {
-  readonly createdAt: string;
-  readonly ingredients: ReadonlyArray<string>;
-  readonly name: string;
-  readonly number: number;
-  readonly status: string;
-  readonly updatedAt: string;
-  readonly _id: string;
+  readonly createdAt?: string;
+  readonly ingredients?: ReadonlyArray<string>;
+  readonly name?: string;
+  readonly number?: number;
+  readonly status?: string;
+  readonly updatedAt?: string;
+  readonly _id?: string;
 };
-//тип структуры ответа о восстановлении пароля
-export type TUserEmailForgotten = {
+//!тип структуры ответа о восстановлении пароля
+export type TUserEmailForgottenOrLogout = {
   readonly message: string;
   readonly success: boolean;
 };
 //тип структуры ответа о сбросе пароля
-export type TUserEmailResetOrLogout = {
+export type TUserEmailReset = {
   readonly password: string;
   readonly token: string;
 };
@@ -56,7 +64,7 @@ export type TUserRegistration = {
   readonly accessToken: string;
   readonly refreshToken: string;
 };
-//тип структуры ответа данных о пользователе
+//!тип структуры ответа данных о пользователе
 export type TUser = {
   readonly success: boolean;
   readonly user: {
@@ -70,18 +78,25 @@ export type TRefreshToken = {
   readonly accessToken: string;
   readonly refreshToken: string;
 };
-// export interface CustomBody<T extends any> extends Body {
-//   json(): Promise<T>;
-// }
+//!тип структуры ответа о всех заказах ????
+export type TOrdersDetails = {
+  readonly success: boolean;
+  readonly orders: [
+    {
+      readonly number: number;
+      readonly status: string;
+      readonly createdAt: string;
+      readonly updatedAt: string;
+      readonly _id: string;
+    }
+  ];
+  readonly total: number;
+  readonly totalToday: number;
+};
+//тип для всех экшенов в приложении
+//!добавить экшены из других файлов
+type TApplicationActions = TConstructorActions | TIngredientsActions | TOrderActions;
 
-// export interface CustomResponse<T> extends CustomBody<T> {
-//   readonly headers: Headers;
-//   readonly ok: boolean;
-//   readonly redirected: boolean;
-//   readonly status: number;
-//   readonly statusText: string;
-//   readonly trailer: Promise<Headers>;
-//   readonly type: ResponseType;
-//   readonly url: string;
-//   clone(): Response;
-// }
+export type RootState = ReturnType<typeof rootReducer>;
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, TApplicationActions>;
+export type AppDispatch = ThunkDispatch<RootState, never, TApplicationActions>;

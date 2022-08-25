@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 import { ingredientListReducer } from "./ingredients";
 import { constructorReducer } from "./constructorState";
 import { detailsReducer } from "./details";
-import { orderReducer } from "./order.js";
+import { orderReducer } from "./order";
 import { userReducer } from "./user.js";
 import { wsReducer } from "./wsReducer.js";
 import { wsAuthReducer } from "./wsReducerUser.js";

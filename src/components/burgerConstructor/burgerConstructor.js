@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem, deleteItem, resetAfterOrder } from "../../services/action/constructorState";
-import { postOrderBurger } from "../../services/action/order.js";
+import { postOrderBurger } from "../../services/action/order";
 import { useDrop } from "react-dnd";
 import ConstructorIngredient from "../constructorIngredient/constructorIngredient";
 import { useHistory } from "react-router-dom";
