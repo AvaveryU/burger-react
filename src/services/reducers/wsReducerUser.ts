@@ -3,15 +3,21 @@ import {
   WS_AUTH_USER_CLOSED,
   WS_AUTH_USER_ERROR,
   WS_AUTH_USER_GET_ORDER,
+  TWsAuthActions,
 } from "../action/wsActionsUser";
-
-const initialState = {
+import { TOrder } from "../../utils/types";
+type TInitialState = {
+  wsConnected: boolean; //статус соединения WebSocket
+  orders: ReadonlyArray<TOrder>; //заказы пользователя
+  error: null | string; //ошибка от ws
+};
+const initialState: TInitialState = {
   wsConnected: false, //статус соединения WebSocket
   orders: [], //заказы пользователя
   error: null, //ошибка от ws
 };
 
-export const wsAuthReducer = (state = initialState, action) => {
+export const wsAuthReducer = (state = initialState, action: TWsAuthActions) => {
   switch (action.type) {
     case WS_AUTH_USER_SUCCESS:
       return {

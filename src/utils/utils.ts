@@ -24,7 +24,7 @@ export function getCookie(name: string) {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-export function setCookie(name: string, value: string, props: Record<string, string | number | boolean | Date>) {
+export function setCookie(name: string, value: string, props?: Record<string, string | number | boolean | Date>) {
   props = props || {};
   let exp = props.expires;
   if (typeof exp == "number" && exp) {

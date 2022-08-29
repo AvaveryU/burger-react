@@ -1,7 +1,5 @@
 import ingredientStyles from "./burgerIngredient.module.css";
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
-import ingredientPropType from "../../utils/prop-types.js";
-import PropTypes from "prop-types";
 import { useDrag } from "react-dnd";
 import { useSelector } from "react-redux";
 import { useMemo } from "react";
@@ -65,9 +63,3 @@ const BurgerIngredient = ({ ingredient, type, onOpenModal }) => {
 };
 
 export default BurgerIngredient;
-//проверка передаваемых пропсов
-BurgerIngredient.propTypes = {
-  ingredient: ingredientPropType.isRequired,
-  type: PropTypes.string.isRequired,
-  onOpenModal: PropTypes.func.isRequired,
-};

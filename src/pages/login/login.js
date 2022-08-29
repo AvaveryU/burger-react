@@ -5,7 +5,7 @@ import styles from "./login.module.css";
 import { Input, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../../services/action/user.js";
+import { loginUser } from "../../services/action/user";
 export const LoginPage = () => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -63,7 +63,12 @@ export const LoginPage = () => {
                 placeholder={"E-mail"}
                 ref={refInputEmail}
               />
-              <PasswordInput className={`mt-6`} name={"password"} onChange={onLoginPassword} value={inputPassword || ""} />
+              <PasswordInput
+                className={`mt-6`}
+                name={"password"}
+                onChange={onLoginPassword}
+                value={inputPassword || ""}
+              />
               <Button type="primary" size="large" disabled={inputEmail && inputPassword ? false : true}>
                 Войти
               </Button>

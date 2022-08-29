@@ -3,6 +3,11 @@ import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { TConstructorActions } from "../services/action/constructorState";
 import { TIngredientsActions } from "../services/action/ingredients";
 import { TOrderActions } from "../services/action/order";
+import { TDetailsModalActions } from "../services/action/details";
+import { TUserActions } from "../services/action/user";
+import { TWsActions } from "../services/action/wsActions";
+import { TWsAuthActions } from "../services/action/wsActionsUser";
+import { TypedUseSelectorHook, useSelector as selectorHook, useDispatch as dispatchHook } from "react-redux";
 
 //интерфейс для объекта с экшенами вебсокета для неавторизованного пользователя
 export interface IwsActions {
@@ -34,16 +39,52 @@ export interface TingredientPropType {
   readonly id?: string;
   count?: number;
 }
+//!тип данных об ингредиентах
+export type TIngredientDetails = {
+  readonly data: ReadonlyArray<TingredientPropType>;
+  readonly success: boolean;
+};
+//тип заказа
+export type TOrder = {
+  readonly number: number;
+  readonly status: string;
+  readonly createdAt: string;
+  readonly updatedAt: string;
+  readonly _id: string;
+  readonly owner: string[];
+  readonly price: number;
+  readonly ingredients: string[];
+};
 //тип структуры заказа
 export type TOrderDetails = {
   name: string;
-  order: { number: number };
+  order: TOrder;
   success: boolean;
+};
+//!тип структуры ответа о всех заказах ????
+export type TOrdersDetails = {
+  readonly success: boolean;
+  readonly orders: TOrder;
+  readonly total: number;
+  readonly totalToday: number;
+};
+export type TWsOrdersDetails = {
+  readonly data: {
+    readonly success: boolean;
+    readonly orders: Array<TOrder>;
+    readonly total: number;
+    readonly totalToday: number;
+  };
 };
 //!тип структуры ответа о восстановлении пароля
 export type TUserEmailForgottenOrLogout = {
   readonly message: string;
   readonly success: boolean;
+  readonly user: {
+    email: string;
+    name: string;
+  };
+  readonly password: string;
 };
 //тип структуры ответа о сбросе пароля
 export type TUserEmailReset = {
@@ -57,6 +98,7 @@ export type TUserRegistration = {
     email: string;
     name: string;
   };
+  readonly password: string;
   readonly accessToken: string;
   readonly refreshToken: string;
 };
@@ -67,6 +109,7 @@ export type TUser = {
     email: string;
     name: string;
   };
+  readonly password: string;
 };
 //тип при обновлении токена
 export type TRefreshToken = {
@@ -74,25 +117,19 @@ export type TRefreshToken = {
   readonly accessToken: string;
   readonly refreshToken: string;
 };
-//!тип структуры ответа о всех заказах ????
-export type TOrdersDetails = {
-  readonly success: boolean;
-  readonly orders: [
-    {
-      readonly number: number;
-      readonly status: string;
-      readonly createdAt: string;
-      readonly updatedAt: string;
-      readonly _id: string;
-    }
-  ];
-  readonly total: number;
-  readonly totalToday: number;
-};
 //тип для всех экшенов в приложении
-//!добавить экшены из других файлов
-type TApplicationActions = TConstructorActions | TIngredientsActions | TOrderActions;
+type TApplicationActions =
+  | TConstructorActions
+  | TIngredientsActions
+  | TOrderActions
+  | TDetailsModalActions
+  | TUserActions
+  | TWsActions
+  | TWsAuthActions;
 
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, TApplicationActions>;
 export type AppDispatch = ThunkDispatch<RootState, never, TApplicationActions>;
+
+export const useSelector: TypedUseSelectorHook<RootState> = selectorHook;
+export const useDispatch = () => dispatchHook<AppDispatch>();

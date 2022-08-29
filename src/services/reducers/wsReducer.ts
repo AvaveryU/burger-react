@@ -1,6 +1,20 @@
-import { WS_CONNECTION_SUCCESS, WS_CONNECTION_ERROR, WS_CONNECTION_CLOSED, WS_GET_MESSAGE } from "../action/wsActions";
+import {
+  WS_CONNECTION_SUCCESS,
+  WS_CONNECTION_ERROR,
+  WS_CONNECTION_CLOSED,
+  WS_GET_MESSAGE,
+  TWsActions,
+} from "../action/wsActions";
+import { TWsOrdersDetails } from "../../utils/types";
 
-const initialState = {
+type TInitialState = {
+  wsConnected: boolean; //статус соединения WebSocket
+  orders: TWsOrdersDetails[]; // все заказы с сервера
+  error: null | string; //ошибка от ws
+  total: null | string;
+  totalToday: null | string;
+};
+const initialState: TInitialState = {
   wsConnected: false, //статус соединения WebSocket
   orders: [], // все заказы с сервера
   error: null, //ошибка от ws
@@ -8,7 +22,7 @@ const initialState = {
   totalToday: null,
 };
 
-export const wsReducer = (state = initialState, action) => {
+export const wsReducer = (state = initialState, action: TWsActions) => {
   switch (action.type) {
     case WS_CONNECTION_SUCCESS:
       return {

@@ -23,8 +23,27 @@ import {
   LOGOUT_USER_REQUEST,
   LOGOUT_USER_SUCCESS,
   LOGOUT_USER_FAILED,
-} from "../action/user.js";
-const initialState = {
+  TUserActions,
+} from "../action/user";
+type TInitialState = {
+  user: {
+    email: string;
+    name: string;
+  };
+  password: string;
+  message: string;
+  token: string;
+  isAuthChecked: boolean;
+  isLogin: boolean;
+  isRegisterChecked: boolean;
+  isForgotPasswordChecked: boolean;
+  isPasswordChecked: boolean;
+  isRefreshToken: boolean;
+  isUpdateUser: boolean;
+  isLogOut: boolean;
+  loginUserError: boolean;
+};
+const initialState: TInitialState = {
   user: {
     email: "",
     name: "",
@@ -43,7 +62,7 @@ const initialState = {
   loginUserError: false, //флаг ошибки при неверных логин/пароль
 };
 //редьюсер регистрации/аутентификации/авторизации
-export const userReducer = (state = initialState, action) => {
+export const userReducer = (state = initialState, action: TUserActions) => {
   switch (action.type) {
     case USER_REGISTER_REQUEST:
       return {
@@ -203,7 +222,6 @@ export const userReducer = (state = initialState, action) => {
         isLogOut: true,
         isLogin: false,
         isAuthChecked: false,
-        message: action.payload.message,
       };
     case LOGOUT_USER_FAILED:
       return {

@@ -13,7 +13,7 @@ import Modal from "../modal/modal";
 import OrderDetails from "../orderDetails/orderDetails";
 import IngredientDetails from "../ingredientDetails/ingredientDetails";
 import { getIngredientsData } from "../../services/action/ingredients";
-import { CLOSE_MODAL, OPEN_INGREDIENT_MODAL, OPEN_ORDER_MODAL } from "../../services/action/details.js";
+import { CLOSE_MODAL, OPEN_INGREDIENT_MODAL, OPEN_ORDER_MODAL } from "../../services/action/details";
 import { ProtectedRoute } from "../protectedRoute/protectedRoute";
 import { getUserInfo } from "../../services/action/user";
 import { getCookie } from "../../utils/utils";

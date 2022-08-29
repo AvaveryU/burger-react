@@ -5,7 +5,7 @@ import styles from "./register.module.css";
 import { Input, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { useDispatch, useSelector } from "react-redux";
-import { postNewUser } from "../../services/action/user.js";
+import { postNewUser } from "../../services/action/user";
 
 export const RegisterPage = () => {
   const dispatch = useDispatch();
@@ -45,8 +45,22 @@ export const RegisterPage = () => {
           <div className={`${styles.wrapper}`}>
             <form name={`form`} id={`register-form`} className={`${styles.form}`} onSubmit={handleRegisterUser}>
               <h2 className="text text_type_main-medium">Регистрация</h2>
-              <Input className={`mt-20`} onChange={onRegisterName} value={inputName} type={"text"} placeholder={"Имя"} name={"name"} />
-              <Input className={`mt-6`} onChange={onRegisterEmail} value={inputEmail} type={"email"} placeholder={"E-mail"} name={"email"} />
+              <Input
+                className={`mt-20`}
+                onChange={onRegisterName}
+                value={inputName}
+                type={"text"}
+                placeholder={"Имя"}
+                name={"name"}
+              />
+              <Input
+                className={`mt-6`}
+                onChange={onRegisterEmail}
+                value={inputEmail}
+                type={"email"}
+                placeholder={"E-mail"}
+                name={"email"}
+              />
               <PasswordInput className={`mt-6`} onChange={onRegisterPassword} value={inputPassword} name={"password"} />
               <Button type="primary" size="medium" disabled={inputName && inputEmail && inputPassword ? false : true}>
                 Зарегистрироваться

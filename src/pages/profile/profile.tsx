@@ -1,25 +1,30 @@
 //страница с настройками профиля пользователя
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect, FunctionComponent, FormEventHandler } from "react";
 import { NavLink, useRouteMatch } from "react-router-dom";
 import styles from "./profile.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../utils/types";
 import { refreshUserInfo, logOutUser, getUserInfo } from "../../services/action/user";
 import { OrderList } from "../../components/orderList/orderList";
-
-export const ProfilePage = () => {
+type Props = {
+  className?: string;
+};
+export const ProfilePage: FunctionComponent<Props> = (props) => {
   const dispatch = useDispatch();
   //данные из хранилища о текущем пользователе
-  const { user, password } = useSelector((state) => state.user);
+  const {
+    user: { email, name },
+    password,
+  } = useSelector((state) => state.user);
   // стейты для редактирования данных о текущем пользователе (пока не рабочий функционал)
-  const [inputEmail, setEmail] = useState(user.email);
-  const [inputName, setName] = useState(user.name);
-  const [inputPassword, setPassword] = useState("");
-  const [buttons, setShowButtons] = useState(false);
+  const [inputEmail, setEmail] = useState<string>(email);
+  const [inputName, setName] = useState<string>(name);
+  const [inputPassword, setPassword] = useState<string>("");
+  const [buttons, setShowButtons] = useState<boolean>(false);
   // рефы для фокусировки поля
-  const refName = React.useRef("text");
-  const refEmail = React.useRef("email");
-  const refPassword = React.useRef("password");
+  const refName = React.useRef<any>("text");
+  const refEmail = React.useRef<any>("email");
+  const refPassword = React.useRef<any>("password");
 
   //на странице сразу получим актуальные данные о пользователе
   useEffect(() => {
@@ -27,7 +32,7 @@ export const ProfilePage = () => {
   }, []);
   //функция при клике на иконку редактирования
   const onIconClick = useCallback(
-    (data) => {
+    (data: any) => {
       if (refName === data) {
         setTimeout(() => refName.current.focus(), 0);
       } else if (refEmail === data) {
@@ -38,20 +43,20 @@ export const ProfilePage = () => {
     },
     [refName, refEmail, refPassword]
   );
-  const handleSubmitFormProfile = (event) => {
+  const handleSubmitFormProfile: FormEventHandler = (event): void => {
     event.preventDefault();
     dispatch(refreshUserInfo(inputPassword, inputEmail, inputName));
     return setShowButtons(false);
   };
 
-  const handleCancelFormProfile = () => {
-    setEmail(user.email);
-    setName(user.name);
+  const handleCancelFormProfile = (): void => {
+    setEmail(email);
+    setName(name);
     setPassword(password);
     setShowButtons(false);
   };
   //выход из ЛК
-  const logOut = (event) => {
+  const logOut = (event: React.SyntheticEvent) => {
     event.preventDefault();
     dispatch(logOutUser());
   };
@@ -102,7 +107,7 @@ export const ProfilePage = () => {
           <div className={`${styles.wrapper}`}>
             <form name={`form`} id={`profile-form`} className={`${styles.form}`} onSubmit={handleSubmitFormProfile}>
               <Input
-                className={`mt-20`}
+                //className={`mt-20`}
                 onChange={(e) => {
                   setName(e.target.value);
                   setShowButtons(true);
@@ -116,7 +121,7 @@ export const ProfilePage = () => {
                 ref={refName}
               />
               <Input
-                className={`mt-6`}
+                //className={`mt-6`}
                 onChange={(e) => {
                   setEmail(e.target.value);
                   setShowButtons(true);
@@ -130,7 +135,7 @@ export const ProfilePage = () => {
                 ref={refEmail}
               />
               <Input
-                className={`mt-6`}
+                //className={`mt-6`}
                 onChange={(e) => {
                   setPassword(e.target.value);
                   setShowButtons(true);
@@ -145,12 +150,8 @@ export const ProfilePage = () => {
               />
               {buttons ? (
                 <div className={`${styles.buttons}`}>
-                  <Button type="secondary" size="medium" onClick={handleCancelFormProfile}>
-                    Отмена
-                  </Button>
-                  <Button type="primary" size="medium">
-                    Сохранить
-                  </Button>
+                  <Button type="secondary" size="medium" onClick={handleCancelFormProfile} children="Отмена" />
+                  <Button type="primary" size="medium" children="Сохранить" />
                 </div>
               ) : (
                 <span></span>

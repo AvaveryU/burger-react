@@ -5,7 +5,7 @@ import styles from "./reset-password.module.css";
 import { Input, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { useDispatch, useSelector } from "react-redux";
-import { savePassword } from "../../services/action/user.js";
+import { savePassword } from "../../services/action/user";
 
 export const ResetPassword = () => {
   const dispatch = useDispatch();
@@ -36,8 +36,19 @@ export const ResetPassword = () => {
           <div className={`${styles.wrapper}`}>
             <form name={`form`} id={`reset_password-form`} className={`${styles.form}`} onSubmit={handleSubmitPassword}>
               <h2 className="text text_type_main-medium">Восстановление пароля</h2>
-              <PasswordInput onChange={onChangePassword} value={inputPassword} placeholder={"Введите новый пароль"} name={"password"} />
-              <Input onChange={onChangeToken} value={valueToken} type={"text"} placeholder={"Введите код из письма"} name={"code"} />
+              <PasswordInput
+                onChange={onChangePassword}
+                value={inputPassword}
+                placeholder={"Введите новый пароль"}
+                name={"password"}
+              />
+              <Input
+                onChange={onChangeToken}
+                value={valueToken}
+                type={"text"}
+                placeholder={"Введите код из письма"}
+                name={"code"}
+              />
               <Button type="primary" size="large" disabled={inputPassword && valueToken ? false : true}>
                 Сохранить
               </Button>

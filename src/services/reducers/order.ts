@@ -1,5 +1,4 @@
 import { CREATE_ORDER_REQUEST, CREATE_ORDER_SUCCESS, CREATE_ORDER_FAILED, TOrderActions } from "../action/order";
-import { TOrderDetails } from "../../utils/types";
 
 type TInitialState = {
   order: {
@@ -22,7 +21,6 @@ export const orderReducer = (state = initialState, action: TOrderActions) => {
     case CREATE_ORDER_REQUEST:
       return {
         ...state,
-        order: action.payload,
         isLoading: true,
       };
     case CREATE_ORDER_SUCCESS:
@@ -35,7 +33,7 @@ export const orderReducer = (state = initialState, action: TOrderActions) => {
     case CREATE_ORDER_FAILED:
       return {
         ...state,
-        order: {},
+        orderNumber: 0,
         isLoading: false,
         error: action.payload,
       };

@@ -3,9 +3,9 @@ import { ingredientListReducer } from "./ingredients";
 import { constructorReducer } from "./constructorState";
 import { detailsReducer } from "./details";
 import { orderReducer } from "./order";
-import { userReducer } from "./user.js";
-import { wsReducer } from "./wsReducer.js";
-import { wsAuthReducer } from "./wsReducerUser.js";
+import { userReducer } from "./user";
+import { wsReducer } from "./wsReducer";
+import { wsAuthReducer } from "./wsReducerUser";
 
 // Корневой редьюсер
 export const rootReducer = combineReducers({

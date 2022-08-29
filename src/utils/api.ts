@@ -80,7 +80,7 @@ export const postLoginUser = async (password: string, email: string) => {
     referrerPolicy: "no-referrer",
     body: JSON.stringify({ email: email, password: password }),
   });
-  return checkResponse<TUser>(response);
+  return checkResponse<TUserRegistration>(response);
 };
 // функция для получения данных о профиле
 export const getUser = async () => {

@@ -2,7 +2,9 @@
 import styles from "./feed.module.css";
 import { OrderList } from "../../components/orderList/orderList";
 import Stats from "../../components/stats/stats";
-export const FeedPage = () => {
+import { FunctionComponent } from "react";
+
+export const FeedPage: FunctionComponent = () => {
   return (
     <>
       <main className={styles.app}>

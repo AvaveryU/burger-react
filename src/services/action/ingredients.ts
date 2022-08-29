@@ -14,7 +14,7 @@ interface IGetIngredientsReguest {
 }
 interface IGetIngredientsSuccess {
   readonly type: typeof GET_INGREDIENTS_SUCCESS;
-  readonly payload: Array<TingredientPropType>;
+  readonly payload: ReadonlyArray<TingredientPropType>;
 }
 interface IGetIngredientsFailed {
   readonly type: typeof GET_INGREDIENTS_FAILED;
@@ -26,7 +26,7 @@ const getIngredientsReguest = (): IGetIngredientsReguest => {
     type: GET_INGREDIENTS_REQUEST,
   };
 };
-const getIngredientsSuccess = (result: { data: Array<TingredientPropType> }): IGetIngredientsSuccess => {
+const getIngredientsSuccess = (result: any): IGetIngredientsSuccess => {
   return {
     type: GET_INGREDIENTS_SUCCESS,
     payload: result.data,
@@ -41,9 +41,12 @@ const getIngredientsFailed = (error: string): IGetIngredientsFailed => {
 //мидлвар для получения данных с сервера
 export const getIngredientsData = (): AppThunk<Promise<unknown>> => {
   return (dispatch) => {
-    dispatch(getIngredientsReguest);
+    dispatch(getIngredientsReguest());
     return getIngredients()
-      .then((result) => dispatch(getIngredientsSuccess(result)))
+      .then((result) => {
+        dispatch(getIngredientsSuccess(result));
+      })
+
       .catch((error) => dispatch(getIngredientsFailed(error)));
   };
 };

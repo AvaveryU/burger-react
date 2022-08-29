@@ -6,7 +6,7 @@ import { wsConnectionStart, wsCloseConnection } from "../../services/action/wsAc
 import { wsConnectionStartUser, wsCloseConnectionUser } from "../../services/action/wsActionsUser";
 import { useDispatch, useSelector } from "react-redux";
 import OrderItem from "../orderItem/orderItem";
-import { OPEN_ORDER_USERS_MODAL } from "../../services/action/details.js";
+import { OPEN_ORDER_USERS_MODAL } from "../../services/action/details";
 import { BURGER_API_WSS_ORDERS, getCookie } from "../../utils/utils";
 
 export const OrderList = () => {
