@@ -20,7 +20,7 @@ export interface IwsActions {
 }
 //интерфейс для объекта с экшенами вебсокета для авторизованного пользователя
 export interface IwsActionsAuthUser extends IwsActions {
-  readonly wsSendData: string;
+  readonly wsSendData?: string;
 }
 //интерфейс для структуры получаемого ингредиента с сервера
 export interface TingredientPropType {
@@ -116,6 +116,30 @@ export type TRefreshToken = {
   readonly success: boolean;
   readonly accessToken: string;
   readonly refreshToken: string;
+};
+//тип для защищенного роутинга
+export interface IProtectedRoute {
+  anonymous?: boolean;
+  user?: {
+    email: string;
+    name?: string;
+    password?: string;
+  };
+  children?: JSX.Element;
+  path?: string;
+  exact?: boolean;
+}
+//тип для текущего url
+export type TLocationState = {
+  from?: string;
+  background?: TLocation;
+};
+type TLocation = {
+  hash: string;
+  key?: string;
+  pathname: string;
+  search: string;
+  state: TLocationState;
 };
 //тип для всех экшенов в приложении
 type TApplicationActions =

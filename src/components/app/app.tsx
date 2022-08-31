@@ -1,10 +1,9 @@
-import { useEffect, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useCallback, FunctionComponent } from "react";
+import { useDispatch, useSelector, TLocationState } from "../../utils/types";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, useLocation, useHistory } from "react-router-dom";
 import { LoginPage, RegisterPage, ForgotPassword, ProfilePage, ResetPassword, FeedPage } from "../../pages";
-import { useLocation, useHistory } from "react-router-dom";
 import appStyles from "./app.module.css";
 import AppHeader from "../appHeader/appHeader";
 import BurgerIngredients from "../burgerIngredients/burgerIngredients";
@@ -19,7 +18,7 @@ import { getUserInfo } from "../../services/action/user";
 import { getCookie } from "../../utils/utils";
 import OrderId from "../orderId/orderId";
 
-const App = () => {
+const App: FunctionComponent = () => {
   const location = useLocation();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -27,7 +26,7 @@ const App = () => {
   // Булевые стейты для модальных окон
   const { isOrderDetailsOpened, isIngredientDetailsOpened, isOrderUsersOpened } = useSelector((state) => state.details);
   const { isLogin, user } = useSelector((state) => state.user); //данные о пользователе
-  const background = location.state?.background;
+  const background = (location.state as TLocationState)?.background;
   const refreshToken = localStorage.getItem("refreshToken");
   const accessToken = getCookie("token");
 

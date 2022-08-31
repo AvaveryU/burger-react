@@ -14,7 +14,7 @@ interface IGetIngredientsReguest {
 }
 interface IGetIngredientsSuccess {
   readonly type: typeof GET_INGREDIENTS_SUCCESS;
-  readonly payload: ReadonlyArray<TingredientPropType>;
+  readonly payload: Array<TingredientPropType>;
 }
 interface IGetIngredientsFailed {
   readonly type: typeof GET_INGREDIENTS_FAILED;
@@ -46,7 +46,6 @@ export const getIngredientsData = (): AppThunk<Promise<unknown>> => {
       .then((result) => {
         dispatch(getIngredientsSuccess(result));
       })
-
       .catch((error) => dispatch(getIngredientsFailed(error)));
   };
 };

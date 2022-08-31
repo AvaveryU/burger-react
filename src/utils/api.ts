@@ -7,6 +7,7 @@ import {
   TUserRegistration,
   TUser,
   TRefreshToken,
+  TIngredientDetails,
 } from "./types";
 
 export function checkResponse<T>(response: Response): Promise<T> {
@@ -19,7 +20,7 @@ export const getIngredients = async () => {
     method: "GET",
     headers: INFO.headers,
   });
-  return checkResponse(response);
+  return checkResponse<TIngredientDetails>(response);
 };
 // функция для отправки данных на сервер о заказе
 export const postOrderDetails = async (data: Array<string>) => {

@@ -8,7 +8,7 @@ import {
 import { TOrder } from "../../utils/types";
 type TInitialState = {
   wsConnected: boolean; //статус соединения WebSocket
-  orders: ReadonlyArray<TOrder>; //заказы пользователя
+  orders: Array<TOrder>; //заказы пользователя
   error: null | string; //ошибка от ws
 };
 const initialState: TInitialState = {

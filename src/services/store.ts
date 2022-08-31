@@ -4,11 +4,16 @@ import thunkMiddleware from "redux-thunk";
 import { socketMiddleware } from "./middleware/socketMiddleware";
 import { wsActions, wsActionsAuthUser } from "../utils/utils";
 
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+}
 //вызов расширения Redux DevTools. Проверка наличия объектов window и window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__. Если всё хорошо,
 //вызовется расширение с пустым набором опций. В противном случае — вернется compose.
 const composeEnhancers =
   typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     : compose;
 
 //расширитель хранилища, функция высшего порядка, которая возвращает новый, расширенный генератор хранилища

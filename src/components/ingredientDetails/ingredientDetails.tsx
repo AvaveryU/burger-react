@@ -1,10 +1,15 @@
 import ingredientDetailsStyles from "./ingredientDetails.module.css";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { FunctionComponent } from "react";
+import { RootState } from "../../utils/types";
 
-const IngredientDetails = ({ title }) => {
-  const { ingredients } = useSelector((state) => state.ingredients);
-  const { id } = useParams();
+interface ITitleProps {
+  title?: string;
+}
+const IngredientDetails: FunctionComponent<ITitleProps> = ({ title }) => {
+  const { ingredients } = useSelector((state: RootState) => state.ingredients);
+  const { id } = useParams<{ id: string }>();
   const ingredient = ingredients.find((ingredient) => ingredient._id === id);
 
   return (

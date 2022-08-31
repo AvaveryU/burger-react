@@ -1,15 +1,21 @@
 //страница с настройками профиля пользователя
-import React, { useCallback, useState, useEffect, FunctionComponent, FormEventHandler } from "react";
+import React, {
+  useCallback,
+  useState,
+  useEffect,
+  FunctionComponent,
+  FormEventHandler,
+  ChangeEvent,
+  SyntheticEvent,
+} from "react";
 import { NavLink, useRouteMatch } from "react-router-dom";
 import styles from "./profile.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector, useDispatch } from "../../utils/types";
 import { refreshUserInfo, logOutUser, getUserInfo } from "../../services/action/user";
 import { OrderList } from "../../components/orderList/orderList";
-type Props = {
-  className?: string;
-};
-export const ProfilePage: FunctionComponent<Props> = (props) => {
+
+export const ProfilePage: FunctionComponent = () => {
   const dispatch = useDispatch();
   //данные из хранилища о текущем пользователе
   const {
@@ -48,7 +54,18 @@ export const ProfilePage: FunctionComponent<Props> = (props) => {
     dispatch(refreshUserInfo(inputPassword, inputEmail, inputName));
     return setShowButtons(false);
   };
-
+  const handleChangeValue = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.type === `text`) {
+      setName(event.target.value);
+    }
+    if (event.target.type === `email`) {
+      setEmail(event.target.value);
+    }
+    if (event.target.type === `password`) {
+      setPassword(event.target.value);
+    }
+    setShowButtons(true);
+  };
   const handleCancelFormProfile = (): void => {
     setEmail(email);
     setName(name);
@@ -56,7 +73,7 @@ export const ProfilePage: FunctionComponent<Props> = (props) => {
     setShowButtons(false);
   };
   //выход из ЛК
-  const logOut = (event: React.SyntheticEvent) => {
+  const logOut = (event: SyntheticEvent) => {
     event.preventDefault();
     dispatch(logOutUser());
   };
@@ -107,11 +124,7 @@ export const ProfilePage: FunctionComponent<Props> = (props) => {
           <div className={`${styles.wrapper}`}>
             <form name={`form`} id={`profile-form`} className={`${styles.form}`} onSubmit={handleSubmitFormProfile}>
               <Input
-                //className={`mt-20`}
-                onChange={(e) => {
-                  setName(e.target.value);
-                  setShowButtons(true);
-                }}
+                onChange={handleChangeValue}
                 onIconClick={() => onIconClick(refName)}
                 value={inputName || ""}
                 type={"text"}
@@ -121,11 +134,7 @@ export const ProfilePage: FunctionComponent<Props> = (props) => {
                 ref={refName}
               />
               <Input
-                //className={`mt-6`}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  setShowButtons(true);
-                }}
+                onChange={handleChangeValue}
                 onIconClick={() => onIconClick(refEmail)}
                 value={inputEmail || ""}
                 type={"email"}
@@ -135,11 +144,7 @@ export const ProfilePage: FunctionComponent<Props> = (props) => {
                 ref={refEmail}
               />
               <Input
-                //className={`mt-6`}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                  setShowButtons(true);
-                }}
+                onChange={handleChangeValue}
                 onIconClick={() => onIconClick(refPassword)}
                 value={inputPassword || ""}
                 type={"password"}

@@ -1,9 +1,10 @@
-export const socketMiddleware = (wsActions) => {
-  return (store) => {
-    let socket = null;
+import { IwsActionsAuthUser } from "../../utils/types";
+export const socketMiddleware = (wsActions: IwsActionsAuthUser) => {
+  return (store: { dispatch: any }) => {
+    let socket: WebSocket | null = null;
     const { wsInit, wsClose, wsSendData, onOpen, onClose, onError, onMessage } = wsActions;
 
-    return (next) => (action) => {
+    return (next: (arg0: any) => void) => (action: { type: string; payload: string }) => {
       const { dispatch } = store;
       const { type, payload } = action;
 

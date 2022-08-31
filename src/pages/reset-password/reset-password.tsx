@@ -1,33 +1,33 @@
 //страница сброса пароля
-import { useState } from "react";
+import { useState, FormEventHandler, ChangeEvent, FunctionComponent } from "react";
 import { Link, useLocation, Redirect } from "react-router-dom";
 import styles from "./reset-password.module.css";
-import { Input, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, TLocationState } from "../../utils/types";
 import { savePassword } from "../../services/action/user";
 
-export const ResetPassword = () => {
+export const ResetPassword: FunctionComponent = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const { password, token, isPasswordChecked } = useSelector((state) => state.user);
   //стейты для полей ввода
-  const [inputPassword, setPassword] = useState(password);
-  const [valueToken, setToken] = useState(token);
+  const [inputPassword, setPassword] = useState<string>(password);
+  const [valueToken, setToken] = useState<string>(token);
 
-  const onChangePassword = (event) => {
+  const onChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
-  const onChangeToken = (event) => {
+  const onChangeToken = (event: ChangeEvent<HTMLInputElement>) => {
     setToken(event.target.value);
   };
-  const handleSubmitPassword = (event) => {
+  const handleSubmitPassword: FormEventHandler = (event): void => {
     event.preventDefault();
     dispatch(savePassword(inputPassword, valueToken)); //диспатчить данные о email
   };
   //если сработал флаг изменения пароля, перебросить на /profile
   if (isPasswordChecked) {
-    return <Redirect to={location.state?.from || "/profile"} />;
+    return <Redirect to={(location as TLocationState)?.from || "/profile"} />;
   }
   return (
     <>
@@ -36,11 +36,12 @@ export const ResetPassword = () => {
           <div className={`${styles.wrapper}`}>
             <form name={`form`} id={`reset_password-form`} className={`${styles.form}`} onSubmit={handleSubmitPassword}>
               <h2 className="text text_type_main-medium">Восстановление пароля</h2>
-              <PasswordInput
+              <Input
                 onChange={onChangePassword}
                 value={inputPassword}
                 placeholder={"Введите новый пароль"}
                 name={"password"}
+                type={"password"}
               />
               <Input
                 onChange={onChangeToken}
@@ -49,9 +50,12 @@ export const ResetPassword = () => {
                 placeholder={"Введите код из письма"}
                 name={"code"}
               />
-              <Button type="primary" size="large" disabled={inputPassword && valueToken ? false : true}>
-                Сохранить
-              </Button>
+              <Button
+                type="primary"
+                size="large"
+                disabled={inputPassword && valueToken ? false : true}
+                children="Сохранить"
+              />
             </form>
           </div>
           <div className={`${styles.text} ml-2`}>

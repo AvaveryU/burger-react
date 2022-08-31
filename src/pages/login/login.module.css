@@ -27,7 +27,7 @@
 .form {
   composes: login;
   min-height: 286px;
-  justify-content: space-between;
+  gap: 24px;
 }
 .button {
   width: 128px;
