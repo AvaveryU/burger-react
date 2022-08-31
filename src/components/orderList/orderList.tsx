@@ -1,15 +1,15 @@
 //на странице /feed заказы
 import styles from "./orderList.module.css";
 import { Link, useLocation, useRouteMatch } from "react-router-dom";
-import { useEffect } from "react";
+import { FunctionComponent, useEffect } from "react";
 import { wsConnectionStart, wsCloseConnection } from "../../services/action/wsActions";
 import { wsConnectionStartUser, wsCloseConnectionUser } from "../../services/action/wsActionsUser";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../utils/types";
 import OrderItem from "../orderItem/orderItem";
 import { OPEN_ORDER_USERS_MODAL } from "../../services/action/details";
 import { BURGER_API_WSS_ORDERS, getCookie } from "../../utils/utils";
 
-export const OrderList = () => {
+export const OrderList: FunctionComponent = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const pageOrdersProfile = useRouteMatch({ path: "/profile/orders", exact: true });

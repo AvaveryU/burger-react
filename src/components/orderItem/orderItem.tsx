@@ -1,12 +1,14 @@
 import styles from "./orderItem.module.css";
 import CurrencyIcon from "../../images/CurrencyIcon.svg";
-import { useMemo } from "react";
-import { useSelector } from "react-redux";
+import { FunctionComponent, useMemo } from "react";
+import { useSelector, TOrder } from "../../utils/types";
 import { getTimeStampString, getOrderStatus } from "../../utils/utils";
 import { useRouteMatch } from "react-router-dom";
-
+type TOrderItem = {
+  readonly order: TOrder;
+};
 //детали каждого заказа
-const OrderItem = ({ order }) => {
+const OrderItem: FunctionComponent<TOrderItem> = ({ order }) => {
   const pageOrdersProfile = useRouteMatch({ path: "/profile/orders", exact: true });
   const { name, number, createdAt, ingredients, status } = order;
 

@@ -55,6 +55,7 @@ export type TOrder = {
   readonly owner: string[];
   readonly price: number;
   readonly ingredients: string[];
+  readonly name?: string;
 };
 //тип структуры заказа
 export type TOrderDetails = {
@@ -157,6 +158,11 @@ export type TConstructorIngredientProps = {
   index: number;
   item: TingredientPropType;
   handleClose: () => void;
+};
+export type TModalProps = {
+  title?: string;
+  children?: any;
+  onClose: () => void;
 };
 //тип для всех экшенов в приложении
 type TApplicationActions =

@@ -1,22 +1,20 @@
 //страница заказа
-import { useMemo, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useMemo, useEffect, FunctionComponent } from "react";
+import { useParams, useRouteMatch } from "react-router-dom";
 import styles from "./orderId.module.css";
 import CurrencyIcon from "../../images/CurrencyIcon.svg";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, RootState, TingredientPropType } from "../../utils/types";
 import { wsConnectionStart, wsCloseConnection } from "../../services/action/wsActions";
-import { getTimeStampString, getOrderStatus } from "../../utils/utils";
-import { useRouteMatch } from "react-router-dom";
-import { BURGER_API_WSS_ORDERS, getCookie } from "../../utils/utils";
+import { getTimeStampString, getOrderStatus, BURGER_API_WSS_ORDERS, getCookie } from "../../utils/utils";
 import { wsConnectionStartUser, wsCloseConnectionUser } from "../../services/action/wsActionsUser";
 
-const OrderId = () => {
-  const { id } = useParams();
+const OrderId: FunctionComponent = () => {
+  const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch();
   const pageOrdersProfile = useRouteMatch({ path: "/profile/orders" });
   const accessToken = getCookie("token");
-  const orders = useSelector((state) => state.wsData.orders);
-  const ordersUser = useSelector((state) => state.wsAuth.orders);
+  const orders = useSelector((state: RootState) => state.wsData.orders);
+  const ordersUser = useSelector((state: RootState) => state.wsAuth.orders);
 
   const ordersInModal = pageOrdersProfile ? ordersUser : orders;
   useEffect(() => {
@@ -42,7 +40,7 @@ const OrderId = () => {
   const ingredientList = [...new Set(ingredientsInOrder)];
 
   //кол-во каждого ингредиента в заказе
-  function counterIngredient(ingredientInOrder) {
+  function counterIngredient(ingredientInOrder: TingredientPropType) {
     const data = ingredientsInOrder.filter((current) => current._id === ingredientInOrder._id);
     const counterIngredient = data.length;
     return counterIngredient;

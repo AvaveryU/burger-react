@@ -1,8 +1,9 @@
 //на странице /feed статистика заказов
 import styles from "./stats.module.css";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../utils/types";
+import { FunctionComponent } from "react";
 
-const Stats = () => {
+const Stats: FunctionComponent = () => {
   const { total, totalToday, orders } = useSelector((state) => state.wsData);
   //массив выполненных заказов
   const doneOrders = orders.filter((item) => item.status === "done");

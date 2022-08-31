@@ -2,13 +2,13 @@ import modalStyles from "./modal.module.css";
 import ModalOverlay from "../modalOverlay/modalOverlay";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ReactDOM from "react-dom";
-import { useEffect } from "react";
-import PropTypes from "prop-types";
+import { useEffect, FunctionComponent } from "react";
+import { TModalProps } from "../../utils/types";
 
-const Modal = ({ title, onClose, children }) => {
+const Modal: FunctionComponent<TModalProps> = ({ title, onClose, children }) => {
   // хук для обработки нажатия Esc
   useEffect(() => {
-    const handleEscKeydown = (event) => {
+    const handleEscKeydown = (event: KeyboardEvent) => {
       event.key === "Escape" && onClose();
     };
     window.addEventListener("keydown", handleEscKeydown);
@@ -30,14 +30,9 @@ const Modal = ({ title, onClose, children }) => {
       </div>
       <ModalOverlay onClose={onClose} />
     </>,
-    document.getElementById("modals") //Контейнер под модальные окна
+    document.getElementById("modals") as HTMLDivElement
+    //Контейнер под модальные окна
   );
 };
 
 export default Modal;
-//проверка передаваемых пропсов
-Modal.propTypes = {
-  title: PropTypes.string,
-  onClose: PropTypes.func.isRequired,
-  children: PropTypes.any.isRequired,
-};
