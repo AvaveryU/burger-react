@@ -1,6 +1,6 @@
 //на странице /feed статистика заказов
 import styles from "./stats.module.css";
-import { useSelector } from "../../utils/types";
+import { useSelector } from "../../services/store";
 import { FunctionComponent } from "react";
 
 const Stats: FunctionComponent = () => {

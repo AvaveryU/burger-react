@@ -1,7 +1,8 @@
 import ingredientStyles from "./burgerIngredient.module.css";
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag } from "react-dnd";
-import { useSelector, TBurgerIngredientProps } from "../../utils/types";
+import { TBurgerIngredientProps } from "../../utils/types";
+import { useSelector } from "../../services/store";
 import { useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FunctionComponent } from "react";

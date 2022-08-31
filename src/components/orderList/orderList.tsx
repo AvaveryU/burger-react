@@ -4,7 +4,7 @@ import { Link, useLocation, useRouteMatch } from "react-router-dom";
 import { FunctionComponent, useEffect } from "react";
 import { wsConnectionStart, wsCloseConnection } from "../../services/action/wsActions";
 import { wsConnectionStartUser, wsCloseConnectionUser } from "../../services/action/wsActionsUser";
-import { useDispatch, useSelector } from "../../utils/types";
+import { useDispatch, useSelector } from "../../services/store";
 import OrderItem from "../orderItem/orderItem";
 import { OPEN_ORDER_USERS_MODAL } from "../../services/action/details";
 import { BURGER_API_WSS_ORDERS, getCookie } from "../../utils/utils";

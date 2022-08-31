@@ -3,7 +3,8 @@ import { Link, useLocation, Redirect } from "react-router-dom";
 import styles from "./forgot-password.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState, FunctionComponent } from "react";
-import { useDispatch, useSelector, TLocationState } from "../../utils/types";
+import { TLocationState } from "../../utils/types";
+import { useDispatch, useSelector } from "../../services/store";
 import { postEmail } from "../../services/action/user";
 
 export const ForgotPassword: FunctionComponent = () => {

@@ -1,8 +1,10 @@
 import { rootReducer } from "./reducers"; // Корневой редьюсер, который обрабатывает экшены
 import { compose, createStore, applyMiddleware } from "redux";
-import thunkMiddleware from "redux-thunk";
+import thunkMiddleware, { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { socketMiddleware } from "./middleware/socketMiddleware";
 import { wsActions, wsActionsAuthUser } from "../utils/utils";
+import { TypedUseSelectorHook, useSelector as selectorHook, useDispatch as dispatchHook } from "react-redux";
+import { TApplicationActions } from "../utils/types";
 
 declare global {
   interface Window {
@@ -23,3 +25,10 @@ const enhancer = composeEnhancers(
 
 // Инициализируем хранилище с помощью корневого редьюсера
 export const store = createStore(rootReducer, enhancer);
+
+export type RootState = ReturnType<typeof rootReducer>;
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, TApplicationActions>;
+export type AppDispatch = ThunkDispatch<RootState, never, TApplicationActions>;
+
+export const useSelector: TypedUseSelectorHook<RootState> = selectorHook;
+export const useDispatch = () => dispatchHook<AppDispatch>();

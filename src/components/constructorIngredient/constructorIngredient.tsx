@@ -1,7 +1,8 @@
 import constructorIngredientStyles from "./constructorIngredient.module.css";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useRef, FunctionComponent } from "react";
-import { useDispatch, TConstructorIngredientProps } from "../../utils/types";
+import { TConstructorIngredientProps } from "../../utils/types";
+import { useDispatch } from "../../services/store";
 import { moveItem } from "../../services/action/constructorState";
 import { useDrop, useDrag } from "react-dnd";
 

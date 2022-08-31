@@ -3,8 +3,8 @@ import { useState, ChangeEvent, FormEventHandler, FunctionComponent } from "reac
 import { Link, Redirect, useLocation } from "react-router-dom";
 import styles from "./register.module.css";
 import { Input, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
-
-import { useDispatch, useSelector, TLocationState } from "../../utils/types";
+import { useDispatch, useSelector } from "../../services/store";
+import { TLocationState } from "../../utils/types";
 import { postNewUser } from "../../services/action/user";
 
 export const RegisterPage: FunctionComponent = () => {

@@ -1,5 +1,5 @@
 import { postOrderDetails } from "../../utils/api";
-import { AppThunk } from "../../utils/types";
+import { AppThunk } from "../../services/store";
 //экшены для заказа в бургерной
 export const CREATE_ORDER_REQUEST: "CREATE_ORDER_REQUEST" = "CREATE_ORDER_REQUEST";
 export const CREATE_ORDER_SUCCESS: "CREATE_ORDER_REQUEST" = "CREATE_ORDER_REQUEST";
@@ -14,7 +14,7 @@ interface ICreateOrderSuccess {
 }
 interface ICreateOrderFailed {
   readonly type: typeof CREATE_ORDER_FAILED;
-  readonly payload: string;
+  readonly payload: boolean | string;
 }
 
 const createOrderSuccess = (result: any): ICreateOrderSuccess => {

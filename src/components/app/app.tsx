@@ -1,5 +1,6 @@
 import { useEffect, useCallback, FunctionComponent } from "react";
-import { useDispatch, useSelector, TLocationState } from "../../utils/types";
+import { TLocationState } from "../../utils/types";
+import { useDispatch, useSelector } from "../../services/store";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { Switch, Route, useLocation, useHistory } from "react-router-dom";

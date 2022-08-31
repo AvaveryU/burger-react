@@ -1,6 +1,6 @@
 import orderStyles from "./orderDetails.module.css";
 import DoneInPopup from "../../images/DoneInPopup.svg";
-import { useSelector, RootState } from "../../utils/types";
+import { useSelector, RootState } from "../../services/store";
 import { FunctionComponent } from "react";
 
 const OrderDetails: FunctionComponent = () => {

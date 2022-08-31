@@ -5,21 +5,21 @@ import {
   WS_GET_MESSAGE,
   TWsActions,
 } from "../action/wsActions";
-import { TWsOrdersDetails } from "../../utils/types";
+import { TOrder } from "../../utils/types";
 
 type TInitialState = {
   wsConnected: boolean; //статус соединения WebSocket
-  orders: TWsOrdersDetails[]; // все заказы с сервера
+  orders: Array<TOrder>; // все заказы с сервера
   error: null | string; //ошибка от ws
-  total: null | string;
-  totalToday: null | string;
+  total: number;
+  totalToday: number;
 };
 const initialState: TInitialState = {
   wsConnected: false, //статус соединения WebSocket
   orders: [], // все заказы с сервера
   error: null, //ошибка от ws
-  total: null,
-  totalToday: null,
+  total: 0,
+  totalToday: 0,
 };
 
 export const wsReducer = (state = initialState, action: TWsActions) => {
@@ -43,9 +43,9 @@ export const wsReducer = (state = initialState, action: TWsActions) => {
     case WS_GET_MESSAGE: //с сервера возвращаются данные о всех заказах
       return {
         ...state,
-        orders: action.payload.data.orders,
-        total: action.payload.data.total,
-        totalToday: action.payload.data.totalToday,
+        orders: action.payload.orders,
+        total: action.payload.total,
+        totalToday: action.payload.totalToday,
       };
     default: {
       return state;

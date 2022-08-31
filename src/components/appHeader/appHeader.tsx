@@ -1,7 +1,7 @@
 import appHeaderStyles from "./appHeader.module.css";
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useRouteMatch } from "react-router-dom";
-import { useSelector, RootState } from "../../utils/types";
+import { useSelector, RootState } from "../../services/store";
 import { FunctionComponent } from "react";
 
 const AppHeader: FunctionComponent = () => {

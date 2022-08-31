@@ -3,8 +3,8 @@ import React, { useState, FormEventHandler, ChangeEvent, FunctionComponent } fro
 import { Link, useLocation, Redirect } from "react-router-dom";
 import styles from "./login.module.css";
 import { Input, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
-
-import { useDispatch, useSelector, TLocationState } from "../../utils/types";
+import { useDispatch, useSelector } from "../../services/store";
+import { TLocationState } from "../../utils/types";
 import { loginUser } from "../../services/action/user";
 
 export const LoginPage: FunctionComponent = () => {

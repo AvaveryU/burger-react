@@ -11,12 +11,12 @@ import {
 import { setCookie, deleteCookie } from "../../utils/utils";
 import {
   TUserRegistration,
-  AppThunk,
   TUserEmailForgottenOrLogout,
   TUserEmailReset,
   TRefreshToken,
   TUser,
 } from "../../utils/types";
+import { AppThunk } from "../store";
 //экшены для регистрации
 export const USER_REGISTER_REQUEST: "USER_REGISTER_REQUEST" = "USER_REGISTER_REQUEST";
 export const USER_REGISTER_SUCCESS: "USER_REGISTER_SUCCESS" = "USER_REGISTER_SUCCESS";

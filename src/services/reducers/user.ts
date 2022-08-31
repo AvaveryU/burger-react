@@ -148,7 +148,7 @@ export const userReducer = (state = initialState, action: TUserActions) => {
       return {
         ...state,
         message: action.payload,
-        loginUserError: action.payload,
+        loginUserError: true,
         isLogin: false,
       };
     case CURRENT_USER_REQUEST:
@@ -218,7 +218,7 @@ export const userReducer = (state = initialState, action: TUserActions) => {
     case LOGOUT_USER_SUCCESS: //успешный ВЫХОД из ЛК
       return {
         ...state,
-        user: {},
+        user: { email: "", name: "" },
         isLogOut: true,
         isLogin: false,
         isAuthChecked: false,

@@ -1,6 +1,6 @@
 import { getIngredients } from "../../utils/api";
-import { AppThunk, TingredientPropType } from "../../utils/types";
-
+import { TingredientPropType } from "../../utils/types";
+import { AppThunk } from "../../services/store";
 //экшены для массива с ингредиентами
 export const GET_INGREDIENTS_REQUEST: "GET_INGREDIENTS_REQUEST" = "GET_INGREDIENTS_REQUEST";
 export const GET_INGREDIENTS_SUCCESS: "GET_INGREDIENTS_SUCCESS" = "GET_INGREDIENTS_SUCCESS";

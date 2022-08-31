@@ -3,8 +3,8 @@ import { useState, FormEventHandler, ChangeEvent, FunctionComponent } from "reac
 import { Link, useLocation, Redirect } from "react-router-dom";
 import styles from "./reset-password.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
-
-import { useDispatch, useSelector, TLocationState } from "../../utils/types";
+import { useDispatch, useSelector } from "../../services/store";
+import { TLocationState } from "../../utils/types";
 import { savePassword } from "../../services/action/user";
 
 export const ResetPassword: FunctionComponent = () => {

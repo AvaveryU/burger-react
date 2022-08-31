@@ -1,7 +1,8 @@
 import styles from "./orderItem.module.css";
 import CurrencyIcon from "../../images/CurrencyIcon.svg";
 import { FunctionComponent, useMemo } from "react";
-import { useSelector, TOrder } from "../../utils/types";
+import { TOrder } from "../../utils/types";
+import { useSelector } from "../../services/store";
 import { getTimeStampString, getOrderStatus } from "../../utils/utils";
 import { useRouteMatch } from "react-router-dom";
 type TOrderItem = {

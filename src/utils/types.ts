@@ -1,5 +1,3 @@
-import { rootReducer } from "../services/reducers/index";
-import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { TConstructorActions } from "../services/action/constructorState";
 import { TIngredientsActions } from "../services/action/ingredients";
 import { TOrderActions } from "../services/action/order";
@@ -7,7 +5,6 @@ import { TDetailsModalActions } from "../services/action/details";
 import { TUserActions } from "../services/action/user";
 import { TWsActions } from "../services/action/wsActions";
 import { TWsAuthActions } from "../services/action/wsActionsUser";
-import { TypedUseSelectorHook, useSelector as selectorHook, useDispatch as dispatchHook } from "react-redux";
 
 //интерфейс для объекта с экшенами вебсокета для неавторизованного пользователя
 export interface IwsActions {
@@ -71,12 +68,10 @@ export type TOrdersDetails = {
   readonly totalToday: number;
 };
 export type TWsOrdersDetails = {
-  readonly data: {
-    readonly success: boolean;
-    readonly orders: Array<TOrder>;
-    readonly total: number;
-    readonly totalToday: number;
-  };
+  readonly success: boolean;
+  readonly orders: Array<TOrder>;
+  readonly total: number;
+  readonly totalToday: number;
 };
 //!тип структуры ответа о восстановлении пароля
 export type TUserEmailForgottenOrLogout = {
@@ -165,7 +160,7 @@ export type TModalProps = {
   onClose: () => void;
 };
 //тип для всех экшенов в приложении
-type TApplicationActions =
+export type TApplicationActions =
   | TConstructorActions
   | TIngredientsActions
   | TOrderActions
@@ -173,10 +168,3 @@ type TApplicationActions =
   | TUserActions
   | TWsActions
   | TWsAuthActions;
-
-export type RootState = ReturnType<typeof rootReducer>;
-export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, TApplicationActions>;
-export type AppDispatch = ThunkDispatch<RootState, never, TApplicationActions>;
-
-export const useSelector: TypedUseSelectorHook<RootState> = selectorHook;
-export const useDispatch = () => dispatchHook<AppDispatch>();

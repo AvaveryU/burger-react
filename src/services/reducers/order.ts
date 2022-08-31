@@ -5,7 +5,7 @@ type TInitialState = {
     number: number;
   };
   isLoading: boolean;
-  error: boolean;
+  error: boolean | string;
 };
 const initialState: TInitialState = {
   order: {
@@ -33,7 +33,7 @@ export const orderReducer = (state = initialState, action: TOrderActions) => {
     case CREATE_ORDER_FAILED:
       return {
         ...state,
-        order: {},
+        order: { number: 0 },
         isLoading: false,
         error: action.payload,
       };

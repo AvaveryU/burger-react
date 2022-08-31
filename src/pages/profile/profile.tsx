@@ -11,7 +11,7 @@ import React, {
 import { NavLink, useRouteMatch } from "react-router-dom";
 import styles from "./profile.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector, useDispatch } from "../../utils/types";
+import { useSelector, useDispatch } from "../../services/store";
 import { refreshUserInfo, logOutUser, getUserInfo } from "../../services/action/user";
 import { OrderList } from "../../components/orderList/orderList";
 

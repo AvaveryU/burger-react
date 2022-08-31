@@ -1,6 +1,7 @@
 import BurgerIngredient from "../burgerIngredient/burgerIngredient";
 import categoryIngredients from "./ingredientsCategory.module.css";
-import { useSelector, TIngredientsCategoryProps } from "../../utils/types";
+import { TIngredientsCategoryProps } from "../../utils/types";
+import { useSelector } from "../../services/store";
 import { FunctionComponent } from "react";
 
 const IngredientsCategory: FunctionComponent<TIngredientsCategoryProps> = ({ type, title, onOpenModal }) => {
