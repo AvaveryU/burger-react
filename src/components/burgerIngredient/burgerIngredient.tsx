@@ -1,11 +1,12 @@
 import ingredientStyles from "./burgerIngredient.module.css";
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag } from "react-dnd";
-import { useSelector } from "react-redux";
+import { useSelector, TBurgerIngredientProps } from "../../utils/types";
 import { useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { FunctionComponent } from "react";
 
-const BurgerIngredient = ({ ingredient, type, onOpenModal }) => {
+const BurgerIngredient: FunctionComponent<TBurgerIngredientProps> = ({ ingredient, type, onOpenModal }) => {
   const location = useLocation();
   const orderState = useSelector((state) => state.constructorState);
 
@@ -27,14 +28,14 @@ const BurgerIngredient = ({ ingredient, type, onOpenModal }) => {
   const count = useMemo(() => {
     return [
       orderState.data.filter((item) => item._id === ingredient._id).length, //кол-во ингредиентов
-      [orderState.bun].filter((item) => item._id === ingredient._id).length * 2, //кол-во булок
+      [orderState.bun].filter((item) => item?._id === ingredient._id).length * 2, //кол-во булок
     ];
   }, [orderState, ingredient]);
 
   return (
     <Link to={{ pathname: `/ingredients/${ingredient._id}`, state: { background: location } }}>
       <li
-        type={type}
+        //type={type}
         className={`${ingredientStyles.ingredient__element}`}
         key={ingredient._id}
         onClick={handleOpenModal}

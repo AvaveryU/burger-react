@@ -11,7 +11,7 @@ export type TConstructorActions = IDeleteItem | IAddItem | IResetAfterOrder | IM
 
 interface IDeleteItem {
   readonly type: typeof DELETE_INGREDIENT_CONSTRUCTOR;
-  readonly id: TingredientPropType;
+  readonly id: string | undefined;
 }
 interface IAddItem {
   readonly type: typeof ADD_INGREDIENT_CONSTRUCTOR;
@@ -39,7 +39,7 @@ export function addItem(item: TingredientPropType): IAddItem {
   };
 }
 //action creator для удаления ингредиента из конструктора
-export function deleteItem(id: TingredientPropType): IDeleteItem {
+export function deleteItem(id: string | undefined): IDeleteItem {
   return {
     type: DELETE_INGREDIENT_CONSTRUCTOR,
     id: id,

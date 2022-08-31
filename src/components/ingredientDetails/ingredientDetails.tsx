@@ -1,8 +1,7 @@
 import ingredientDetailsStyles from "./ingredientDetails.module.css";
-import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { FunctionComponent } from "react";
-import { RootState } from "../../utils/types";
+import { useSelector, RootState } from "../../utils/types";
 
 interface ITitleProps {
   title?: string;

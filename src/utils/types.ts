@@ -36,12 +36,13 @@ export interface TingredientPropType {
   readonly image_mobile: string;
   readonly image_large: string;
   readonly __v: number;
-  readonly id?: string;
+  id?: string;
   count?: number;
+  ownId?: string;
 }
 //!тип данных об ингредиентах
 export type TIngredientDetails = {
-  readonly data: ReadonlyArray<TingredientPropType>;
+  readonly data: Array<TingredientPropType>;
   readonly success: boolean;
 };
 //тип заказа
@@ -140,6 +141,22 @@ type TLocation = {
   pathname: string;
   search: string;
   state: TLocationState;
+};
+export interface TBurgerConstructorProps {
+  onOpenModal: (...arg: string[]) => void;
+}
+export interface TBurgerIngredientProps extends TBurgerConstructorProps {
+  ingredient: TingredientPropType;
+  type: string;
+}
+export interface TIngredientsCategoryProps extends TBurgerConstructorProps {
+  title: string;
+  type: string;
+}
+export type TConstructorIngredientProps = {
+  index: number;
+  item: TingredientPropType;
+  handleClose: () => void;
 };
 //тип для всех экшенов в приложении
 type TApplicationActions =

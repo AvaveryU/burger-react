@@ -5,15 +5,16 @@ import {
   MOVE_INGREDIENT_CONSTRUCTOR,
   TConstructorActions,
 } from "../action/constructorState";
-//!убрать any
+import { TingredientPropType } from "../../utils/types";
+
 type TInitialState = {
-  data: any;
-  readonly bun: {};
+  data: Array<TingredientPropType>;
+  bun: TingredientPropType | null;
 };
 
 const initialState: TInitialState = {
   data: [], //массив из ингредиентов в конструкторе
-  bun: {}, //булки в конструкторе
+  bun: null, //булки в конструкторе
 };
 //редьюсер для конструктора (массив выбранных ингредиентов и тип булки)
 export const constructorReducer = (state = initialState, action: TConstructorActions) => {
@@ -38,7 +39,7 @@ export const constructorReducer = (state = initialState, action: TConstructorAct
       return {
         ...state,
         data: [],
-        bun: {},
+        bun: null,
       };
     case MOVE_INGREDIENT_CONSTRUCTOR: {
       const dataMoving = [...state.data];

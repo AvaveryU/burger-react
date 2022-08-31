@@ -1,11 +1,12 @@
 import appHeaderStyles from "./appHeader.module.css";
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useRouteMatch } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, RootState } from "../../utils/types";
+import { FunctionComponent } from "react";
 
-const AppHeader = () => {
+const AppHeader: FunctionComponent = () => {
   //если пользователь авторизован, будет отображено имя вместо "личный кабинет"
-  const userName = useSelector((state) => state.user.user?.name);
+  const userName = useSelector((state: RootState) => state.user.user.name);
   const pageHome = useRouteMatch({ path: "/", exact: true });
   const pageProfile = useRouteMatch("/profile");
   const pageLogin = useRouteMatch("/login");
@@ -19,7 +20,7 @@ const AppHeader = () => {
             <Link
               className={`${appHeaderStyles.header__link} mr-2 pt-4 pb-4 pl-5 pr-5`}
               to={{ pathname: `/` }}
-              exact="true"
+              //exact="true"
             >
               <BurgerIcon type={pageHome ? "primary" : "secondary"} />
               <p
@@ -33,7 +34,7 @@ const AppHeader = () => {
             <Link
               className={`${appHeaderStyles.header__link} pt-4 pb-4 pl-5 pr-5`}
               to={{ pathname: `/feed` }}
-              exact="true"
+              //exact="true"
             >
               <ListIcon type={pageFeed ? "primary" : "secondary"} />
               <p

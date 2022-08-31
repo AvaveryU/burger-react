@@ -1,10 +1,10 @@
 import orderStyles from "./orderDetails.module.css";
 import DoneInPopup from "../../images/DoneInPopup.svg";
-import { useSelector } from "react-redux";
-import { RootState } from "../../utils/types";
+import { useSelector, RootState } from "../../utils/types";
+import { FunctionComponent } from "react";
 
-const OrderDetails = () => {
-  const isOrder = useSelector((state: RootState) => state.order); // данные о заказе
+const OrderDetails: FunctionComponent = () => {
+  const isOrder = useSelector((state: RootState) => state.order.order); // данные о заказе
 
   return (
     <div className={orderStyles.order__data}>

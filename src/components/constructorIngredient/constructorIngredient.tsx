@@ -1,15 +1,14 @@
 import constructorIngredientStyles from "./constructorIngredient.module.css";
-import PropTypes from "prop-types";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useRef, FunctionComponent } from "react";
+import { useDispatch, TConstructorIngredientProps } from "../../utils/types";
 import { moveItem } from "../../services/action/constructorState";
 import { useDrop, useDrag } from "react-dnd";
 
-const ConstructorIngredient = ({ index, item, handleClose }) => {
+const ConstructorIngredient: FunctionComponent<TConstructorIngredientProps> = ({ index, item, handleClose }) => {
   const { id } = item;
   const dispatch = useDispatch();
-  const ref = useRef(null);
+  const ref = useRef<HTMLLIElement>(null);
   //хук для области перетаскивания - ингредиенты в самом конструкторе между булок
   const [{ handlerId }, drop] = useDrop({
     accept: "data", //массив с данными как область перетаскивания
@@ -19,7 +18,7 @@ const ConstructorIngredient = ({ index, item, handleClose }) => {
       };
     },
     //срабатывает, когда ингредиент зависает над областью перетаскивания ингредиентов
-    hover(item, monitor) {
+    hover(item: TConstructorIngredientProps, monitor) {
       if (!ref.current) return;
 
       const dragIndex = item.index;
@@ -29,7 +28,7 @@ const ConstructorIngredient = ({ index, item, handleClose }) => {
       const hoverBoundingRect = ref.current.getBoundingClientRect();
       const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      const hoverClientY = clientOffset !== null && clientOffset.y - hoverBoundingRect.top;
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) return;
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) return;
       //диспатч для изменения индекса ингредиента в конструкторе. Выполняется при проведении курсора с захваченным ингредиентом
@@ -51,18 +50,24 @@ const ConstructorIngredient = ({ index, item, handleClose }) => {
   drag(drop(ref));
 
   return (
-    <li className={`${constructorIngredientStyles.constructor__element} ${isDragging ? constructorIngredientStyles.constructor__drag : ""}`} data-handler-id={handlerId} ref={ref}>
+    <li
+      className={`${constructorIngredientStyles.constructor__element} ${
+        isDragging ? constructorIngredientStyles.constructor__drag : ""
+      }`}
+      data-handler-id={handlerId}
+      ref={ref}
+    >
       <div className={`${constructorIngredientStyles.constructor__dragIcon} mr-2`}>
-        <DragIcon />
+        <DragIcon type={"secondary"} />
       </div>
-      <ConstructorElement isLocked={false} text={item.name} price={item.price} thumbnail={item.image_mobile} handleClose={handleClose} />
+      <ConstructorElement
+        isLocked={false}
+        text={item.name}
+        price={item.price}
+        thumbnail={item.image_mobile}
+        handleClose={handleClose}
+      />
     </li>
   );
 };
 export default ConstructorIngredient;
-//проверка передаваемых пропсов
-ConstructorIngredient.propTypes = {
-  index: PropTypes.number.isRequired,
-  item: PropTypes.any.isRequired,
-  handleClose: PropTypes.func.isRequired,
-};
