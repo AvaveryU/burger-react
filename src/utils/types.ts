@@ -46,7 +46,7 @@ export type TingredientPropType = {
   count?: number;
   ownId?: string;
 };
-//!тип данных об ингредиентах
+//тип данных об ингредиентах
 export type TIngredientDetails = {
   readonly data: Array<TingredientPropType>;
   readonly success: boolean;
