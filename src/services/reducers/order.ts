@@ -2,26 +2,27 @@ import { CREATE_ORDER_REQUEST, CREATE_ORDER_SUCCESS, CREATE_ORDER_FAILED, TOrder
 
 type TInitialState = {
   order: {
-    number: number;
+    number: number | null;
   };
   isLoading: boolean;
   error: boolean | string;
 };
 const initialState: TInitialState = {
   order: {
-    number: 0,
+    number: null,
   },
   isLoading: false,
   error: false,
 };
 
 //редьюсер заказа
-export const orderReducer = (state = initialState, action: TOrderActions) => {
+export const orderReducer = (state = initialState, action: TOrderActions): TInitialState => {
   switch (action.type) {
     case CREATE_ORDER_REQUEST:
       return {
         ...state,
         isLoading: true,
+        order: { number: action.payload },
       };
     case CREATE_ORDER_SUCCESS:
       return {
@@ -33,7 +34,7 @@ export const orderReducer = (state = initialState, action: TOrderActions) => {
     case CREATE_ORDER_FAILED:
       return {
         ...state,
-        order: { number: 0 },
+        order: { number: null },
         isLoading: false,
         error: action.payload,
       };

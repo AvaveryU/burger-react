@@ -63,3 +63,7 @@
   height: 194px;
   background: #8585ad;
 }
+.order_loading {
+  margin: 0 auto;
+  color: #00cccc;
+}

@@ -34,8 +34,8 @@ const OrderId: FunctionComponent = () => {
 
   //массив ингредиентов в заказе, найденных в общем списке ингредиентов
   const ingredientsInOrder = useMemo(
-    () => order!.ingredients.map((ingredientInOrder) => allIngredients.find((item) => ingredientInOrder === item._id)),
-    [order!.ingredients, allIngredients]
+    () => order?.ingredients.map((ingredientInOrder) => allIngredients.find((item) => ingredientInOrder === item._id)),
+    [order?.ingredients, allIngredients]
   );
 
   //новый массив ингредиентов в заказе без повторяющихся позиций
@@ -43,8 +43,9 @@ const OrderId: FunctionComponent = () => {
 
   //кол-во каждого ингредиента в заказе
   function counterIngredient(ingredientInOrder: TingredientPropType) {
-    const data = ingredientsInOrder.filter((current: any) => current._id === ingredientInOrder._id);
-    const counterIngredient = data.length;
+    const data = ingredientsInOrder?.filter((current: any) => current._id === ingredientInOrder._id);
+    console.log(data);
+    const counterIngredient = data?.length;
     return counterIngredient;
   }
   const orderDate = order !== undefined && getTimeStampString(order.createdAt); //дата заказа
@@ -62,13 +63,13 @@ const OrderId: FunctionComponent = () => {
   }, [order?.ingredients]);
 
   if (!order) {
-    return <p>Загружаем...</p>;
+    return <p className={`${styles.order_loading} text text_type_main-large`}>Загружаем заказ...</p>;
   }
   return (
     <>
       <span className={`${styles.order_card}`}>
-        <p className={`${styles.order_number} text text_type_digits-default`}>{`#${order?.number}`}</p>
-        <p className={`text text_type_main-medium mt-10`}>{order?.name}</p>
+        <p className={`${styles.order_number} text text_type_digits-default`}>{`#${order.number}`}</p>
+        <p className={`text text_type_main-medium mt-10`}>{order.name}</p>
         <p className={`${styles.order_status} text text_type_main-default mt-3`}>{orderStatus}</p>
         {/* список ингредиентов заказа */}
         <p className={`text text_type_main-medium mt-15 mb-6`}>Состав:</p>

@@ -6,6 +6,15 @@ import { TUserActions } from "../services/action/user";
 import { TWsActions } from "../services/action/wsActions";
 import { TWsAuthActions } from "../services/action/wsActionsUser";
 
+//тип для всех экшенов в приложении
+export type TApplicationActions =
+  | TConstructorActions
+  | TIngredientsActions
+  | TOrderActions
+  | TDetailsModalActions
+  | TUserActions
+  | TWsActions
+  | TWsAuthActions;
 //интерфейс для объекта с экшенами вебсокета для неавторизованного пользователя
 export interface IwsActions {
   readonly wsInit: string;
@@ -20,7 +29,7 @@ export interface IwsActionsAuthUser extends IwsActions {
   readonly wsSendData?: string;
 }
 //интерфейс для структуры получаемого ингредиента с сервера
-export interface TingredientPropType {
+export type TingredientPropType = {
   readonly _id: string;
   readonly name: string;
   readonly type: string;
@@ -36,7 +45,7 @@ export interface TingredientPropType {
   id?: string;
   count?: number;
   ownId?: string;
-}
+};
 //!тип данных об ингредиентах
 export type TIngredientDetails = {
   readonly data: Array<TingredientPropType>;
@@ -60,54 +69,38 @@ export type TOrderDetails = {
   order: TOrder;
   success: boolean;
 };
-//!тип структуры ответа о всех заказах ????
-export type TOrdersDetails = {
-  readonly success: boolean;
-  readonly orders: TOrder;
-  readonly total: number;
-  readonly totalToday: number;
-};
+//тип структуры ответа о всех заказах
 export type TWsOrdersDetails = {
-  readonly success: boolean;
-  readonly orders: Array<TOrder>;
-  readonly total: number;
-  readonly totalToday: number;
-};
-//!тип структуры ответа о восстановлении пароля
-export type TUserEmailForgottenOrLogout = {
-  readonly message: string;
-  readonly success: boolean;
-  readonly user: {
-    email: string;
-    name: string;
+  data: {
+    readonly success: boolean;
+    readonly orders: Array<TOrder>;
+    readonly total: number;
+    readonly totalToday: number;
   };
-  readonly password: string;
 };
+//тип структуры ответа о восстановлении пароля
+export interface TUserEmailForgottenOrLogout extends TUser {
+  readonly message: string;
+}
 //тип структуры ответа о сбросе пароля
 export type TUserEmailReset = {
   readonly password: string;
   readonly token: string;
 };
 //тип структуры ответа при регистрации
-export type TUserRegistration = {
-  readonly success: boolean;
-  readonly user: {
-    email: string;
-    name: string;
-  };
-  readonly password: string;
+export interface TUserRegistration extends TUser {
   readonly accessToken: string;
   readonly refreshToken: string;
-};
-//!тип структуры ответа данных о пользователе
-export type TUser = {
+}
+//тип структуры ответа данных о пользователе
+export interface TUser {
   readonly success: boolean;
   readonly user: {
     email: string;
     name: string;
   };
   readonly password: string;
-};
+}
 //тип при обновлении токена
 export type TRefreshToken = {
   readonly success: boolean;
@@ -159,12 +152,3 @@ export type TModalProps = {
   children?: any;
   onClose: () => void;
 };
-//тип для всех экшенов в приложении
-export type TApplicationActions =
-  | TConstructorActions
-  | TIngredientsActions
-  | TOrderActions
-  | TDetailsModalActions
-  | TUserActions
-  | TWsActions
-  | TWsAuthActions;

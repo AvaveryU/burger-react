@@ -38,7 +38,7 @@ export const wsAuthReducer = (state = initialState, action: TWsAuthActions) => {
     case WS_AUTH_USER_GET_ORDER: //с сервера возвращаются данные о заказе
       return {
         ...state,
-        orders: action.payload.orders,
+        orders: action.payload.data.orders,
       };
     default: {
       return state;

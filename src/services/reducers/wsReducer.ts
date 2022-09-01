@@ -43,9 +43,9 @@ export const wsReducer = (state = initialState, action: TWsActions) => {
     case WS_GET_MESSAGE: //с сервера возвращаются данные о всех заказах
       return {
         ...state,
-        orders: action.payload.orders,
-        total: action.payload.total,
-        totalToday: action.payload.totalToday,
+        orders: action.payload.data.orders,
+        total: action.payload.data.total,
+        totalToday: action.payload.data.totalToday,
       };
     default: {
       return state;
