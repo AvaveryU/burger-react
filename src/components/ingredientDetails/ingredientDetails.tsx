@@ -1,13 +1,13 @@
 import ingredientDetailsStyles from "./ingredientDetails.module.css";
 import { useParams } from "react-router-dom";
 import { FunctionComponent } from "react";
-import { useSelector, RootState } from "../../services/store";
+import { useSelector } from "../../services/store";
 
 interface ITitleProps {
   title?: string;
 }
 const IngredientDetails: FunctionComponent<ITitleProps> = ({ title }) => {
-  const { ingredients } = useSelector((state: RootState) => state.ingredients);
+  const { ingredients } = useSelector((state) => state.ingredients);
   const { id } = useParams<{ id: string }>();
   const ingredient = ingredients.find((ingredient) => ingredient._id === id);
 

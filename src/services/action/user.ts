@@ -212,7 +212,7 @@ const logoutUserSuccess = (result: TUserEmailForgottenOrLogout): ILogoutUserSucc
   };
 };
 //мидлвар. На экране /register пользователь вводит данные для регистрации
-export const postNewUser = (password: string, name: string, email: string): AppThunk<Promise<unknown>> => {
+export const postNewUser = (password: string, name: string, email: string): AppThunk => {
   return (dispatch) => {
     dispatch({
       type: USER_REGISTER_REQUEST,
@@ -232,7 +232,7 @@ export const postNewUser = (password: string, name: string, email: string): AppT
   };
 };
 //мидлвар. На экране /forgot-password пользователь вводит адрес электронной почты и нажимает кнопку «Восстановить»
-export const postEmail = (data: string): AppThunk<Promise<unknown>> => {
+export const postEmail = (data: string): AppThunk => {
   return (dispatch) => {
     dispatch({
       type: CREATE_RECOVERY_PASSWORD_REQUEST,
@@ -248,7 +248,7 @@ export const postEmail = (data: string): AppThunk<Promise<unknown>> => {
   };
 };
 //мидлвар. На экране /reset-password пользователь вводит пароль и код и нажимает кнопку "Сохранить"
-export const savePassword = (password: string, token: string): AppThunk<Promise<unknown>> => {
+export const savePassword = (password: string, token: string): AppThunk => {
   return (dispatch) => {
     dispatch({
       type: SAVE_PASSWORD_REQUEST,
@@ -264,7 +264,7 @@ export const savePassword = (password: string, token: string): AppThunk<Promise<
   };
 };
 //мидлвар авторизации. На экране /login пользователь вводит пароль, email и нажимает кнопку "Войти"
-export const loginUser = (password: string, email: string): AppThunk<Promise<unknown>> => {
+export const loginUser = (password: string, email: string): AppThunk => {
   return (dispatch) => {
     dispatch({
       type: LOGIN_USER_REQUEST,
@@ -284,7 +284,7 @@ export const loginUser = (password: string, email: string): AppThunk<Promise<unk
   };
 };
 //мидлвар для обновления токена
-export const refreshToken = (): AppThunk<Promise<unknown>> => {
+export const refreshToken = (): AppThunk => {
   return (dispatch) => {
     dispatch({
       type: UPDATE_TOKEN_REQUEST,
@@ -307,7 +307,7 @@ export const refreshToken = (): AppThunk<Promise<unknown>> => {
   };
 };
 //мидлвар. получить инфо о пользователе
-export const getUserInfo = (): AppThunk<Promise<unknown>> => {
+export const getUserInfo = (): AppThunk => {
   return (dispatch) => {
     dispatch({
       type: CURRENT_USER_REQUEST,
@@ -332,7 +332,7 @@ export const getUserInfo = (): AppThunk<Promise<unknown>> => {
   };
 };
 //мидлвар для обновления инфо о пользователе
-export const refreshUserInfo = (password: string, email: string, name: string): AppThunk<Promise<unknown>> => {
+export const refreshUserInfo = (password: string, email: string, name: string): AppThunk => {
   return (dispatch) => {
     dispatch({
       type: UPDATE_USER_REQUEST,
@@ -356,7 +356,7 @@ export const refreshUserInfo = (password: string, email: string, name: string): 
   };
 };
 //мидлвар для выхода из приложения (на странице /profile кнопка 'Выйти')
-export const logOutUser = (): AppThunk<Promise<unknown>> => {
+export const logOutUser = (): AppThunk => {
   return (dispatch) => {
     dispatch({
       type: LOGOUT_USER_REQUEST,

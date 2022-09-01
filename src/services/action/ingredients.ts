@@ -39,7 +39,7 @@ const getIngredientsFailed = (error: string): IGetIngredientsFailed => {
   };
 };
 //мидлвар для получения данных с сервера
-export const getIngredientsData = (): AppThunk<Promise<unknown>> => {
+export const getIngredientsData = (): AppThunk => {
   return (dispatch) => {
     dispatch(getIngredientsReguest());
     return getIngredients()

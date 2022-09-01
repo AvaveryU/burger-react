@@ -39,39 +39,31 @@ export const RegisterPage: FunctionComponent = () => {
     return <Redirect to={(location.state as TLocationState)?.from || "/login"} />;
   }
   return (
-    <>
-      <main className={styles.page}>
-        <div className={styles.register}>
-          <div className={`${styles.wrapper}`}>
-            <form name={`form`} id={`register-form`} className={`${styles.form}`} onSubmit={handleRegisterUser}>
-              <h2 className="text text_type_main-medium">Регистрация</h2>
-              <Input onChange={onRegisterName} value={inputName} type={"text"} placeholder={"Имя"} name={"name"} />
-              <Input
-                onChange={onRegisterEmail}
-                value={inputEmail}
-                type={"email"}
-                placeholder={"E-mail"}
-                name={"email"}
-              />
-              <PasswordInput onChange={onRegisterPassword} value={inputPassword} name={"password"} />
-              <Button
-                type="primary"
-                size="medium"
-                disabled={inputName && inputEmail && inputPassword ? false : true}
-                children="Зарегистрироваться"
-              />
-            </form>
-          </div>
-          <div className={`${styles.text} ml-2`}>
-            <p className={`text text_type_main-default text_color_inactive`}>
-              Уже зарегистрированы?
-              <Link to={{ pathname: `/login` }} className={`${styles.link} ml-2`}>
-                Войти
-              </Link>
-            </p>
-          </div>
+    <main className={styles.page}>
+      <div className={styles.register}>
+        <div className={`${styles.wrapper}`}>
+          <form name={`form`} id={`register-form`} className={`${styles.form}`} onSubmit={handleRegisterUser}>
+            <h2 className="text text_type_main-medium">Регистрация</h2>
+            <Input onChange={onRegisterName} value={inputName} type={"text"} placeholder={"Имя"} name={"name"} />
+            <Input onChange={onRegisterEmail} value={inputEmail} type={"email"} placeholder={"E-mail"} name={"email"} />
+            <PasswordInput onChange={onRegisterPassword} value={inputPassword} name={"password"} />
+            <Button
+              type="primary"
+              size="medium"
+              disabled={inputName && inputEmail && inputPassword ? false : true}
+              children="Зарегистрироваться"
+            />
+          </form>
         </div>
-      </main>
-    </>
+        <div className={`${styles.text} ml-2`}>
+          <p className={`text text_type_main-default text_color_inactive`}>
+            Уже зарегистрированы?
+            <Link to={{ pathname: `/login` }} className={`${styles.link} ml-2`}>
+              Войти
+            </Link>
+          </p>
+        </div>
+      </div>
+    </main>
   );
 };

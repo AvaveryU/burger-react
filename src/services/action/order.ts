@@ -34,7 +34,7 @@ const createOrderFailed = (error: string): ICreateOrderFailed => {
   };
 };
 //мидлвар для отправки данных на сервер
-export const postOrderBurger = (data: Array<string>): AppThunk<Promise<unknown>> => {
+export const postOrderBurger = (data: Array<string>): AppThunk => {
   return (dispatch) => {
     return postOrderDetails(data)
       .then((result) => {

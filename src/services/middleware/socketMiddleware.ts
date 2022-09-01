@@ -1,10 +1,13 @@
 import { IwsActionsAuthUser } from "../../utils/types";
-export const socketMiddleware = (wsActions: IwsActionsAuthUser) => {
-  return (store: { dispatch: any }) => {
+import { RootState, AppDispatch } from "../../services/store";
+import { Middleware, MiddlewareAPI } from "redux";
+
+export const socketMiddleware = (wsActions: IwsActionsAuthUser): Middleware => {
+  return (store: MiddlewareAPI) => {
     let socket: WebSocket | null = null;
     const { wsInit, wsClose, wsSendData, onOpen, onClose, onError, onMessage } = wsActions;
 
-    return (next: (arg0: any) => void) => (action: { type: string; payload: string }) => {
+    return (next) => (action) => {
       const { dispatch } = store;
       const { type, payload } = action;
 

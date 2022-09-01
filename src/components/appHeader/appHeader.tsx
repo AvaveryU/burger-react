@@ -6,7 +6,7 @@ import { FunctionComponent } from "react";
 
 const AppHeader: FunctionComponent = () => {
   //если пользователь авторизован, будет отображено имя вместо "личный кабинет"
-  const userName = useSelector((state: RootState) => state.user.user.name);
+  const userName = useSelector((state) => state.user.user.name);
   const pageHome = useRouteMatch({ path: "/", exact: true });
   const pageProfile = useRouteMatch("/profile");
   const pageLogin = useRouteMatch("/login");

@@ -1,10 +1,10 @@
 import orderStyles from "./orderDetails.module.css";
 import DoneInPopup from "../../images/DoneInPopup.svg";
-import { useSelector, RootState } from "../../services/store";
+import { useSelector } from "../../services/store";
 import { FunctionComponent } from "react";
 
 const OrderDetails: FunctionComponent = () => {
-  const { order } = useSelector((state: RootState) => state.order); // данные о заказе
+  const { order } = useSelector((state) => state.order); // данные о заказе
 
   return (
     <div className={orderStyles.order__data}>

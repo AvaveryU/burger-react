@@ -44,70 +44,54 @@ const OrderItem: FunctionComponent<TOrderItem> = ({ order }) => {
   }, [ingredients.length]);
 
   return (
-    <>
-      <li className={`${styles.order_card} ${pageOrdersProfile ? styles.order_user : ``} p-6 mb-4`}>
-        <div className={`${styles.order_caption}`}>
-          <p className={`text text_type_digits-default`}>{`#` + number}</p>
-          <p className={`text text_type_main-default text_color_inactive`}>{orderDate}</p>
-        </div>
-        <p className={`${styles.order_info} text text_type_main-medium`}>{name}</p>
-        {pageOrdersProfile ? (
-          <p className={`text text_type_main-default ${status === "done" ? styles.order_status : ""} `}>
-            {orderStatus}
-          </p>
-        ) : null}
-        <div className={`${styles.order_ingredients} mt-6`}>
-          {/* список иконок ингредиентов в заказе*/}
-          <div className={`${styles.order_iconsList}`}>
-            {/* если ингредиентов больше 7 штук, то добавляем счетчик */}
-            {ingredients.length > 6 && (
-              <div className={`${styles.order_icons} `}>
-                <span className={`text text_type_main-default ${styles.order_count}`}>{`+${countItems}`}</span>
-                {ingredientData.slice(5, 6).map((ingredientInOrder) => {
-                  ingredientInOrder && (
-                    <img
-                      className={`${styles.order_image}`}
-                      src={ingredientInOrder.image}
-                      alt={ingredientInOrder.name}
-                    />
-                  );
-                })}
+    <li className={`${styles.order_card} ${pageOrdersProfile ? styles.order_user : ``} p-6 mb-4`}>
+      <div className={`${styles.order_caption}`}>
+        <p className={`text text_type_digits-default`}>{`#` + number}</p>
+        <p className={`text text_type_main-default text_color_inactive`}>{orderDate}</p>
+      </div>
+      <p className={`${styles.order_info} text text_type_main-medium`}>{name}</p>
+      {pageOrdersProfile ? (
+        <p className={`text text_type_main-default ${status === "done" ? styles.order_status : ""} `}>{orderStatus}</p>
+      ) : null}
+      <div className={`${styles.order_ingredients} mt-6`}>
+        {/* список иконок ингредиентов в заказе*/}
+        <div className={`${styles.order_iconsList}`}>
+          {/* если ингредиентов больше 7 штук, то добавляем счетчик */}
+          {ingredients.length > 6 && (
+            <div className={`${styles.order_icons} `}>
+              <span className={`text text_type_main-default ${styles.order_count}`}>{`+${countItems}`}</span>
+              {ingredientData.slice(5, 6).map((ingredientInOrder) => {
+                ingredientInOrder && (
+                  <img className={`${styles.order_image}`} src={ingredientInOrder.image} alt={ingredientInOrder.name} />
+                );
+              })}
+            </div>
+          )}
+          {/* если ингредиентов до 6 штук включительно */}
+          {ingredients.length <= 5 &&
+            ingredientData.map((ingredientInOrder, index) => (
+              <div className={`${styles.order_icons}`} key={index}>
+                {ingredientInOrder && (
+                  <img className={`${styles.order_image}`} src={ingredientInOrder.image} alt={ingredientInOrder.name} />
+                )}
               </div>
-            )}
-            {/* если ингредиентов до 6 штук включительно */}
-            {ingredients.length <= 5 &&
-              ingredientData.map((ingredientInOrder, index) => (
-                <div className={`${styles.order_icons}`} key={index}>
-                  {ingredientInOrder && (
-                    <img
-                      className={`${styles.order_image}`}
-                      src={ingredientInOrder.image}
-                      alt={ingredientInOrder.name}
-                    />
-                  )}
-                </div>
-              ))}
-            {/* если ингредиентов больше 6 штук, то разметка для этих 6 штук */}
-            {ingredients.length > 5 &&
-              ingredientData.slice(0, 5).map((ingredientInOrder, index) => (
-                <div className={`${styles.order_icons}`} key={index}>
-                  {ingredientInOrder && (
-                    <img
-                      className={`${styles.order_image}`}
-                      src={ingredientInOrder.image}
-                      alt={ingredientInOrder.name}
-                    />
-                  )}
-                </div>
-              ))}
-          </div>
-          <div className={`${styles.order_price} ml-6`}>
-            <p className={`${styles.ingredient__digits} text text_type_digits-default mr-2`}>{totalPrice}</p>
-            <img className={`${styles.order_iconPrice}`} src={CurrencyIcon} alt={"картинка"} />
-          </div>
+            ))}
+          {/* если ингредиентов больше 6 штук, то разметка для этих 6 штук */}
+          {ingredients.length > 5 &&
+            ingredientData.slice(0, 5).map((ingredientInOrder, index) => (
+              <div className={`${styles.order_icons}`} key={index}>
+                {ingredientInOrder && (
+                  <img className={`${styles.order_image}`} src={ingredientInOrder.image} alt={ingredientInOrder.name} />
+                )}
+              </div>
+            ))}
         </div>
-      </li>
-    </>
+        <div className={`${styles.order_price} ml-6`}>
+          <p className={`${styles.ingredient__digits} text text_type_digits-default mr-2`}>{totalPrice}</p>
+          <img className={`${styles.order_iconPrice}`} src={CurrencyIcon} alt={"картинка"} />
+        </div>
+      </div>
+    </li>
   );
 };
 

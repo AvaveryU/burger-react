@@ -14,8 +14,8 @@ import { FunctionComponent } from "react";
 const BurgerConstructor: FunctionComponent<TBurgerConstructorProps> = ({ onOpenModal }) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { data, bun } = useSelector((state: RootState) => state.constructorState);
-  const { isLogin, isAuthChecked } = useSelector((state: RootState) => state.user);
+  const { data, bun } = useSelector((state) => state.constructorState);
+  const { isLogin, isAuthChecked } = useSelector((state) => state.user);
   //хук для подсчета цены ингредиентов
   const totalPrice = useMemo<number>(() => {
     return (bun !== null ? bun.price * 2 : 0) + data.reduce((s, v) => s + v.price, 0);
