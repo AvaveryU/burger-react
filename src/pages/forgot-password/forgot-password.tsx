@@ -35,7 +35,7 @@ export const ForgotPassword: FunctionComponent = () => {
             <h2 className="text text_type_main-medium">Восстановление пароля</h2>
             <Input
               onChange={handleChange}
-              value={values?.email}
+              value={values?.email || ""}
               type={"text"}
               placeholder={"Укажите e-mail"}
               name={"email"}

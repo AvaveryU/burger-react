@@ -1,11 +1,12 @@
 //страница регистрации
-import { useState, ChangeEvent, FormEventHandler, FunctionComponent } from "react";
+import { FormEventHandler, FunctionComponent } from "react";
 import { Link, Redirect, useLocation } from "react-router-dom";
 import styles from "./register.module.css";
 import { Input, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "../../services/store";
 import { TLocationState } from "../../utils/types";
 import { postNewUser } from "../../services/action/user";
+import { useForm } from "../../hooks/useForm";
 
 export const RegisterPage: FunctionComponent = () => {
   const dispatch = useDispatch();
@@ -15,23 +16,12 @@ export const RegisterPage: FunctionComponent = () => {
     password,
     isRegisterChecked,
   } = useSelector((state) => state.user);
-  // стейты для регистрации
-  const [inputName, setName] = useState<string>(name);
-  const [inputEmail, setEmail] = useState<string>(email);
-  const [inputPassword, setPassword] = useState<string>(password);
-  //функции для полей ввода
-  const onRegisterName = (event: ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value);
-  };
-  const onRegisterEmail = (event: ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
-  };
-  const onRegisterPassword = (event: ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
-  };
+
+  const { values, handleChange, setValues } = useForm({ password: password, email: email, name: name });
+
   const handleRegisterUser: FormEventHandler = (event): void => {
     event.preventDefault();
-    dispatch(postNewUser(inputPassword, inputName, inputEmail)); //диспатчим данные о новом пользователе
+    dispatch(postNewUser(values.password, values.name, values.email)); //диспатчим данные о новом пользователе
   };
 
   //если сработал флаг регистрации, перебросить на главную страницу
@@ -44,13 +34,27 @@ export const RegisterPage: FunctionComponent = () => {
         <div className={`${styles.wrapper}`}>
           <form name={`form`} id={`register-form`} className={`${styles.form}`} onSubmit={handleRegisterUser}>
             <h2 className="text text_type_main-medium">Регистрация</h2>
-            <Input onChange={onRegisterName} value={inputName} type={"text"} placeholder={"Имя"} name={"name"} />
-            <Input onChange={onRegisterEmail} value={inputEmail} type={"email"} placeholder={"E-mail"} name={"email"} />
-            <PasswordInput onChange={onRegisterPassword} value={inputPassword} name={"password"} />
+            <Input
+              onChange={handleChange}
+              value={values?.name || ""}
+              type={"text"}
+              placeholder={"Имя"}
+              name={"name"}
+              onBlur={() => setValues(values)}
+            />
+            <Input
+              onChange={handleChange}
+              value={values?.email || ""}
+              type={"email"}
+              placeholder={"E-mail"}
+              name={"email"}
+              onBlur={() => setValues(values)}
+            />
+            <PasswordInput onChange={handleChange} value={values?.password || ""} name={"password"} />
             <Button
               type="primary"
               size="medium"
-              disabled={inputName && inputEmail && inputPassword ? false : true}
+              disabled={values.password !== `` && values.email !== `` && values.name !== `` ? false : true}
               children="Зарегистрироваться"
             />
           </form>

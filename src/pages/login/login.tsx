@@ -41,13 +41,13 @@ export const LoginPage: FunctionComponent = () => {
             <h2 className="text text_type_main-medium">Вход</h2>
             <Input
               onChange={handleChange}
-              value={values?.email}
+              value={values?.email || ""}
               name={"email"}
               icon={"EditIcon"}
               placeholder={"E-mail"}
               onBlur={() => setValues(values)}
             />
-            <PasswordInput name={"password"} onChange={handleChange} value={values?.password} />
+            <PasswordInput name={"password"} onChange={handleChange} value={values?.password || ""} />
             <Button
               type="primary"
               size="large"

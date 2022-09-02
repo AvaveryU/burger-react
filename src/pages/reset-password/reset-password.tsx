@@ -31,7 +31,7 @@ export const ResetPassword: FunctionComponent = () => {
             <h2 className="text text_type_main-medium">Восстановление пароля</h2>
             <Input
               onChange={handleChange}
-              value={values?.password}
+              value={values?.password || ""}
               placeholder={"Введите новый пароль"}
               name={"password"}
               type={"password"}
@@ -39,7 +39,7 @@ export const ResetPassword: FunctionComponent = () => {
             />
             <Input
               onChange={handleChange}
-              value={values?.token}
+              value={values?.token || ""}
               type={"text"}
               placeholder={"Введите код из письма"}
               name={"token"}

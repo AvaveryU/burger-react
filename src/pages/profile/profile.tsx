@@ -1,13 +1,5 @@
 //страница с настройками профиля пользователя
-import React, {
-  useCallback,
-  useState,
-  useEffect,
-  FunctionComponent,
-  FormEventHandler,
-  ChangeEvent,
-  SyntheticEvent,
-} from "react";
+import { useState, useEffect, FunctionComponent, FormEventHandler, ChangeEvent, SyntheticEvent } from "react";
 import { NavLink, useRouteMatch } from "react-router-dom";
 import styles from "./profile.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -36,9 +28,13 @@ export const ProfilePage: FunctionComponent = () => {
     dispatch(refreshUserInfo(values.password, values.email, values.name));
     return setShowButtons(false);
   };
+  const handleChangeValue = (event: ChangeEvent<HTMLInputElement>) => {
+    handleChange(event);
+    setShowButtons(true);
+  };
 
   const handleCancelFormProfile = (): void => {
-    // setValues(values);
+    setValues({ password: password, email: email, name: name });
     setShowButtons(false);
   };
   //выход из ЛК
@@ -92,11 +88,8 @@ export const ProfilePage: FunctionComponent = () => {
         <div className={`${styles.wrapper}`}>
           <form name={`form`} id={`profile-form`} className={`${styles.form}`} onSubmit={handleSubmitFormProfile}>
             <Input
-              onChange={(event) => {
-                handleChange(event);
-                setShowButtons(true);
-              }}
-              value={values.name}
+              onChange={(event) => handleChangeValue(event)}
+              value={values.name || ""}
               type={"text"}
               placeholder={"Имя"}
               name={"name"}
@@ -104,11 +97,8 @@ export const ProfilePage: FunctionComponent = () => {
               onBlur={() => setValues(values)}
             />
             <Input
-              onChange={(event) => {
-                handleChange(event);
-                setShowButtons(true);
-              }}
-              value={values.email}
+              onChange={(event) => handleChangeValue(event)}
+              value={values.email || ""}
               type={"email"}
               placeholder={"Логин"}
               name={"email"}
@@ -116,11 +106,8 @@ export const ProfilePage: FunctionComponent = () => {
               onBlur={() => setValues(values)}
             />
             <Input
-              onChange={(event) => {
-                handleChange(event);
-                setShowButtons(true);
-              }}
-              value={values?.password}
+              onChange={(event) => handleChangeValue(event)}
+              value={values?.password || ""}
               type={"text"}
               placeholder={"Пароль"}
               name={"password"}

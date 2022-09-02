@@ -44,7 +44,6 @@ const OrderId: FunctionComponent = () => {
   //кол-во каждого ингредиента в заказе
   function counterIngredient(ingredientInOrder: TingredientPropType) {
     const data = ingredientsInOrder?.filter((current: any) => current._id === ingredientInOrder._id);
-    console.log(data);
     const counterIngredient = data?.length;
     return counterIngredient;
   }
