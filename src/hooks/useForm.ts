@@ -1,9 +1,14 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
+
+interface IValuesInputForm {
+  [name: string]: string;
+}
+
 //кастомный хук для полей ввода
-export function useForm(inputValues) {
+export function useForm(inputValues: IValuesInputForm) {
   const [values, setValues] = useState(inputValues);
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
 
     setValues({ ...values, [name]: value });
