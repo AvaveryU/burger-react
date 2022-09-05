@@ -10,7 +10,7 @@ import { OPEN_ORDER_USERS_MODAL } from "../../services/action/details";
 import { BURGER_API_WSS_ORDERS, getCookie } from "../../utils/utils";
 
 export const OrderList: FunctionComponent = () => {
-  const location = useLocation();
+  const location = useLocation<{ background: Location }>();
   const dispatch = useDispatch();
   const pageOrdersProfile = useRouteMatch({ path: "/profile/orders", exact: true });
   const accessToken = getCookie("token");

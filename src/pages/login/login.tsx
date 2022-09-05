@@ -4,13 +4,12 @@ import { Link, useLocation, Redirect } from "react-router-dom";
 import styles from "./login.module.css";
 import { Input, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "../../services/store";
-import { TLocationState } from "../../utils/types";
 import { loginUser } from "../../services/action/user";
 import { useForm } from "../../hooks/useForm";
 
 export const LoginPage: FunctionComponent = () => {
   const dispatch = useDispatch();
-  const location = useLocation();
+  const location = useLocation<{ from: Location }>();
   //данные о пытающемся войти пользователе
   const {
     user: { email },
@@ -30,7 +29,7 @@ export const LoginPage: FunctionComponent = () => {
   };
   //если сработали флаги авторизации, перебросить на главную страницу
   if (isLogin) {
-    return <Redirect to={(location.state as TLocationState)?.from || "/profile"} />;
+    return <Redirect to={location.state?.from || "/profile"} />;
   }
 
   return (

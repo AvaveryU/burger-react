@@ -4,13 +4,12 @@ import { Link, Redirect, useLocation } from "react-router-dom";
 import styles from "./register.module.css";
 import { Input, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "../../services/store";
-import { TLocationState } from "../../utils/types";
 import { postNewUser } from "../../services/action/user";
 import { useForm } from "../../hooks/useForm";
 
 export const RegisterPage: FunctionComponent = () => {
   const dispatch = useDispatch();
-  const location = useLocation();
+  const location = useLocation<{ from: Location }>();
   const {
     user: { email, name },
     password,
@@ -26,7 +25,7 @@ export const RegisterPage: FunctionComponent = () => {
 
   //если сработал флаг регистрации, перебросить на главную страницу
   if (isRegisterChecked) {
-    return <Redirect to={(location.state as TLocationState)?.from || "/login"} />;
+    return <Redirect to={location.state?.from || "/login"} />;
   }
   return (
     <main className={styles.page}>
