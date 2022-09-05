@@ -119,18 +119,6 @@ export interface IProtectedRoute {
   path?: string;
   exact?: boolean;
 }
-//тип для текущего url
-export type TLocationState = {
-  from?: string;
-  background?: TLocation;
-};
-type TLocation = {
-  hash: string;
-  key?: string;
-  pathname: string;
-  search: string;
-  state: TLocationState;
-};
 export interface TBurgerConstructorProps {
   onOpenModal: (...arg: string[]) => void;
 }
