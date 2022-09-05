@@ -3,7 +3,6 @@ import { Link, useLocation, Redirect } from "react-router-dom";
 import styles from "./forgot-password.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { FunctionComponent } from "react";
-import { TLocationState } from "../../utils/types";
 import { useDispatch, useSelector } from "../../services/store";
 import { postEmail } from "../../services/action/user";
 import { useForm } from "../../hooks/useForm";
@@ -14,7 +13,7 @@ export const ForgotPassword: FunctionComponent = () => {
     user: { email },
     isForgotPasswordChecked,
   } = useSelector((state) => state.user);
-  const location = useLocation();
+  const location = useLocation<{ from: Location }>();
 
   const { values, handleChange, setValues } = useForm({ email: email });
 
@@ -25,7 +24,7 @@ export const ForgotPassword: FunctionComponent = () => {
   };
   //если сработал флаг сброса пароля, перебросить на страницу /reset-password
   if (isForgotPasswordChecked) {
-    return <Redirect to={(location.state as TLocationState)?.from || "/reset-password"} />;
+    return <Redirect to={location.state?.from || "/reset-password"} />;
   }
   return (
     <main className={styles.page}>

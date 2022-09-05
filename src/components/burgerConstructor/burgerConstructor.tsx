@@ -3,7 +3,7 @@ import { ConstructorElement, Button } from "@ya.praktikum/react-developer-burger
 import CurrencyIcon from "../../images/CurrencyIcon.svg";
 import { useMemo } from "react";
 import { TBurgerConstructorProps, TingredientPropType } from "../../utils/types";
-import { useDispatch, useSelector, RootState } from "../../services/store";
+import { useDispatch, useSelector } from "../../services/store";
 import { addItem, deleteItem, resetAfterOrder } from "../../services/action/constructorState";
 import { postOrderBurger } from "../../services/action/order";
 import { useDrop } from "react-dnd";

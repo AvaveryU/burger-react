@@ -4,13 +4,12 @@ import { Link, useLocation, Redirect } from "react-router-dom";
 import styles from "./reset-password.module.css";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "../../services/store";
-import { TLocationState } from "../../utils/types";
 import { savePassword } from "../../services/action/user";
 import { useForm } from "../../hooks/useForm";
 
 export const ResetPassword: FunctionComponent = () => {
   const dispatch = useDispatch();
-  const location = useLocation();
+  const location = useLocation<{ from: Location }>();
   const { password, token, isPasswordChecked } = useSelector((state) => state.user);
 
   const { values, handleChange, setValues } = useForm({ password: password, token: token });
@@ -21,7 +20,7 @@ export const ResetPassword: FunctionComponent = () => {
   };
   //если сработал флаг изменения пароля, перебросить на /profile
   if (isPasswordChecked) {
-    return <Redirect to={(location as TLocationState)?.from || "/profile"} />;
+    return <Redirect to={location.state?.from || "/profile"} />;
   }
   return (
     <main className={styles.page}>

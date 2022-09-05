@@ -20,14 +20,14 @@ import { getCookie } from "../../utils/utils";
 import OrderId from "../orderId/orderId";
 
 const App: FunctionComponent = () => {
-  const location = useLocation();
+  const location = useLocation<{ background: Location }>();
   const history = useHistory();
   const dispatch = useDispatch();
   const { isLoading, error } = useSelector((state) => state.ingredients);
   // Булевые стейты для модальных окон
   const { isOrderDetailsOpened, isIngredientDetailsOpened, isOrderUsersOpened } = useSelector((state) => state.details);
   const { isLogin, user } = useSelector((state) => state.user); //данные о пользователе
-  const background = (location.state as TLocationState)?.background;
+  const background = location.state && location.state.background;
   const refreshToken = localStorage.getItem("refreshToken");
   const accessToken = getCookie("token");
 

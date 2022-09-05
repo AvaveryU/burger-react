@@ -8,7 +8,7 @@ import { Link, useLocation } from "react-router-dom";
 import { FunctionComponent } from "react";
 
 const BurgerIngredient: FunctionComponent<TBurgerIngredientProps> = ({ ingredient, type, onOpenModal }) => {
-  const location = useLocation();
+  const location = useLocation<{ background: Location }>();
   const orderState = useSelector((state) => state.constructorState);
 
   const handleOpenModal = () => {
