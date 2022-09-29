@@ -1,7 +1,7 @@
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { FunctionComponent } from "react";
 import { useHistory } from "react-router";
-import styles from "./NotFound.module.css";
+import styles from "./notFound.module.css";
 export const NotFoundPage: FunctionComponent = () => {
   const history = useHistory();
   const handleBackHome = () => {
