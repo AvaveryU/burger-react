@@ -71,7 +71,7 @@ const OrderId: FunctionComponent = () => {
       <p className={`${styles.order_status} text text_type_main-default mt-3`}>{orderStatus}</p>
       {/* список ингредиентов заказа */}
       <p className={`text text_type_main-medium mt-15 mb-6`}>Состав:</p>
-      <ul className={`${styles.order_ingredients}`}>
+      <ul className={ingredientList.length >= 4 ? `${styles.order_ingredients}` : `${styles.order_hidden}`}>
         {ingredientList.map((ingredientInOrder, index) => (
           <li className={`${styles.order_item} mb-4 mr-6`} key={index}>
             <div className={`${styles.order_part}`}>

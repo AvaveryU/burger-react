@@ -67,7 +67,11 @@ const BurgerConstructor: FunctionComponent<TBurgerConstructorProps> = ({ onOpenM
         )}
       </div>
       {/* список ингредиентов между булками */}
-      <ul className={`${constructorStyles.constructor__list}`}>
+      <ul
+        className={
+          data.length > 5 ? `${constructorStyles.constructor__list}` : `${constructorStyles.constructor__hidden}`
+        }
+      >
         {data.length !== 0 ? (
           data.map((item, index) => (
             <ConstructorIngredient key={item.id} index={index} item={item} handleClose={() => onDelete(item.id)} />

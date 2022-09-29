@@ -13,6 +13,18 @@
   max-height: 480px;
   margin-bottom: 0;
 }
+.constructor__hidden {
+  composes: constructor__list;
+  overflow: hidden;
+}
+.constructor__list::-webkit-scrollbar {
+  width: 8px;
+  background: #2f2f37;
+}
+.constructor__list::-webkit-scrollbar-thumb {
+  height: 492px;
+  background: #8585ad;
+}
 .constructor__element {
   text-decoration: none;
   display: flex;

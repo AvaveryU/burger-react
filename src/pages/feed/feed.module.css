@@ -13,7 +13,19 @@
   padding: 0;
   margin: 0;
 }
+.order_hidden {
+  composes: order_list;
+  overflow: hidden;
+}
 .order_link {
   text-decoration: none;
   color: #f2f2f3;
+}
+.order_list::-webkit-scrollbar {
+  width: 8px;
+  background: #2f2f37;
+}
+.order_list::-webkit-scrollbar-thumb {
+  height: 492px;
+  background: #8585ad;
 }

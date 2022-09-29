@@ -13,3 +13,11 @@
   overflow: scroll;
   overflow-x: hidden;
 }
+.ingredients__category::-webkit-scrollbar {
+  width: 8px;
+  background: #2f2f37;
+}
+.ingredients__category::-webkit-scrollbar-thumb {
+  height: 492px;
+  background: #8585ad;
+}

@@ -53,7 +53,6 @@ export function deleteCookie(name: string) {
 export const BURGER_API_WSS_ORDERS = "wss://norma.nomoreparties.space/orders";
 export const BURGER_API_WSS_FEED = "wss://norma.nomoreparties.space/orders/all";
 //объект с экшенами
-//!как типизировать лучше?
 export const wsActions: IwsActions = {
   wsInit: WS_CONNECTION_START,
   wsClose: WS_CONNECTION_CLOSE,
@@ -63,7 +62,6 @@ export const wsActions: IwsActions = {
   onMessage: WS_GET_MESSAGE,
 };
 //объект с экшенами
-//!как типизировать лучше?
 export const wsActionsAuthUser: IwsActionsAuthUser = {
   wsInit: WS_AUTH_USER_START,
   wsClose: WS_AUTH_USER_CLOSE,
@@ -73,7 +71,6 @@ export const wsActionsAuthUser: IwsActionsAuthUser = {
   onMessage: WS_AUTH_USER_GET_ORDER,
   wsSendData: WS_AUTH_USER_SEND_ORDER,
 };
-
 export const formatDate = (date: string) => {
   const today = new Date();
   const todayISOstring = today.toISOString();

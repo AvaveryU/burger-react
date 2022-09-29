@@ -13,10 +13,11 @@ export const socketMiddleware = (wsActions: IwsActionsAuthUser): Middleware => {
 
       if (type === wsInit) {
         socket = new WebSocket(payload);
+      }
+      if (socket) {
         socket.onopen = (event) => {
           dispatch({ type: onOpen, payload: event });
         };
-
         socket.onerror = (event) => {
           console.log("ошибка", event);
           dispatch({ type: onError, payload: event });
