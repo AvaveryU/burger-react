@@ -28,6 +28,11 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  margin-right: 0px;
+}
+.constructor__description {
+  display: flex;
+  align-items: center;
 }
 .constructor__icon {
   width: 33px;

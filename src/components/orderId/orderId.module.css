@@ -51,10 +51,6 @@
   composes: order_item;
   justify-content: flex-end;
 }
-.order_iconPrice {
-  height: 22px;
-  width: 22px;
-}
 .order_ingredients::-webkit-scrollbar {
   width: 8px;
   background: #2f2f37;

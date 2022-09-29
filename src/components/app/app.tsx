@@ -3,7 +3,15 @@ import { useDispatch, useSelector } from "../../services/store";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { Switch, Route, useLocation, useHistory } from "react-router-dom";
-import { LoginPage, RegisterPage, ForgotPassword, ProfilePage, ResetPassword, FeedPage } from "../../pages";
+import {
+  LoginPage,
+  RegisterPage,
+  ForgotPassword,
+  ProfilePage,
+  ResetPassword,
+  FeedPage,
+  NotFoundPage,
+} from "../../pages";
 import appStyles from "./app.module.css";
 import AppHeader from "../appHeader/appHeader";
 import BurgerIngredients from "../burgerIngredients/burgerIngredients";
@@ -104,6 +112,9 @@ const App: FunctionComponent = () => {
         </ProtectedRoute>
         <Route path="/ingredients/:id">
           <IngredientDetails title="Детали ингредиента" />
+        </Route>
+        <Route>
+          <NotFoundPage />
         </Route>
       </Switch>
       {/* модальное окно заказа */}

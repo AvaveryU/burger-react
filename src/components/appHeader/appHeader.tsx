@@ -17,11 +17,7 @@ const AppHeader: FunctionComponent = () => {
       <nav>
         <ul className={appHeaderStyles.header__ul}>
           <li>
-            <Link
-              className={`${appHeaderStyles.header__link} mr-2 pt-4 pb-4 pl-5 pr-5`}
-              to={{ pathname: `/` }}
-              //exact="true"
-            >
+            <Link className={`${appHeaderStyles.header__link} mr-2 pt-4 pb-4 pl-5 pr-5`} to={{ pathname: `/` }}>
               <BurgerIcon type={pageHome ? "primary" : "secondary"} />
               <p
                 className={`${pageHome ? `text_color_active` : `text_color_inactive`} text text_type_main-default ml-2`}

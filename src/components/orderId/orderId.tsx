@@ -2,7 +2,7 @@
 import { useMemo, useEffect, FunctionComponent } from "react";
 import { useParams, useRouteMatch } from "react-router-dom";
 import styles from "./orderId.module.css";
-import CurrencyIcon from "../../images/CurrencyIcon.svg";
+import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { TingredientPropType } from "../../utils/types";
 import { useSelector, useDispatch } from "../../services/store";
 import { wsConnectionStart, wsCloseConnection } from "../../services/action/wsActions";
@@ -82,7 +82,7 @@ const OrderId: FunctionComponent = () => {
               <p className={`${styles.order__digits} text text_type_digits-default mr-2 ml-4`}>
                 {ingredientInOrder !== undefined && counterIngredient(ingredientInOrder)} x {ingredientInOrder?.price}
               </p>
-              <img className={`${styles.order_iconPrice}`} src={CurrencyIcon} />
+              <CurrencyIcon type="secondary" />
             </div>
           </li>
         ))}
@@ -91,7 +91,7 @@ const OrderId: FunctionComponent = () => {
         <p className={`text text_type_main-default text_color_inactive`}>{orderDate}</p>
         <div className={`${styles.order_price} ml-6`}>
           <p className={`text text_type_digits-default mr-2`}>{totalPrice}</p>
-          <img className={`${styles.order_iconPrice}`} src={CurrencyIcon} />
+          <CurrencyIcon type="secondary" />
         </div>
       </div>
     </span>

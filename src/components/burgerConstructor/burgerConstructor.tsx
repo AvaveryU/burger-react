@@ -1,6 +1,5 @@
 import constructorStyles from "./burgerConstructor.module.css";
-import { ConstructorElement, Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import CurrencyIcon from "../../images/CurrencyIcon.svg";
+import { ConstructorElement, Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useMemo } from "react";
 import { TBurgerConstructorProps, TingredientPropType } from "../../utils/types";
 import { useDispatch, useSelector } from "../../services/store";
@@ -100,17 +99,18 @@ const BurgerConstructor: FunctionComponent<TBurgerConstructorProps> = ({ onOpenM
         )}
       </div>
       <div className={`${constructorStyles.constructor__button} mr-10 mt-10`}>
-        <p className="text text_type_digits-medium mr-2">{totalPrice}</p>
-        <img className={`${constructorStyles.constructor__icon} mr-10`} src={CurrencyIcon} alt="иконка"></img>
+        <div className={`${constructorStyles.constructor__description} mr-10`}>
+          <p className="text text_type_digits-medium mr-2">{totalPrice}</p>
+          <CurrencyIcon type="primary" />
+        </div>
         {/* отобразить активную кнопку только при условии наличия булки и хотя бы 1 ингредиента */}
         <Button
           type="primary"
           size="large"
           onClick={handleSendOrder}
           disabled={data.length !== 0 && bun !== null && Object.keys(bun).length > 0 ? false : true}
-        >
-          Оформить заказ
-        </Button>
+          children="Оформить заказ"
+        />
       </div>
     </div>
   );

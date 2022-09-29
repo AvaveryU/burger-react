@@ -1,5 +1,5 @@
 import styles from "./orderItem.module.css";
-import CurrencyIcon from "../../images/CurrencyIcon.svg";
+import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { FunctionComponent, useMemo } from "react";
 import { TOrder } from "../../utils/types";
 import { useSelector } from "../../services/store";
@@ -88,7 +88,7 @@ const OrderItem: FunctionComponent<TOrderItem> = ({ order }) => {
         </div>
         <div className={`${styles.order_price} ml-6`}>
           <p className={`${styles.ingredient__digits} text text_type_digits-default mr-2`}>{totalPrice}</p>
-          <img className={`${styles.order_iconPrice}`} src={CurrencyIcon} alt={"картинка"} />
+          <CurrencyIcon type="secondary" />
         </div>
       </div>
     </li>
